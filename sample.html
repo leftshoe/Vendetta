@@ -2,59 +2,92 @@
 <head>
 	<link rel="stylesheet" href="sample.css" type="text/css" />
 	<title> Editor mockup </title>
+	
+	<!-- debugging stuff -->
+	<script type="text/javascript" src="AIRIntrospector.js"></script> 
+	<script type="text/javascript" src="AIRSourceViewer.js"></script>
+	
 	<script type="text/javascript" src="AIRAliases.js"></script>
 	<script type="text/javascript" src="jquery-1.4.3.min.js" />
 	<script type="text/javascript" src="jquery-blink.js" />
-	<script type="text/javascript"> 
+	<script type="text/javascript">
+		var CTRL_KEY = 17;
+		var CHROME_OFFSET_X = 7;
+		var CHROME_OFFSET_Y = 29;
+		var Display = runtime.flash.display.StageDisplayState;
+		var stage = window.nativeWindow.stage;
+	
 		$(document).ready(function() {
 			$('.cursor').blink();
+			
+			$(document).keydown(function(e) {
+				if(e.which == CTRL_KEY && stage.displayState == Display.NORMAL) {
+					$('.editor').css({
+						'left': stage.nativeWindow.x + CHROME_OFFSET_X,
+						'top': stage.nativeWindow.y + CHROME_OFFSET_Y
+					});
+					air.trace('set position: x ' + stage.nativeWindow.x + ' y ' + stage.nativeWindow.y);
+					stage.displayState = Display.FULL_SCREEN_INTERACTIVE;
+				}
+			});
+			
+			$(document).keyup(function(e) {
+				if(e.which == CTRL_KEY) {
+					stage.displayState = Display.NORMAL;
+					
+					$('.editor').css({
+						'left': 0, 'top': 0
+					});
+				}
+			});
+			
 		});
 	</script>
 	
 </head>
 <body>
-
-<div class="gutter">
-<div class="line-no">1</div>
-<div class="line-no">2</div>
-<div class="line-no">3</div>
-<div class="line-no">4</div>
-<div class="line-no">5</div>
-<div class="line-no">6</div>
-<div class="line-no">7</div>
-<div class="line-no">8</div>
-<div class="line-no">9</div>
-<div class="line-no">10</div>
-<div class="line-no">11</div>
-<div class="line-no">12</div>
-<div class="line-no">13</div>
-<div class="line-no">14</div>
-<div class="line-no">15</div>
-</div>
-
-	
 <div class="editor">
-	<div class="comment">
-		<div class="line">/* hash.c</div>
-		<div class="line"></div>
-		<div class="line"><span class="tab">&nbsp;</span> 
-			A hash table implementation derived from 
-			lp_hash.c from the lp_solve library</div>
-		<div class="line"><span class="tab">&nbsp;</span> 
-			to quickly translate a provided name to an index.</div>
-		<div class="line"> </div>
-		<div class="line">*/</div>
+	<div class="gutter">
+		<div class="line-no">1</div>
+		<div class="line-no">2</div>
+		<div class="line-no">3</div>
+		<div class="line-no">4</div>
+		<div class="line-no">5</div>
+		<div class="line-no">6</div>
+		<div class="line-no">7</div>
+		<div class="line-no">8</div>
+		<div class="line-no">9</div>
+		<div class="line-no">10</div>
+		<div class="line-no">11</div>
+		<div class="line-no">12</div>
+		<div class="line-no">13</div>
+		<div class="line-no">14</div>
+		<div class="line-no">15</div>
 	</div>
-	<div class="line"></div>
-	<div class="line"></div>
-	<div class="line macro"><span class="include">#include</span> &lt;sys/types.h&gt;</div>
-	<div class="line macro"><span class="include">#include</span> &lt;stdlib.h&gt;</div>
-	<div class="line macro"><span class="include">#include</span> &lt;string.h&gt;</div>
-	<div class="line"></div>
-	<div class="line macro"><span class="include">#include</span> "ha<span class="cursor" ></span>sh.h"</div>
-	<div class="line"></div>
-	<div class="line macro"><span class="include">#ifndef</span> FALSE</div>
-</div> <!-- editor -->
 
+		
+	<div class="text-area">
+		<div class="comment">
+			<div class="line">/* hash.c</div>
+			<div class="line"></div>
+			<div class="line"><span class="tab">&nbsp;</span> 
+				A hash table implementation derived from 
+				lp_hash.c from the lp_solve library</div>
+			<div class="line"><span class="tab">&nbsp;</span> 
+				to quickly translate a provided name to an index.</div>
+			<div class="line"> </div>
+			<div class="line">*/</div>
+		</div>
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line macro"><span class="include">#include</span> &lt;sys/types.h&gt;</div>
+		<div class="line macro"><span class="include">#include</span> &lt;stdlib.h&gt;</div>
+		<div class="line macro"><span class="include">#include</span> &lt;string.h&gt;</div>
+		<div class="line"></div>
+		<div class="line macro"><span class="include">#include</span> "ha<span class="cursor" ></span>sh.h"</div>
+		<div class="line"></div>
+		<div class="line macro"><span class="include">#ifndef</span> FALSE</div>
+	</div> <!-- text-area -->
+</div> <!-- editor -->
 </body>
 </html>
