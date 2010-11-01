@@ -28,11 +28,13 @@
 					});
 					air.trace('set position: x ' + stage.nativeWindow.x + ' y ' + stage.nativeWindow.y);
 					stage.displayState = Display.FULL_SCREEN_INTERACTIVE;
+					$('.file-browser').show();
 				}
 			});
 			
 			$(document).keyup(function(e) {
 				if(e.which == CTRL_KEY) {
+					$('.file-browser').hide();
 					stage.displayState = Display.NORMAL;
 					
 					$('.editor').css({
@@ -46,7 +48,29 @@
 	
 </head>
 <body>
+
+
+<div class="file-browser">
+	<div class="folder-open">
+		<div class="folder-name">Application stuff</div>
+		<div class="file js">AIRAliases.js</div>
+		<div class="file js">AIRIntrospector.js</div>
+		<div class="file js">AIRSourceViewer.js</div>
+		<div class="file html">Editor.html</div>
+		<div class="file js">Editor-app.xml</div>
+		<div class="file js">jquery-1.4.3.min.js</div>
+		<div class="file js">jquery-blink.js</div>
+		<div class="file sh">package.sh</div>
+		<div class="file">README</div>
+		<div class="file css">sample.css</div>
+		<div class="file html">sample.html</div>
+		<div class="file xml">Sample-app.xml</div>
+		<div class="file xml">Vendetta.xml</div>
+	</div>
+</div> <!-- file-browser -->
+
 <div class="editor">
+	
 	<div class="gutter">
 		<div class="line-no">1</div>
 		<div class="line-no">2</div>
