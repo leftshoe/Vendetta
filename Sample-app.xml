@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<application xmlns="http://ns.adobe.com/air/application/2.5"> 
+    <id>defazio.editor</id> 
+    <versionNumber>0.1</versionNumber> 
+    <filename>Editor Mockup</filename> 
+    <initialWindow> 
+        <content>sample.html</content> 
+        <visible>true</visible> 
+        <width>700</width> 
+        <height>350</height> 
+    </initialWindow> 
+</application>

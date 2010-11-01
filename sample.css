@@ -1,0 +1,57 @@
+
+body {
+	font-family: Monaco;
+	font-size: 12px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.editor {
+	float: left;
+}
+
+.gutter {
+	color: #757575;
+	font-size: 10px;
+	margin: 0px;
+	padding: 0px;
+	float: left;
+	width: 30px;
+	background: #DCDCDC;
+	border-right: 1px solid #8D8D8D;
+}
+
+.line-no {
+	padding: 2px 5px;
+	height: 14px;
+	text-align: right;
+}
+
+.line {
+	padding: 2px 5px;
+	height: 14px;
+}
+
+.tab {
+	width: 4em;
+}
+
+.comment {
+	color: #1E82F4;
+}
+
+.macro {
+	color: #378428;
+}
+
+.include {
+	/*font-weight: bold; */
+	color: #24531A;
+}
+
+.cursor {
+	width: 1.5px;
+	height: 12px;
+	background-color: black;
+	display:inline-block;
+}
