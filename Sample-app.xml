@@ -6,13 +6,13 @@
     <initialWindow> 
         <content>sample.html</content> 
         <visible>true</visible> 
-        <width>700</width> 
-        <height>350</height>
 		<maximizable>true</maximizable>
 		<minimizable>true</minimizable>
 		<resizable>true</resizable>
 		<x>300</x>
 		<y>300</y>
+        <width>593</width> 
+        <height>292</height> 
     </initialWindow> 
   <icon>
     <image16x16>icons/icon-x16.png</image16x16>

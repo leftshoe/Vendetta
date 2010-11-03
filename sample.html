@@ -28,18 +28,20 @@
 					});
 					air.trace('set position: x ' + stage.nativeWindow.x + ' y ' + stage.nativeWindow.y);
 					stage.displayState = Display.FULL_SCREEN_INTERACTIVE;
-					$('.file-browser').show();
+					$('.file-browser,.mini-map').show();
+					$('.editor').addClass('box')
 				}
 			});
 			
 			$(document).keyup(function(e) {
 				if(e.which == CTRL_KEY) {
-					$('.file-browser').hide();
+					$('.file-browser,.mini-map').hide();
 					stage.displayState = Display.NORMAL;
 					
 					$('.editor').css({
 						'left': 0, 'top': 0
 					});
+					$('.editor').removeClass('box')
 				}
 			});
 			
@@ -68,6 +70,10 @@
 		<div class="file xml">Vendetta.xml</div>
 	</div>
 </div> <!-- file-browser -->
+
+<div class="mini-map">
+	<div class="mini-window"></div>
+</div>
 
 <div class="editor">
 	

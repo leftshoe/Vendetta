@@ -7,7 +7,12 @@ body {
 }
 
 .editor {
+	background-color: white;
 	position: fixed;
+}
+
+.box {
+	border: 1px solid black;
 }
 
 .text-area {
@@ -28,12 +33,13 @@ body {
 .file-browser {
 	position: fixed;
 	left: 10px;
-	top: 100px;
+	top: 150px;
 	display: none;
 	color: rgb(159,159,159);
 	background-color: rgb(71,71,71);
 	padding: 8px;
 	-webkit-border-radius: 5px;
+	width: 250px;
 }
 
 .folder-open {
@@ -57,6 +63,25 @@ body {
 	background-image: url('icons/file.png');
 	background-position: left center;
 	background-repeat: no-repeat;
+}
+
+.mini-map {
+	right: 10px;
+	top: 50px;
+	position: fixed;
+	display: none;
+	background-image: url('mini-map.png');
+	background-repeat: no-repeat;
+	height: 660px;
+	width: 238px;
+}
+
+.mini-window {
+	position: absolute;
+	height: 80px;
+	width: 100%;
+	top: 20px;
+	border: 1px solid blue;
 }
 
 .line-no {
