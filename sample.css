@@ -15,6 +15,9 @@ body {
 .editor {
 	background-color: white;
 	position: fixed;
+	display: block;
+	width: 600px;
+	height: 300px;
 }
 
 .box {

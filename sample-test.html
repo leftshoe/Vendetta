@@ -20,6 +20,7 @@
 		$(document).ready(function() {
 			$('.cursor').blink();
 			
+			/*
 			$(document).keydown(function(e) {
 				if(e.which == CTRL_KEY && stage.displayState == Display.NORMAL) {
 					$('.editor').css({
@@ -43,7 +44,7 @@
 					});
 					$('.editor').removeClass('box')
 				}
-			});
+			}); */
 			
 		});
 	</script>
@@ -76,9 +77,7 @@
 </div>
 
 <iframe class="editor"
-            src="http://localhost/Bespin/bespin.html"  
-            documentRoot="app:/Bespin/" 
-            sandboxRoot="http://localhost/Bespin/">
+            src="Bespin/bespin.html">
 
 </body>
 </html>
