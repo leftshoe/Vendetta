@@ -1,0 +1,129 @@
+
+body {
+	font-family: Monaco;
+	font-size: 12px;
+	margin: 0px;
+	padding: 0px;
+	background-color: #E7EAEC;
+}
+
+.heading {
+	font-family: MuseoSans, Tahoma, sans-serif;
+	text-shadow: white 0px 1px 0px;
+}
+
+.editor {
+	background-color: white;
+	position: fixed;
+	display: block;
+	width: 600px;
+	height: 300px;
+}
+
+.box {
+	border: 1px solid black;
+}
+
+.text-area {
+	float: left;
+}
+
+.gutter {
+	color: #757575;
+	font-size: 10px;
+	margin: 0px;
+	padding: 0px;
+	float: left;
+	width: 30px;
+	background: #DCDCDC;
+	border-right: 1px solid #8D8D8D;
+}
+
+.file-browser {
+	position: fixed;
+	left: 10px;
+	top: 150px;
+	display: none;
+	color: rgb(159,159,159);
+	background-color: rgb(71,71,71);
+	padding: 8px;
+	-webkit-border-radius: 5px;
+	width: 250px;
+}
+
+.folder-open {
+	padding-left: 15px;
+	background-image: url('icons/down-triangle.png');
+	background-position: 0px 3px;
+	background-repeat: no-repeat;
+}
+
+.folder-name {
+	padding-left: 15px;
+	border-bottom: 1px solid rgb(80,80,80);
+}
+
+.file {
+	border-bottom: 1px solid rgb(80,80,80);
+	margin-left: 10px;
+	padding-left: 15px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background-image: url('icons/file.png');
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+
+.mini-map {
+	right: 10px;
+	top: 50px;
+	position: fixed;
+	display: none;
+	background-image: url('../images/mini-map.png');
+	background-repeat: no-repeat;
+	height: 660px;
+	width: 238px;
+}
+
+.mini-window {
+	position: absolute;
+	height: 80px;
+	width: 100%;
+	top: 20px;
+	border: 1px solid blue;
+}
+
+.line-no {
+	padding: 2px 5px;
+	height: 14px;
+	text-align: right;
+}
+
+.line {
+	padding: 2px 5px;
+	height: 14px;
+}
+
+.tab {
+	width: 4em;
+}
+
+.comment {
+	color: #1E82F4;
+}
+
+.macro {
+	color: #378428;
+}
+
+.include {
+	/*font-weight: bold; */
+	color: #24531A;
+}
+
+.cursor {
+	width: 1.5px;
+	height: 12px;
+	background-color: black;
+	display:inline-block;
+}
