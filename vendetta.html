@@ -3,44 +3,11 @@
 	<link rel="stylesheet" href="style/main.css" type="text/css" />
 	<title> Editor mockup </title>
 	
-	<!-- debugging stuff -->
-	<script type="text/javascript" src="lib/air/AIRIntrospector.js"></script> 
-	<script type="text/javascript" src="lib/air/AIRSourceViewer.js"></script>
-	<script type="text/javascript" src="lib/air/AIRAliases.js"></script>
-	
-	<script type="text/javascript" src="lib/jquery-1.4.3.min.js"></script>
-	<script type="text/javascript" src="lib/require.js" charset="utf-8"></script>
+	<script type="text/javascript" data-main="app/main.js" src="lib/require-jquery-1.4.4.js"></script>
 	
 	<script type="text/javascript">
 		
-		$(document).ready(function() {
-			
-			require(
-			    {baseUrl: "lib"},
-			    [
-			        "ace/lib/event",
-			        "ace/editor",
-			        "ace/virtual_renderer",
-			        "ace/theme/textmate",
-			        "ace/document",
-			        "ace/mode/javascript",
-			        "ace/mode/css",
-			        "ace/mode/html",
-			        "ace/mode/xml",
-			        "ace/mode/text",
-			        "ace/undomanager"
-			    ], function(event, Editor, Renderer, theme, Document, JavaScriptMode, CssMode, HtmlMode, XmlMode, TextMode, UndoManager) {
-					var doc = new Document($('#editor-contents').html());
-					doc.setMode(new JavaScriptMode());
-					doc.setUndoManager(new UndoManager());
-
-					var editor = new Editor(new Renderer($('.editor')[0], theme));
-					editor.setDocument(doc);
-					editor.focus();
-					editor.resize();
-					
-			});
-
+		$(function() {
 			var CTRL_KEY = 17;
 			var CHROME_OFFSET_X = 7;
 			var CHROME_OFFSET_Y = 29;
@@ -105,98 +72,20 @@
 
 <div class="editor"></div>
 
+
+
+
 <script type="text/editor" id="editor-contents">
-	//     (c) 2010 Jeremy Ashkenas, DocumentCloud Inc.
-	//     Underscore is freely distributable under the MIT license.
-	//     Portions of Underscore are inspired or borrowed from Prototype,
-	//     Oliver Steele's Functional, and John Resig's Micro-Templating.
-	//     For all details and documentation:
-	//     http://documentcloud.github.com/underscore
-
-	(function() {
-
-	  // Baseline setup
-	  // --------------
-
-	  // Establish the root object, `window` in the browser, or `global` on the server.
-	  var root = this;
-
-	  // Save the previous value of the `_` variable.
-	  var previousUnderscore = root._;
-
-	  // Establish the object that gets thrown to break out of a loop iteration.
-	  var breaker = typeof StopIteration !== 'undefined' ? StopIteration : '__break__';
-
-	  // Save bytes in the minified (but not gzipped) version:
-	  var ArrayProto = Array.prototype, ObjProto = Object.prototype;
-
-	  // Create quick reference variables for speed access to core prototypes.
-	  var slice                 = ArrayProto.slice,
-	      unshift               = ArrayProto.unshift,
-	      toString              = ObjProto.toString,
-	      hasOwnProperty        = ObjProto.hasOwnProperty,
-	      propertyIsEnumerable  = ObjProto.propertyIsEnumerable;
-
-	  // All **ECMAScript 5** native function implementations that we hope to use
-	  // are declared here.
-	  var
-	    nativeForEach      = ArrayProto.forEach,
-	    nativeMap          = ArrayProto.map,
-	    nativeReduce       = ArrayProto.reduce,
-	    nativeReduceRight  = ArrayProto.reduceRight,
-	    nativeFilter       = ArrayProto.filter,
-	    nativeEvery        = ArrayProto.every,
-	    nativeSome         = ArrayProto.some,
-	    nativeIndexOf      = ArrayProto.indexOf,
-	    nativeLastIndexOf  = ArrayProto.lastIndexOf,
-	    nativeIsArray      = Array.isArray,
-	    nativeKeys         = Object.keys;
-
-	  // Create a safe reference to the Underscore object for use below.
-	  var _ = function(obj) { return new wrapper(obj); };
-
-	  // Export the Underscore object for **CommonJS**.
-	  if (typeof exports !== 'undefined') exports._ = _;
-
-	  // Export Underscore to the global scope.
-	  root._ = _;
-
-	  // Current version.
-	  _.VERSION = '1.1.2';
-
-	  // Collection Functions
-	  // --------------------
-
-	  // The cornerstone, an `each` implementation, aka `forEach`.
-	  // Handles objects implementing `forEach`, arrays, and raw objects.
-	  // Delegates to **ECMAScript 5**'s native `forEach` if available.
-	  var each = _.each = _.forEach = function(obj, iterator, context) {
-	    try {
-	      if (nativeForEach &amp;&amp; obj.forEach === nativeForEach) {
-	        obj.forEach(iterator, context);
-	      } else if (_.isNumber(obj.length)) {
-	        for (var i = 0, l = obj.length; i &lt; l; i++) iterator.call(context, obj[i], i, obj);
-	      } else {
-	        for (var key in obj) {
-	          if (hasOwnProperty.call(obj, key)) iterator.call(context, obj[key], key, obj);
-	        }
-	      }
-	    } catch(e) {
-	      if (e != breaker) throw e;
-	    }
-	    return obj;
-	  };
-
-	  // Return the results of applying the iterator to each element.
-	  // Delegates to **ECMAScript 5**'s native `map` if available.
-	  _.map = function(obj, iterator, context) {
-	    if (nativeMap &amp;&amp; obj.map === nativeMap) return obj.map(iterator, context);
-	    var results = [];
-	    each(obj, function(value, index, list) {
-	      results[results.length] = iterator.call(context, value, index, list);
-	    });
-	    return results;
-	  };
+// Return the results of applying the iterator to each element.
+// Delegates to **ECMAScript 5**'s native `map` if available.
+_.map = function(obj, iterator, context) {
+  if (nativeMap &amp;&amp; obj.map === nativeMap) return obj.map(iterator, context);
+  var results = [];
+  each(obj, function(value, index, list) {
+    results[results.length] = iterator.call(context, value, index, list);
+  });
+  return results;
+};
 </script> <!-- editor -->
 
 </body>
