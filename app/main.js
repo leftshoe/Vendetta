@@ -1,4 +1,8 @@
 
+function isAir() {
+	return typeof(runtime) != "undefined";
+}
+
 require(
 	{
 		baseUrl: "app",
