@@ -6,7 +6,7 @@ define(["Logging/Log", "File/File"], function(Log, File) {
 	};
 	
 	AirFileSystem.prototype.open = function(file_name, callback) {
-		var file = new air.File(file_name);
+		var airfile = new air.File(file_name);
 		var fileStream = new air.FileStream();
 		
 		fileStream.addEventListener(air.Event.COMPLETE, function() {
@@ -19,25 +19,26 @@ define(["Logging/Log", "File/File"], function(Log, File) {
 		});
 		
 		// Triggers COMPLETE event when open
-		fileStream.openAsync(file, air.FileMode.READ);
+		fileStream.openAsync(airfile, air.FileMode.READ);
 	};
 	
 	AirFileSystem.prototype.save = function(file) {
-		var file = new air.File(file.fullFileName);
+		var airfile = new air.File(file.get('fullFileName'));
 		var fileStream = new air.FileStream();
-		fileStream.openAsync(file, air.FileMode.WRITE);
+		fileStream.openAsync(airfile, air.FileMode.WRITE);
 		
-		fileStream.writeMultiByte(file.data, air.File.systemCharset);
+		fileStream.writeMultiByte(file.get('data'), air.File.systemCharset);
 		fileStream.close();
 	};
 	
 	AirFileSystem.prototype.openDialog = function(callback) {
-		var file = new air.File();
-		file.addEventListener(air.Event.SELECT, function(e) {
+		var airfile = new air.File();
+		airfile.addEventListener(air.Event.SELECT, function(e) {
+			log.trace("select event called");
 			callback(e.target.nativePath);
 		});
 		
-		file.browseForOpen("Open");
+		airfile.browseForOpen("Open");
 	};
 	
 	return AirFileSystem;

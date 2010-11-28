@@ -14,7 +14,7 @@ require(
 		
 		// Debugging stuff
 		"lib/air/AIRIntrospector.js",
-		"lib/air/AIRSourceViewer.js"
+		"lib/air/AIRSourceViewer.js",
 	],
 	function(Log, FileSystem) {
 		$(function(){
@@ -53,7 +53,7 @@ require(
 					
 					FileSystem.openDialog(function(file_name) {
 						FileSystem.open(file_name, function(f) {
-							var doc = new Document(f.data);
+							var doc = new Document(f.get('data'));
 							doc.setMode(new JavaScriptMode());
 							doc.setUndoManager(new UndoManager());
 							editor.setDocument(doc);

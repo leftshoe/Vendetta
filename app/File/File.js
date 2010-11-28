@@ -1,10 +1,8 @@
 
 define(function() {
 
-	var File = function(attr) {
-		this.fullFileName = attr.fullFileName;
-		this.data = attr.data;
-	};
+	var File = Backbone.Model.extend({
+	});
 
 	return File;
 });

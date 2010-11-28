@@ -40,7 +40,7 @@ define(["Logging/Log", "File/File"], function(Log, File) {
 	DBFileSystem.prototype.save = function(file) {
 		this.db.transaction(function(t) {
 			t.executeSql('INSERT INTO file (full_file_name, data) VALUES (?, ?)',
-						 [file.fullFileName, file.data]);
+						 [file.get('fullFileName'), file.get('data')]);
 		});
 	};
 	
