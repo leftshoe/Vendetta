@@ -6,7 +6,11 @@ define(function() {
 	};
 
 	AirLogger.prototype.trace = function(msg) {
-		air.trace(this.context + ': ' + msg);
+		air.trace("TRACE " + this.context + ': ' + msg);
+	};
+	
+	AirLogger.prototype.error = function(msg) {
+		air.trace("ERROR " + this.context + ': ' + msg);
 	};
 
 	return AirLogger;
