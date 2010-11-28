@@ -22,8 +22,7 @@ require(
 			log.trace("Initialising stuff");
 			
 			//TODO: this needs to be moved into it's own class
-			require({ baseUrl: "lib/"},
-			    [
+			require({ baseUrl: ""}, [
 			        "ace/lib/event",
 			        "ace/editor",
 			        "ace/virtual_renderer",
