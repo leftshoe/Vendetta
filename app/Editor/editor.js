@@ -14,13 +14,13 @@ define([
 	"app/File/FileSystem",
 	"app/Logging/Log"
 	], function(event, AceEditor, Renderer, theme, Document, 
-				JavaScriptMode, CssMode, HtmlMode, XmlMode, 
+				JavascriptMode, CssMode, HtmlMode, XmlMode, 
 				TextMode, UndoManager, FileSystem, Log) {
 	var log = new Log("AirFileSystem");
 					
 	var Editor = function(element, core) {
 		var doc = new Document($('#editor-contents').html());
-		doc.setMode(new JavaScriptMode());
+		doc.setMode(new JavascriptMode());
 		doc.setUndoManager(new UndoManager());
 
 		var ace = this.ace = new AceEditor(new Renderer(element, theme));
@@ -35,21 +35,33 @@ define([
 		this.handleEditCommands(core);
 	};
 	
+	var extensionModes = {
+		'txt': TextMode,
+		'css': CssMode,
+		'htm': HtmlMode,
+		'html': HtmlMode,
+		'xml': XmlMode,
+		'js': JavascriptMode
+	};
+	
+	Editor.prototype.editFile = function(f) {
+		log.trace("Edit file called: " + f.get('fullFileName'));
+		this.openFile = f;
+		var doc = new Document(f.get('data'));
+		var mode = extensionModes[f.getExtension() || 'txt'];
+		mode = mode || JavascriptMode;
+		doc.setMode(new mode());
+		doc.setUndoManager(new UndoManager());
+		this.ace.setDocument(doc);
+	};
+	
 	Editor.prototype.handleEditCommands = function(core) {
 		var self = this;
 		var editor = this.ace;
 		var selection = editor.getSelection();
 		
 		core.bind('opendialog', function() {
-			FileSystem.openDialog(function(file_name) {
-				FileSystem.open(file_name, function(f) {
-					self.openFile = f;
-					var doc = new Document(f.get('data'));
-					doc.setMode(new JavaScriptMode());
-					doc.setUndoManager(new UndoManager());
-					editor.setDocument(doc);
-				});
-			});	
+			FileSystem.openDialog(_.bind(self.editFile, self));
 		});
 		core.bind('save', function() {
 			if(self.openFile) {

@@ -39,13 +39,38 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 	
 	DBFileSystem.prototype.save = function(file) {
 		this.db.transaction(function(t) {
-			t.executeSql('INSERT INTO file (full_file_name, data) VALUES (?, ?)',
+			t.executeSql('INSERT OR REPLACE INTO file (full_file_name, data) VALUES (?, ?)',
 						 [file.get('fullFileName'), file.get('data')]);
 		});
 	};
 	
 	DBFileSystem.prototype.openDialog = function(callback) {
-		log.error("openDialog not implemented yet");
+		log.trace("Opening upload file dialog");
+		var inputNode = $('<input />');
+		inputNode.attr({
+			type: "file"
+		});
+		inputNode.bind('change', function() { 
+			log.trace('change event triggered');
+			if(this.files && this.files.length > 0) {
+				var file = this.files[0];
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					log.trace('onload triggered for file');
+					callback(new File({
+						fullFileName: file.name,
+						data: e.target.result
+					}));
+				};
+				
+				log.trace('reading file ...');
+				reader.readAsText(file);
+			}
+			inputNode.remove();
+		});
+		
+		$('body').append(inputNode);
+		inputNode.first().click();
 	};
 	
 	return DBFileSystem;

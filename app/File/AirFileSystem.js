@@ -6,6 +6,7 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 	};
 	
 	AirFileSystem.prototype.open = function(file_name, callback) {
+		log.trace('opening ' + file_name);
 		var airfile = new air.File(file_name);
 		var fileStream = new air.FileStream();
 		
@@ -33,10 +34,12 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 	};
 	
 	AirFileSystem.prototype.openDialog = function(callback) {
+		var self = this;
+		log.trace("Air openDialog called");
 		var airfile = new air.File();
 		airfile.addEventListener(air.Event.SELECT, function(e) {
 			log.trace("select event called");
-			callback(e.target.nativePath);
+			self.open(e.target.nativePath, callback);
 		});
 		
 		airfile.browseForOpen("Open");
