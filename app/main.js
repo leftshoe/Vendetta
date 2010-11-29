@@ -5,62 +5,27 @@ function isAir() {
 
 require(
 	{
-		baseUrl: "app",
+		baseUrl: "",
 		urlArgs: "bust=" +  (new Date()).getTime()
 	},
 	[
-		"Logging/Log",
-		"File/FileSystem",
-		
-		// Debugging stuff
+		"app/Logging/Log",
+		"app/File/FileSystem",
+		"app/Keyboard/keybinding",
+		"app/Core",
+		"app/Editor/editor",
 		"lib/air/AIRIntrospector.js",
 		"lib/air/AIRSourceViewer.js",
 	],
-	function(Log, FileSystem) {
+	function(Log, FileSystem, KeyBinding, Core, Editor) {
 		$(function(){
 			var log = new Log("main");
 			log.trace("Initialising stuff");
 			
-			//TODO: this needs to be moved into it's own class
-			require({ baseUrl: ""}, [
-			        "ace/lib/event",
-			        "ace/editor",
-			        "ace/virtual_renderer",
-			        "ace/theme/textmate",
-			        "ace/document",
-			        "ace/mode/javascript",
-			        "ace/mode/css",
-			        "ace/mode/html",
-			        "ace/mode/xml",
-			        "ace/mode/text",
-			        "ace/undomanager"
-			    ], function(event, Editor, Renderer, theme, Document, JavaScriptMode, 
-							CssMode, HtmlMode, XmlMode, TextMode, UndoManager) {
-																
-					var doc = new Document($('#editor-contents').html());
-					doc.setMode(new JavaScriptMode());
-					doc.setUndoManager(new UndoManager());
-
-					var editor = new Editor(new Renderer($('.editor')[0], theme));
-					editor.setDocument(doc);
-					editor.focus();
-					editor.resize();
-					
-					window.onresize = function() {
-						editor.resize();
-					}
-					
-					FileSystem.openDialog(function(file_name) {
-						FileSystem.open(file_name, function(f) {
-							var doc = new Document(f.get('data'));
-							doc.setMode(new JavaScriptMode());
-							doc.setUndoManager(new UndoManager());
-							editor.setDocument(doc);
-						});
-					});
-			});
-			
-			
+			var element = $('.editor')[0];
+			var core = new Core();
+			var editor = new Editor(element, core);
+			var keybinding = new KeyBinding(element, core);
 		});
 		
 	});

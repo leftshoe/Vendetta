@@ -41,7 +41,6 @@ var oop = require("./lib/oop");
 var event = require("./lib/event");
 var lang = require("./lib/lang");
 var TextInput = require("./textinput");
-var KeyBinding = require("./keybinding");
 var Document = require("./document");
 var Search = require("./search");
 var BackgroundTokenizer = require("./background_tokenizer");
@@ -54,7 +53,6 @@ var Editor =function(renderer, doc) {
     this.renderer = renderer;
 
     this.textInput  = new TextInput(container, this);
-    this.keyBinding = new KeyBinding(container, this);
     var self = this;
     event.addListener(container, "mousedown", function(e) {
         setTimeout(function() {self.focus();});

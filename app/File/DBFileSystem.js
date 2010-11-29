@@ -1,5 +1,5 @@
 
-define(["Logging/Log", "File/File"], function(Log, File) {
+define(["app/Logging/Log", "./File"], function(Log, File) {
 	var log = new Log("DBFileSystem");
 	var DB_SIZE = 2*1024*1024; //2MB
 	

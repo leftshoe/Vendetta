@@ -1,4 +1,4 @@
 
-define(["Logging/ConsoleLogger", "Logging/AirLogger"], function(ConsoleLogger, AirLogger) {
+define(["./ConsoleLogger", "./AirLogger"], function(ConsoleLogger, AirLogger) {
 	return isAir() ? AirLogger : ConsoleLogger;
 });

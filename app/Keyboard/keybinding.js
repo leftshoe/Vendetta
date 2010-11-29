@@ -35,17 +35,13 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-define(function(require, exports, module) {
+define(["ace/lib/event",
+		"configuration/keybindings/default_mac", 
+		"configuration/keybindings/default_win"], 
+		function(event, default_mac, default_win) {
 
-var core = require("./lib/core");
-var event = require("./lib/event");
-var default_mac = require("./conf/keybindings/default_mac");
-var default_win = require("./conf/keybindings/default_win");
-var PluginManager = require("./plugin_manager");
-require("./commands/default_commands");
-
-var KeyBinding = function(element, editor, config) {
-    this.setConfig(config);
+var KeyBinding = function(element, core) {
+    this.setConfig();
 
     var _self = this;
     event.addKeyListener(element, function(e) {
@@ -55,12 +51,19 @@ var KeyBinding = function(element, editor, config) {
 
         var commandName = (_self.config.reverse[hashId] || {})[(key
             || String.fromCharCode(e.keyCode)).toLowerCase()];
-        var command = PluginManager.commands[commandName];
 
-        if (command) {
-            command(editor, editor.getSelection());
-            return event.stopEvent(e);
-        }
+		if(commandName) {
+			//Push event to core object
+			core.trigger(commandName);
+			return event.stopEvent(e);
+		}
+		
+        // var command = PluginManager.commands[commandName];
+        // 
+        // if (command) {
+        //     command(editor, editor.getSelection());
+        //     return event.stopEvent(e);
+        // }
     });
 };
 
@@ -140,9 +143,11 @@ var KeyBinding = function(element, editor, config) {
     }
 
     this.setConfig = function(config) {
-        this.config = config || (core.isMac
-            ? default_mac
-            : default_win);
+		//TODO: add better way of determining keybinding to use
+		this.config = config || default_mac;
+        //this.config = config || (core.isMac
+        //    ? default_mac
+        //    : default_win);
         if (typeof this.config.reverse == "undefined")
             this.config.reverse = objectReverse.call(this, this.config, "|");
     };
