@@ -23,6 +23,7 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 	};
 	
 	AirFileSystem.prototype.save = function(file) {
+		log.trace("Saving " + file.get('fullFileName'));
 		var airfile = new air.File(file.get('fullFileName'));
 		var fileStream = new air.FileStream();
 		fileStream.openAsync(airfile, air.FileMode.WRITE);

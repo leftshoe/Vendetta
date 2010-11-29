@@ -10,10 +10,13 @@ define([
     "ace/mode/html",
     "ace/mode/xml",
     "ace/mode/text",
-    "ace/undomanager"
+    "ace/undomanager",
+	"app/File/FileSystem",
+	"app/Logging/Log"
 	], function(event, AceEditor, Renderer, theme, Document, 
 				JavaScriptMode, CssMode, HtmlMode, XmlMode, 
-				TextMode, UndoManager) {
+				TextMode, UndoManager, FileSystem, Log) {
+	var log = new Log("AirFileSystem");
 					
 	var Editor = function(element, core) {
 		var doc = new Document($('#editor-contents').html());
@@ -28,27 +31,37 @@ define([
 		window.onresize = function() {
 			ace.resize();
 		}
-		
-		// FileSystem.openDialog(function(file_name) {
-		// 	FileSystem.open(file_name, function(f) {
-		// 		var doc = new Document(f.get('data'));
-		// 		doc.setMode(new JavaScriptMode());
-		// 		doc.setUndoManager(new UndoManager());
-		// 		ace.setDocument(doc);
-		// 	});
-		// });
-		
+				
 		this.handleEditCommands(core);
 	};
 	
 	Editor.prototype.handleEditCommands = function(core) {
+		var self = this;
 		var editor = this.ace;
 		var selection = editor.getSelection();
 		
+		core.bind('opendialog', function() {
+			FileSystem.openDialog(function(file_name) {
+				FileSystem.open(file_name, function(f) {
+					self.openFile = f;
+					var doc = new Document(f.get('data'));
+					doc.setMode(new JavaScriptMode());
+					doc.setUndoManager(new UndoManager());
+					editor.setDocument(doc);
+				});
+			});	
+		});
+		core.bind('save', function() {
+			if(self.openFile) {
+				self.openFile.set({'data': editor.getDocument().toString()});
+				FileSystem.save(self.openFile);
+			} else {
+				log.trace("No openFile");
+			}
+		});
 		core.bind('selectall', function() {
 			selection.selectAll();
 		});
-		
 		core.bind("removeline", function() {
 		    editor.removeLines();
 		});

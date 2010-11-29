@@ -38,6 +38,8 @@
 define(function() {
 
 return {
+	"save": "Command-S",
+	"opendialog": "Command-O",
     "selectall": "Command-A",
     "removeline": "Command-D",
     "gotoline": "Command-L",

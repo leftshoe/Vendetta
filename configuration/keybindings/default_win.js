@@ -38,6 +38,8 @@
 define(function() {
 
 return {
+	"save": "Ctrl-S",
+	"opendialog": "Ctrl-O",
     "selectall": "Ctrl-A",
     "removeline": "Ctrl-D",
     "gotoline": "Ctrl-L",
