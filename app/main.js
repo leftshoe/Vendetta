@@ -3,6 +3,13 @@ function isAir() {
 	return typeof(runtime) != "undefined";
 }
 
+if(!isAir()) {
+	window = {};
+	window.nativeWindow = {};
+}
+
+window.nativeWindow.title = "untitled - Vendetta";
+
 require(
 	{
 		baseUrl: "",
@@ -26,6 +33,11 @@ require(
 			var core = new Core();
 			var editor = new Editor(element, core);
 			var keybinding = new KeyBinding(element, core);
+			
+			//TODO: find a better spot for this
+			core.bind('newactivefile',function(f) {
+				window.nativeWindow.title = f.getFileName() + " - Vendetta";
+			});
 		});
 		
 	});

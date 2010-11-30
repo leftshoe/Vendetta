@@ -33,6 +33,7 @@ define([
 		}
 				
 		this.handleEditCommands(core);
+		core.bind('newactivefile', _.bind(this.editFile, this));
 	};
 	
 	var extensionModes = {
@@ -45,7 +46,7 @@ define([
 	};
 	
 	Editor.prototype.editFile = function(f) {
-		log.trace("Edit file called: " + f.get('fullFileName'));
+		log.trace("Edit file called: " + f.getFullFileName());
 		this.openFile = f;
 		var doc = new Document(f.get('data'));
 		var mode = extensionModes[f.getExtension() || 'txt'];
@@ -60,7 +61,9 @@ define([
 		var editor = this.ace;
 		
 		core.bind("opendialog", function() {
-			FileSystem.openDialog(_.bind(self.editFile, self));
+			FileSystem.openDialog(function(f) {
+				core.trigger("newactivefile", f);
+			});
 		});
 		core.bind("save", function() {
 			if(self.openFile) {
