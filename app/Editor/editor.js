@@ -19,12 +19,8 @@ define([
 	var log = new Log("AirFileSystem");
 					
 	var Editor = function(element, core) {
-		var doc = new Document($('#editor-contents').html());
-		doc.setMode(new JavascriptMode());
-		doc.setUndoManager(new UndoManager());
 
 		var ace = this.ace = new AceEditor(new Renderer(element, theme));
-		ace.setDocument(doc);
 		ace.focus();
 		ace.resize();
 		
@@ -34,6 +30,13 @@ define([
 				
 		this.handleEditCommands(core);
 		core.bind('newactivefile', _.bind(this.editFile, this));
+		
+		// File object is passed in 
+		if(window.argFileName) {
+			FileSystem.open(window.argFileName, function(f) {
+				core.trigger("newactivefile", f);
+			});
+		}
 	};
 	
 	var extensionModes = {

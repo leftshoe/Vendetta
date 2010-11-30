@@ -4,15 +4,8 @@
     <versionNumber>0.1</versionNumber> 
     <filename>Vendetta</filename> 
     <initialWindow> 
-        <content>vendetta.html</content> 
-        <visible>true</visible> 
-		<maximizable>true</maximizable>
-		<minimizable>true</minimizable>
-		<resizable>true</resizable>
-		<x>300</x>
-		<y>300</y>
-        <width>602</width> 
-        <height>322</height> 
+        <content>vendetta-window-manager.html</content> 
+        <visible>false</visible> 
     </initialWindow> 
   <icon>
     <image16x16>icons/icon-x16.png</image16x16>

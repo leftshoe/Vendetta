@@ -38,6 +38,7 @@
 define(function() {
 
 return {
+	"newwindow": "Command-N",
 	"save": "Command-S",
 	"saveas": "Command-Shift-S",
 	"opendialog": "Command-O",

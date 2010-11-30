@@ -16,6 +16,7 @@ require(
 		"app/Keyboard/keybinding",
 		"app/Core",
 		"app/Editor/editor",
+		"app/window-util.js",
 		"lib/air/AIRIntrospector.js",
 		"lib/air/AIRSourceViewer.js",
 	],
@@ -33,6 +34,14 @@ require(
 			core.bind('newactivefile',function(f) {
 				document.title = f.getFileName() + " - Vendetta";
 			});
+			core.bind('newwindow', function() {
+				openWindow();
+			});
+			
+			if(isAir()) {
+				// window starts hidden to avoid graphical gliches
+				window.nativeWindow.visible = true;
+			}
 		});
 		
 	});

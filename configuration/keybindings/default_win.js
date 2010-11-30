@@ -38,6 +38,7 @@
 define(function() {
 
 return {
+	"newwindow": "Ctrl-N",
 	"save": "Ctrl-S",
 	"saveas": "Ctrl-Shift-S",
 	"opendialog": "Ctrl-O",
