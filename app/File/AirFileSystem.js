@@ -33,6 +33,24 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 		fileStream.close();
 	};
 	
+	AirFileSystem.prototype.saveas = function(data, callback) {
+		var self = this;
+		var docs_dir = air.File.documentsDirectory;
+		try {
+			docs_dir.addEventListener(air.Event.SELECT, function(e) {
+				var f = new File({
+					fullFileName: e.target.nativePath,
+					data: data
+				});
+				self.save(f)
+				callback(f);
+			});
+			docs_dir.browseForSave("Save as");
+		} catch (error) {
+			log.error("Error in saveas: " + error.message);
+		}
+	};
+	
 	AirFileSystem.prototype.openDialog = function(callback) {
 		var self = this;
 		log.trace("Air openDialog called");

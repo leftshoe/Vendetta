@@ -44,6 +44,14 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 		});
 	};
 	
+	DBFileSystem.prototype.saveas = function(data, callback) {
+		log.trace("saveas not implemented yet");
+		callback(new File({
+			fullFileName: "temp",
+			data: data
+		}));
+	}
+	
 	DBFileSystem.prototype.openDialog = function(callback) {
 		log.trace("Opening upload file dialog");
 		var inputNode = $('<input />');

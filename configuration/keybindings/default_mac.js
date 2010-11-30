@@ -39,6 +39,7 @@ define(function() {
 
 return {
 	"save": "Command-S",
+	"saveas": "Command-Shift-S",
 	"opendialog": "Command-O",
     "selectall": "Command-A",
     "removeline": "Command-D",

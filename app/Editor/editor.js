@@ -58,21 +58,27 @@ define([
 	Editor.prototype.handleEditCommands = function(core) {
 		var self = this;
 		var editor = this.ace;
-		var selection = editor.getSelection();
 		
-		core.bind('opendialog', function() {
+		core.bind("opendialog", function() {
 			FileSystem.openDialog(_.bind(self.editFile, self));
 		});
-		core.bind('save', function() {
+		core.bind("save", function() {
 			if(self.openFile) {
 				self.openFile.set({'data': editor.getDocument().toString()});
 				FileSystem.save(self.openFile);
 			} else {
 				log.trace("No openFile");
+				core.trigger("saveas");
 			}
 		});
-		core.bind('selectall', function() {
-			selection.selectAll();
+		core.bind("saveas", function() {
+			FileSystem.saveas(editor.getDocument().toString(), function(f) {
+				self.openFile = f;
+			});
+		});
+		core.bind("selectall", function() {
+			log.trace('selectall');
+			editor.getSelection().selectAll();
 		});
 		core.bind("removeline", function() {
 		    editor.removeLines();
@@ -115,13 +121,13 @@ define([
 		    editor.moveLinesUp();
 		});
 		core.bind("selecttostart", function() {
-		    selection.selectFileStart();
+		    editor.getSelection().selectFileStart();
 		});
 		core.bind("gotostart", function() {
 		    editor.navigateFileStart();
 		});
 		core.bind("selectup", function() {
-		    selection.selectUp();
+		    editor.getSelection().selectUp();
 		});
 		core.bind("golineup", function() {
 		    editor.navigateUp();
@@ -133,49 +139,49 @@ define([
 		    editor.moveLinesDown();
 		});
 		core.bind("selecttoend", function() {
-		    selection.selectFileEnd();
+		    editor.getSelection().selectFileEnd();
 		});
 		core.bind("gotoend", function() {
 		    editor.navigateFileEnd();
 		});
 		core.bind("selectdown", function() {
-		    selection.selectDown();
+		    editor.getSelection().selectDown();
 		});
 		core.bind("godown", function() {
 		    editor.navigateDown();
 		});
 		core.bind("selectwordleft", function() {
-		    selection.selectWordLeft();
+		    editor.getSelection().selectWordLeft();
 		});
 		core.bind("gotowordleft", function() {
 		    editor.navigateWordLeft();
 		});
 		core.bind("selecttolinestart", function() {
-		    selection.selectLineStart();
+		    editor.getSelection().selectLineStart();
 		});
 		core.bind("gotolinestart", function() {
 		    editor.navigateLineStart();
 		});
 		core.bind("selectleft", function() {
-		    selection.selectLeft();
+		    editor.getSelection().selectLeft();
 		});
 		core.bind("gotoleft", function() {
 		    editor.navigateLeft();
 		});
 		core.bind("selectwordright", function() {
-		    selection.selectWordRight();
+		    editor.getSelection().selectWordRight();
 		});
 		core.bind("gotowordright", function() {
 		    editor.navigateWordRight();
 		});
 		core.bind("selecttolineend", function() {
-		    selection.selectLineEnd();
+		    editor.getSelection().selectLineEnd();
 		});
 		core.bind("gotolineend", function() {
 		    editor.navigateLineEnd();
 		});
 		core.bind("selectright", function() {
-		    selection.selectRight();
+		    editor.getSelection().selectRight();
 		});
 		core.bind("gotoright", function() {
 		    editor.navigateRight();
@@ -199,13 +205,13 @@ define([
 		    editor.gotoPageUp();
 		});
 		core.bind("selectlinestart", function() {
-		    selection.selectLineStart();
+		    editor.getSelection().selectLineStart();
 		});
 		core.bind("gotolinestart", function() {
 		    editor.navigateLineStart();
 		});
 		core.bind("selectlineend", function() {
-		    selection.selectLineEnd();
+		    editor.getSelection().selectLineEnd();
 		});
 		core.bind("gotolineend", function() {
 		    editor.navigateLineEnd();
@@ -222,6 +228,12 @@ define([
 		core.bind("indent", function() {
 		    editor.indent();
 		});
+		
+		// if(isAir()) {
+		// 	window.nativeWindow.stage.addEventListener(Event.SELECT_ALL, function() {
+		// 		log.trace("SELECT_ALL");
+		// 	});
+		// }
 	};
 	
 	return Editor;

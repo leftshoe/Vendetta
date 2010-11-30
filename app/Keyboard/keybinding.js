@@ -36,9 +36,12 @@
  * ***** END LICENSE BLOCK ***** */
 
 define(["ace/lib/event",
+		"app/Logging/Log",
 		"configuration/keybindings/default_mac", 
 		"configuration/keybindings/default_win"], 
-		function(event, default_mac, default_win) {
+		function(event, Log, default_mac, default_win) {
+
+var log = new Log("KeyBinding");
 
 var KeyBinding = function(element, core) {
     this.setConfig();
@@ -53,6 +56,7 @@ var KeyBinding = function(element, core) {
             || String.fromCharCode(e.keyCode)).toLowerCase()];
 
 		if(commandName) {
+			log.trace('command: ' + commandName);
 			//Push event to core object
 			core.trigger(commandName);
 			return event.stopEvent(e);

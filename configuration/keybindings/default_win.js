@@ -39,6 +39,7 @@ define(function() {
 
 return {
 	"save": "Ctrl-S",
+	"saveas": "Ctrl-Shift-S",
 	"opendialog": "Ctrl-O",
     "selectall": "Ctrl-A",
     "removeline": "Ctrl-D",
