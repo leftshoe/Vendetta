@@ -3,12 +3,7 @@ function isAir() {
 	return typeof(runtime) != "undefined";
 }
 
-if(!isAir()) {
-	window = {};
-	window.nativeWindow = {};
-}
-
-window.nativeWindow.title = "untitled - Vendetta";
+document.title = "untitled - Vendetta";
 
 require(
 	{
@@ -36,7 +31,7 @@ require(
 			
 			//TODO: find a better spot for this
 			core.bind('newactivefile',function(f) {
-				window.nativeWindow.title = f.getFileName() + " - Vendetta";
+				document.title = f.getFileName() + " - Vendetta";
 			});
 		});
 		
