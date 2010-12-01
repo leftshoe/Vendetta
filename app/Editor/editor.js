@@ -36,6 +36,10 @@ define([
 			FileSystem.open(window.argFileName, function(f) {
 				core.trigger("newactivefile", f);
 			});
+		} else {
+			// Empty document
+			log.trace("Setting empty document");
+			this.setDocument('', JavascriptMode);
 		}
 	};
 	
@@ -50,17 +54,22 @@ define([
 	
 	Editor.prototype.isSaved = function() {
 		log.trace('isSaved called');
+		var txt = this.ace.getDocument().toString();
 		return this.openFile ?  
-			(this.openFile.get('data') == this.ace.getDocument().toString())
-			: false;
+			(this.openFile.get('data') == txt)
+			: (txt == '');
 	};
 	
 	Editor.prototype.editFile = function(f) {
 		log.trace("Edit file called: " + f.getFullFileName());
 		this.openFile = f;
-		var doc = new Document(f.get('data'));
 		var mode = extensionModes[f.getExtension() || 'txt'];
 		mode = mode || JavascriptMode;
+		this.setDocument(f.get('data'), mode);
+	};
+	
+	Editor.prototype.setDocument = function(txt, mode) {
+		var doc = new Document(txt);
 		doc.setMode(new mode());
 		doc.setUndoManager(new UndoManager());
 		this.ace.setDocument(doc);
