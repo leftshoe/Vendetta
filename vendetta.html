@@ -76,21 +76,12 @@
 
 <div class="editor"></div>
 
-
-
-
-<script type="text/editor" id="editor-contents">
-// Return the results of applying the iterator to each element.
-// Delegates to **ECMAScript 5**'s native `map` if available.
-_.map = function(obj, iterator, context) {
-  if (nativeMap &amp;&amp; obj.map === nativeMap) return obj.map(iterator, context);
-  var results = [];
-  each(obj, function(value, index, list) {
-    results[results.length] = iterator.call(context, value, index, list);
-  });
-  return results;
-};
-</script> <!-- editor -->
+<div id="prompt-dialog" class="dialog">
+	<p>You have unsaved changes</p>
+	<button id="save" class="close">save</button>
+	<button id="close" class="close">close anyway</button>
+	<button id="cancel" class="close">cancel</button>
+</div>
 
 </body>
 </html>

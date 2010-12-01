@@ -19,6 +19,8 @@ require(
 		"app/window-util.js",
 		"lib/air/AIRIntrospector.js",
 		"lib/air/AIRSourceViewer.js",
+		"lib/overlay.js",
+		"lib/toolbox.expose.js"
 	],
 	function(Log, FileSystem, KeyBinding, Core, Editor) {
 		$(function(){
@@ -41,6 +43,37 @@ require(
 			if(isAir()) {
 				// window starts hidden to avoid graphical gliches
 				window.nativeWindow.visible = true;
+				
+				var force_close = false;
+				var promptDialog = $('#prompt-dialog');
+				
+				//Prompt to save before closing the window
+				window.nativeWindow.addEventListener(air.Event.CLOSING, function(e) {
+					if(force_close || !editor.isSaved()) {
+						promptDialog.overlay({
+							closeOnClick: false,
+							load: true,
+							mask: {
+								color: '#ebecff',
+								loadSpeed: 200,
+								opacity: 0.8
+							}
+						});
+						
+						promptDialog.data("overlay").load();
+						e.preventDefault();
+					}
+				});
+				
+				$('#save', promptDialog).click(function() {
+					core.trigger('save');
+					window.close();
+				});
+				
+				$('#close', promptDialog).click(function() {
+					force_close = true;
+					window.close();
+				});
 			}
 		});
 		

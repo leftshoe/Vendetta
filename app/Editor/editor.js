@@ -48,6 +48,13 @@ define([
 		'js': JavascriptMode
 	};
 	
+	Editor.prototype.isSaved = function() {
+		log.trace('isSaved called');
+		return this.openFile ?  
+			(this.openFile.get('data') == this.ace.getDocument().toString())
+			: false;
+	};
+	
 	Editor.prototype.editFile = function(f) {
 		log.trace("Edit file called: " + f.getFullFileName());
 		this.openFile = f;
