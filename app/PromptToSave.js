@@ -41,7 +41,8 @@ define(["app/Logging/Log", "templates/PromptToSave.js"], function(Log) {
 		
 		events: {
 			"click .save": "save",
-			"click .close-anyway": "close"
+			"click .close-anyway": "close",
+			"click .cancel": "cancel"
 		},
 		initialize: function(options) {
 			this.core = options.core;
@@ -59,6 +60,9 @@ define(["app/Logging/Log", "templates/PromptToSave.js"], function(Log) {
 		close: function() {
 			this.model.set({forceQuit: true});
 			window.close();
+		},
+		cancel: function() {
+			$(this.el).data("overlay").close();
 		}
 	});
 	
