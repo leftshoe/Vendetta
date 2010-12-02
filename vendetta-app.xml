@@ -13,5 +13,31 @@
     <image48x48>icons/icon-x48.png</image48x48>
     <image128x128>icons/icon-x128.png</image128x128>
   </icon>
-
+  <fileTypes>
+      <fileType>
+          <name>XML</name>
+          <extension>xml</extension>
+          <contentType>text/xml</contentType>
+      </fileType>
+      <fileType>
+          <name>HTML</name>
+          <extension>html</extension>
+          <contentType>text/html</contentType>
+      </fileType>
+      <fileType>
+          <name>Javascript</name>
+          <extension>js</extension>
+          <contentType>application/javascript</contentType>
+      </fileType>
+      <fileType>
+          <name>Text</name>
+          <extension>txt</extension>
+          <contentType>text/plain</contentType>
+      </fileType>
+      <fileType>
+          <name>CSS</name>
+          <extension>css</extension>
+          <contentType>text/css</contentType>
+      </fileType>
+  </fileTypes>
 </application>
