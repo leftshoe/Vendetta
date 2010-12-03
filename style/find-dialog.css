@@ -1,0 +1,74 @@
+#find-dialog {
+	width: 280px;
+	font-size: 11px;
+	overflow: auto;
+	position: absolute;
+	bottom: 15px;
+	right: 15px;
+	opacity: 0.9;
+	height: 36px;
+	clip: rect(-10, 288, 44, -10);
+}
+
+#up-down {
+	float: left;
+	width: 40px;
+}
+
+#up, #down {
+	font-size: 9px;
+	display: block;
+	text-align: center;
+	height: 17px;
+	line-height: 17px;
+}
+
+#find-replace {
+	float: left;
+	overflow: hidden;
+	width: 180px;
+}
+
+#find-replace .label {
+	float: left;
+	width: 55px;
+	height: 17px;
+	line-height: 17px;
+}
+
+#find-input, #replace-input {
+	padding: 0px;
+	margin: 0px;
+	float: left;
+	width: 120px;
+}
+
+#find-options  {
+	float: left;
+	width: 50px;
+}
+
+.find-check {
+	-webkit-border-radius: 2px;
+	float: left;
+	display: block;
+	width: 10px;
+	height: 10px;
+	padding: 0px;
+	margin: 0px;
+	background-color: white;
+}
+
+.find-check.checked {
+	background-color: rgb(108,206,245);
+}
+
+#find-options .label {
+	font-size: 9px;
+	display: block;
+	float: left;
+	width: 35px;
+	height: 12px;
+	line-height: 12px;
+	padding-left: 5px;
+}

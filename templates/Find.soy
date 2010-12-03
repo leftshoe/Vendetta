@@ -1,0 +1,25 @@
+{namespace template}
+
+/**
+ *	Standard find and replace dialog
+ */
+{template .find}
+	<div id="up-down">
+		<span id="up">up</span>
+		<span id="down">down</span>
+	</div>
+	<div id="find-replace">
+		<span class="label">Find</span>
+		<input type="text" id="find-input">
+		<span class="label">Replace</span>
+		<input type="text" id="replace-input">
+	</div>
+	<div id="find-options">
+		<div id="check-regex" class="find-check"></div>
+		<span class="label">regex</span>
+		<div id="check-wrap" class="find-check"></div>
+		<span class="label">wrap</span>
+		<div id="check-case" class="find-check"></div>
+		<span class="label">case</span>
+	</div>
+{/template}

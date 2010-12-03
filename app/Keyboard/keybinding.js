@@ -148,10 +148,9 @@ var KeyBinding = function(element, core) {
 
     this.setConfig = function(config) {
 		//TODO: add better way of determining keybinding to use
-		this.config = config || default_mac;
-        //this.config = config || (core.isMac
-        //    ? default_mac
-        //    : default_win);
+        this.config = config || (isMac()
+           ? default_mac
+           : default_win);
         if (typeof this.config.reverse == "undefined")
             this.config.reverse = objectReverse.call(this, this.config, "|");
     };

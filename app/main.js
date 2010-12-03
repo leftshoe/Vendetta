@@ -1,7 +1,11 @@
 
 function isAir() {
 	return typeof(runtime) != "undefined";
-}
+};
+
+function isMac() {
+	return !!navigator.platform.match(/Mac/);
+};
 
 document.title = "untitled - Vendetta";
 
@@ -23,13 +27,14 @@ require({ baseUrl: ""}, [
 			"app/Core",
 			"app/Editor/editor",
 			"app/PromptToSave",
+			"app/FindAndReplace",
 			"app/window-util.js",
 			"lib/air/AIRIntrospector.js",
 			"lib/air/AIRSourceViewer.js",
 			"lib/overlay.js",
 			"lib/toolbox.expose.js"
 		],
-		function(Log, FileSystem, KeyBinding, Core, Editor, PromptToSave) {
+		function(Log, FileSystem, KeyBinding, Core, Editor, PromptToSave, FindAndReplace) {
 			$(function(){
 				var log = new Log("main");
 				log.trace("Initialising stuff");
@@ -38,6 +43,7 @@ require({ baseUrl: ""}, [
 				var core = new Core();
 				var editor = new Editor(element, core);
 				var keybinding = new KeyBinding(element, core);
+				var findAndReplace = new FindAndReplace();
 
 				//TODO: find a better spot for this
 				core.bind('newactivefile',function(f) {

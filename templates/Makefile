@@ -1,3 +1,7 @@
+TEMPLATES = $(wildcard *.soy)
+TARGETS = $(TEMPLATES:.soy=.js)
 
-PromptToSave.js:
-	java -jar ../lib/SoyToJsSrcCompiler.jar  --outputPathFormat PromptToSave.js PromptToSave.soy
+%.js: %.soy
+	java -jar ../lib/SoyToJsSrcCompiler.jar  --outputPathFormat $@ $<
+
+all: $(TARGETS)
