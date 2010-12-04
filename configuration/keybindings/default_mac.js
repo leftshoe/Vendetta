@@ -45,10 +45,10 @@ return {
     "selectall": "Command-A",
     "removeline": "Command-D",
     "gotoline": "Command-L",
-    "togglecomment": "Command-7",
+    "togglecomment": "Command-7|Command-/",
     "findnext": "Command-K",
     "findprevious": "Command-Shift-K",
-    "find": "Command-F",
+    "openfind": "Command-F",
     "replace": "Command-R",
     "undo": "Command-Z",
     "redo": "Command-Shift-Z|Command-Y",
@@ -85,8 +85,8 @@ return {
     "selectlineend": "Shift-End",
     "del": "Delete",
     "backspace": "Backspace",
-    "outdent": "Shift-Tab",
-    "indent": "Tab"
+    "outdent": "Shift-Tab|Command-{",
+    "indent": "Tab|Command-}"
 };
 
 });

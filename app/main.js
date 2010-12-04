@@ -13,7 +13,8 @@ require({ baseUrl: ""}, [
 	"lib/air/AIRAliases.js",
 	"lib/underscore.js",
 	"lib/backbone.js",
-	"lib/soyutils.js"
+	"lib/soyutils.js",
+	"lib/jquery-ui-1.8.6.js"
 ], function() {
 	require(
 		{
@@ -43,7 +44,7 @@ require({ baseUrl: ""}, [
 				var core = new Core();
 				var editor = new Editor(element, core);
 				var keybinding = new KeyBinding(element, core);
-				var findAndReplace = new FindAndReplace();
+				var findAndReplace = new FindAndReplace(core);
 
 				//TODO: find a better spot for this
 				core.bind('newactivefile',function(f) {

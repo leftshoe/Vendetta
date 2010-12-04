@@ -1,8 +1,12 @@
 
 define(["app/Logging/Log", "templates/PromptToSave.js"], function(Log) {
 	var log = new Log('PromptToSave');
+	// Control-C on command line just calls closing repeatedly, so we
+	// need to force quit in that case.
+	var MAX_QUITS = 100; 
 	
 	var PromptToSave = function(core, editor) {
+		this.quitAttempts = 0;
 		this.editor = editor;
 		this.model = new Backbone.Model();
 		this.view = new PromptToSaveView({
@@ -15,11 +19,13 @@ define(["app/Logging/Log", "templates/PromptToSave.js"], function(Log) {
 	};
 	
 	PromptToSave.prototype.closing = function(e) {
-		if(this.model.get('forceQuit')
-		|| !this.editor.isSaved()) {
+		if(!this.model.get('forceQuit') 
+		&& !this.editor.isSaved()
+		&& this.quitAttempts <= MAX_QUITS) {
 			this.view.render();
 			$(this.view.el).overlay(overlay_settings);
 			$(this.view.el).data("overlay").load();
+			this.quitAttempts += 1;
 			e.preventDefault();
 		}
 	};

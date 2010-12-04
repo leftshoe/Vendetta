@@ -48,7 +48,7 @@ return {
     "togglecomment": "Ctrl-7",
     "findnext": "Ctrl-K",
     "findprevious": "Ctrl-Shift-K",
-    "find": "Ctrl-F",
+    "openfind": "Ctrl-F",
     "replace": "Ctrl-R",
     "undo": "Ctrl-Z",
     "redo": "Ctrl-Shift-Z|Ctrl-Y",

@@ -2,13 +2,24 @@
 define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 	var log = new Log('FindAndReplace');
 	
-	var FindAndReplace = function() {
-		this.model = new Backbone.Model();
-		this.view = new FindAndReplaceView({
-			model: this.model
+	var FindAndReplace = function(core) {
+		self = this;
+		self.model = new Backbone.Model();
+		self.view = new FindAndReplaceView({
+			model: self.model,
+			core: core
 		});
-		this.view.render();
-		$('body').append(this.view.el);
+		
+		self.view.render();
+		$('body').append(self.view.el);
+		
+		core.bind('openfind', function() {
+			$(self.view.el).show();
+		});
+		self.model.bind('change:find', function(model, text) {
+			log.trace('triggering find');
+			core.trigger('find', text);
+		});
 	};
 	
 	var FindAndReplaceView = Backbone.View.extend({
@@ -19,13 +30,22 @@ define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 		events: {
 			"click #check-regex": "toggleRegex",
 			"click #check-wrap": "toggleWrap",
-			"click #check-case": "toggleCase"
+			"click #check-case": "toggleCase",
+			"change #find-input": "findChange",
+			"change #replace-input": "replaceChange",
+			"click #up": "findPrevious",
+			"click #down": "findNext",
+			"click #find-close": "close",
+			"click #replace": "replace",
+			"click #replace-all": "replaceAll"
 		},
 		initialize: function(options) {
+			this.core = options.core;
 		},
 		render: function() {
 			log.trace('Rendering find-and-replace');
 			$(this.el).html(template.find());
+			this.$('.button').button();
 			$('body').append(this.el);
 			return this;
 		},
@@ -47,6 +67,28 @@ define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 		},
 		toggleCase: function() {
 			this.toggle('case');
+		},
+		findChange: function(e) {
+			log.trace('findChange: ' + e);
+			this.model.set({find: e.target.value});
+		},
+		replaceChange: function(e) {
+			this.model.set({replace: e.target.value});
+		},
+		findNext: function() {
+			this.core.trigger('findnext');
+		},
+		findPrevious: function() {
+			this.core.trigger('findprevious');
+		},
+		close: function() {
+			$(this.el).hide();
+		},
+		replace: function() {
+			this.core.trigger('replace');
+		},
+		replaceAll: function() {
+			this.core.trigger('replaceall');
 		}
 	});
 	

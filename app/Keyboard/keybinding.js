@@ -102,7 +102,10 @@ var KeyBinding = function(element, core) {
         "120": "F9",
         "121": "F10",
         "122": "F11",
-        "123": "F12"
+        "123": "F12",
+		"191": "/",
+		"219": "{",
+		"221": "}"
     };
 
     function splitSafe(s, separator, limit, bLowerCase) {

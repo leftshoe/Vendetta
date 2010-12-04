@@ -15,6 +15,7 @@
 		background-color: rgb(70,70,70);
 		color: rgb(220,220,220);
 		padding: 4px;
+		display: none;
 
 		-webkit-border-top-left-radius: 6px;
 		/*-webkit-border-top-right-radius: 6px; */

@@ -130,9 +130,9 @@ define([
 		core.bind("findprevious", function() {
 		    editor.findPrevious();
 		});
-		core.bind("find", function() {
-		    var needle = prompt("Find:");
-		    editor.find(needle);
+		core.bind("find", function(text) {
+			log.trace('text: ' + text);
+		    editor.find(text);
 		});
 		core.bind("undo", function() {
 		    editor.undo();
