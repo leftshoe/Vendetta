@@ -130,9 +130,15 @@ define([
 		core.bind("findprevious", function() {
 		    editor.findPrevious();
 		});
-		core.bind("find", function(text) {
+		core.bind("find", function(text, options) {
 			log.trace('text: ' + text);
-		    editor.find(text);
+		    editor.find(text, options);
+		});
+		core.bind("replace", function(text, options) {
+		    editor.replace(text, options);
+		});
+		core.bind("replaceall", function(text, options) {
+		    editor.replaceAll(text, options);
 		});
 		core.bind("undo", function() {
 		    editor.undo();

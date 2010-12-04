@@ -3,7 +3,10 @@ define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 	var log = new Log('FindAndReplace');
 	
 	var FindAndReplace = function(core) {
+		_.bindAll(this, 'find', 'replace', 'replaceAll');
 		self = this;
+		
+		self.core = core;
 		self.model = new Backbone.Model();
 		self.view = new FindAndReplaceView({
 			model: self.model,
@@ -16,10 +19,33 @@ define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 		core.bind('openfind', function() {
 			$(self.view.el).show();
 		});
-		self.model.bind('change:find', function(model, text) {
-			log.trace('triggering find');
-			core.trigger('find', text);
-		});
+		
+		self.model.bind('change:find', this.find);
+		self.model.bind('change:case', this.find);
+		self.model.bind('change:regex', this.find);
+		self.model.bind('replace', this.replace);
+		self.model.bind('replaceall', this.replaceAll);
+	};
+	
+	FindAndReplace.prototype.getOptions = function() {
+		return {
+			wrap: !!this.model.get('wrap'),
+			caseSensitive: !!this.model.get('case'),
+			regExp: !!this.model.get('regex')
+		};
+	};
+	
+	FindAndReplace.prototype.find = function() {
+		log.trace('triggering find');
+		this.core.trigger('find', this.model.get('find'), this.getOptions());
+	};
+	
+	FindAndReplace.prototype.replace = function() {
+		this.core.trigger('replace', this.model.get('replace'), this.getOptions());
+	};
+	
+	FindAndReplace.prototype.replaceAll = function() {
+		this.core.trigger('replaceall', this.model.get('replace'), this.getOptions());
 	};
 	
 	var FindAndReplaceView = Backbone.View.extend({
@@ -85,10 +111,10 @@ define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 			$(this.el).hide();
 		},
 		replace: function() {
-			this.core.trigger('replace');
+			this.model.trigger('replace');
 		},
 		replaceAll: function() {
-			this.core.trigger('replaceall');
+			this.model.trigger('replaceall');
 		}
 	});
 	

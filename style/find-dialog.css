@@ -37,7 +37,7 @@
 }
 
 #find-input, #replace-input {
-	padding: 0px;
+	padding: 0px 3px;
 	margin: 0px;
 	float: left;
 	width: 120px;
@@ -81,7 +81,7 @@
 #find-buttons .button {
 	width: 70px;
 	font-size: 9px;
-	height: 17px;
+	height: 15px;
 	margin: 0px;
 	display: block;
 }
