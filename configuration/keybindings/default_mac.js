@@ -38,6 +38,7 @@
 define(function() {
 
 return {
+	"togglemetamode": "Esc",
 	"newwindow": "Command-N",
 	"save": "Command-S",
 	"saveas": "Command-Shift-S",

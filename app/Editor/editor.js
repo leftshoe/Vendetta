@@ -22,6 +22,7 @@ define([
 		_.bindAll(this, 'editFile', 'isNothingInputed');	// Makes this pointer correct
 		
 		var ace = this.ace = new AceEditor(new Renderer(element, theme));
+		this.el = element;
 		ace.focus();
 		ace.resize();
 		
