@@ -9,7 +9,7 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 	
 	var OFFSETS = {
 		win: {x: 7, y: 29},
-		mac: {x: 0, y: 20},
+		mac: {x: -1, y: 21},
 		linux: {x: 7, y: 29}
 	};
 	
