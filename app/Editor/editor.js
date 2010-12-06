@@ -12,10 +12,11 @@ define([
     "ace/mode/text",
     "ace/undomanager",
 	"app/File/FileSystem",
-	"app/Logging/Log"
+	"app/Logging/Log",
+	"app/Notification"
 	], function(event, AceEditor, Renderer, theme, Document, 
 				JavascriptMode, CssMode, HtmlMode, XmlMode, 
-				TextMode, UndoManager, FileSystem, Log) {
+				TextMode, UndoManager, FileSystem, Log, Notification) {
 	var log = new Log("AirFileSystem");
 					
 	var Editor = function(element, core) {
@@ -99,6 +100,7 @@ define([
 			if(self.openFile) {
 				self.openFile.set({'data': editor.getDocument().toString()});
 				FileSystem.save(self.openFile);
+				new Notification({msg: 'Saved'});
 			} else {
 				log.trace("No openFile");
 				core.trigger("saveas");

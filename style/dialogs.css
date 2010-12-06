@@ -22,3 +22,14 @@
 		-webkit-box-shadow: 0px 0px 3px 3px #ccc;
 }
 
+.notification {
+	background-color: rgb(70,70,70);
+	color: rgb(220,220,220);
+	padding: 15px;
+	-webkit-border-bottom-left-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
+	position: absolute;
+	right: 30px;
+	top: 0px;
+	display: none;
+}

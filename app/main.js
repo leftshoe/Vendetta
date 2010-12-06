@@ -45,6 +45,7 @@ require({ baseUrl: ""}, [
 			"app/PromptToSave",
 			"app/FindAndReplace",
 			"app/randomise-gutter",
+			"app/Notification",
 			"app/window-util.js",
 			"lib/air/AIRIntrospector.js",
 			"lib/air/AIRSourceViewer.js",
@@ -52,7 +53,7 @@ require({ baseUrl: ""}, [
 			"lib/toolbox.expose.js"
 		],
 		function(Log, FileSystem, KeyBinding, Core, MetaMode, Editor, PromptToSave, FindAndReplace,
-				 randomiseGutter) {
+				 randomiseGutter, Notification) {
 					
 			$(function(){
 				var log = new Log("main");
