@@ -74,6 +74,17 @@ require({ baseUrl: ""}, [
 					// window starts hidden to avoid graphical gliches
 					window.nativeWindow.visible = true;
 					var promptToSave = new PromptToSave(core, editor);
+					
+					if(isMac()) {
+						// "select all" (Cmd-A) is not passed to html event system for some reason.
+						// Only way to capture it is by a handler on the menu item.
+						var app = air.NativeApplication.nativeApplication;
+						var select_all_menu = app.menu.items[2].submenu.items[4];
+						select_all_menu.addEventListener(air.Event.SELECT, function(e) {
+							log.trace('select all menu');
+							core.trigger('selectall');
+						});
+					}
 				}
 			});
 
