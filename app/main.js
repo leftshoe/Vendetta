@@ -44,13 +44,16 @@ require({ baseUrl: ""}, [
 			"app/Editor/editor",
 			"app/PromptToSave",
 			"app/FindAndReplace",
+			"app/randomise-gutter",
 			"app/window-util.js",
 			"lib/air/AIRIntrospector.js",
 			"lib/air/AIRSourceViewer.js",
 			"lib/overlay.js",
 			"lib/toolbox.expose.js"
 		],
-		function(Log, FileSystem, KeyBinding, Core, MetaMode, Editor, PromptToSave, FindAndReplace) {
+		function(Log, FileSystem, KeyBinding, Core, MetaMode, Editor, PromptToSave, FindAndReplace,
+				 randomiseGutter) {
+					
 			$(function(){
 				var log = new Log("main");
 				log.trace("Initialising stuff");
@@ -61,6 +64,7 @@ require({ baseUrl: ""}, [
 				var metaMode = new MetaMode(core, editor);
 				var keybinding = new KeyBinding(element, core);
 				var findAndReplace = new FindAndReplace(core);
+				randomiseGutter();
 
 				//TODO: find a better spot for this
 				core.bind('newactivefile',function(f) {
