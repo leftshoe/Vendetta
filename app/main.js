@@ -67,7 +67,7 @@ require({ baseUrl: ""}, [
 					document.title = f.getFileName() + " - Vendetta";
 				});
 				core.bind('newwindow', function() {
-					openWindow();
+					openWindow(null, window.nativeWindow);
 				});
 
 				if(isAir()) {
