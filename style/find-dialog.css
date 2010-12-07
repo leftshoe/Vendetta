@@ -1,5 +1,5 @@
 #find-dialog {
-	width: 380px;
+	width: 350px;
 	font-size: 11px;
 	overflow: auto;
 	position: absolute;
@@ -7,12 +7,24 @@
 	right: 15px;
 	opacity: 0.9;
 	height: 36px;
-	clip: rect(-10, 388, 44, -10);
+	clip: rect(-10, 358, 44, -10);
 }
 
 #up-down {
 	float: left;
-	width: 40px;
+	width: 30px;
+}
+
+#up {
+	background-image: url('../icons/up-arrow.png');
+}
+
+#down {
+	background-image: url('../icons/down-arrow.png');
+}
+
+#up:hover, #down:hover {
+	background-color: rgb(100,100,100);
 }
 
 #up, #down {
@@ -20,7 +32,10 @@
 	display: block;
 	text-align: center;
 	height: 17px;
+	width: 25px;
 	line-height: 17px;
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
 }
 
 #find-replace {
@@ -45,7 +60,7 @@
 
 #find-options  {
 	float: left;
-	width: 60px;
+	width: 50px;
 }
 
 .find-check {
@@ -67,7 +82,7 @@
 	font-size: 9px;
 	display: block;
 	float: left;
-	width: 45px;
+	width: 35px;
 	height: 12px;
 	line-height: 12px;
 	padding-left: 5px;
@@ -75,15 +90,16 @@
 
 #find-buttons {
 	float: left;
-	width: 70px;
+	width: 65px;
 }
 
 #find-buttons .button {
-	width: 70px;
+	width: 65px;
 	font-size: 9px;
 	height: 15px;
 	margin: 0px;
 	display: block;
+	text-align: center;
 }
 
 #find-dialog-buttons {
