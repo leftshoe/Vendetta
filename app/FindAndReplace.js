@@ -18,6 +18,7 @@ define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 		
 		core.bind('openfind', function() {
 			$(self.view.el).show();
+			self.view.focus();
 		});
 		
 		self.model.bind('change:find', this.find);
@@ -66,12 +67,14 @@ define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 			"click #replace-all": "replaceAll"
 		},
 		initialize: function(options) {
+			_.bindAll(this, 'findKeydown');
 			this.core = options.core;
 		},
 		render: function() {
 			log.trace('Rendering find-and-replace');
 			$(this.el).html(template.find());
 			this.$('.button').button();
+			this.$('#find-input').keydown(this.findKeydown);
 			$('body').append(this.el);
 			return this;
 		},
@@ -109,12 +112,22 @@ define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 		},
 		close: function() {
 			$(this.el).hide();
+			this.core.trigger('focus');
 		},
 		replace: function() {
 			this.model.trigger('replace');
 		},
 		replaceAll: function() {
 			this.model.trigger('replaceall');
+		},
+		focus: function() {
+			$('#find-input').focus();
+		},
+		findKeydown: function(e) {
+			log.trace('keydown: ' + e.keyCode);
+			if(e.keyCode == 27) {
+				this.close();
+			}
 		}
 	});
 	

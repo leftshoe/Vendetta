@@ -87,6 +87,9 @@ define([
 		var self = this;
 		var editor = this.ace;
 		
+		core.bind("focus", function() {
+			$('.editor textarea').focus();	
+		});
 		core.bind("opendialog", function() {
 			FileSystem.openDialog(function(f) {
 				if(self.isNothingInputed()) {
