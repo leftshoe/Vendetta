@@ -3,8 +3,7 @@ define(function() {
 
 	var separator = isAir() ? air.File.separator : '/';
 
-	var File = Backbone.Model.extend({
-	});
+	var File = Backbone.Model;
 	
 	// Just looks for the last bit after a dot that doesn't contain a path separator
 	File.prototype.getExtension = function() {

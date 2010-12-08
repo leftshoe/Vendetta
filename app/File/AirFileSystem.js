@@ -1,11 +1,16 @@
 
-define(["app/Logging/Log", "./File"], function(Log, File) {
+define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directory) {
 	var log = new Log("AirFileSystem");
 	
-	AirFileSystem = function() {
-	};
+	var AirDirectory = Directory.extend({
+		load: function() {
+			AirFileSystem.loadDirectory(this.get('fullFileName'), this);
+		}
+	});
 	
-	AirFileSystem.prototype.open = function(file_name, callback) {
+	var AirFileSystem = {};
+	
+	AirFileSystem.open = function(file_name, callback) {
 		log.trace('opening ' + file_name);
 		var airfile = new air.File(file_name);
 		var fileStream = new air.FileStream();
@@ -23,7 +28,29 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 		fileStream.openAsync(airfile, air.FileMode.READ);
 	};
 	
-	AirFileSystem.prototype.save = function(file) {
+	AirFileSystem.isDirectory = function(file_name) {
+		var f = new air.File(file_name);
+		return f.isDirectory;
+	};
+	
+	AirFileSystem.loadDirectory = function(file_name, opt_directory) {
+		var directory = opt_directory || new AirDirectory({fullFileName: file_name});
+		
+		var airdir = new air.File(file_name);
+		assert(airdir.isDirectory);
+		
+		var airfiles = airdir.getDirectoryListing();
+		_.each(airfiles, function(file) {
+			var Type = file.isDirectory ? AirDirectory : File;
+			directory.addFile(new Type({
+				fullFileName: file.nativePath
+			}));
+		});
+		
+		return directory;
+	};
+	
+	AirFileSystem.save = function(file) {
 		log.trace("Saving " + file.get('fullFileName'));
 		var airfile = new air.File(file.get('fullFileName'));
 		var fileStream = new air.FileStream();
@@ -33,7 +60,7 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 		fileStream.close();
 	};
 	
-	AirFileSystem.prototype.saveas = function(data, callback) {
+	AirFileSystem.saveas = function(data, callback) {
 		var self = this;
 		var docs_dir = air.File.documentsDirectory;
 		try {
@@ -51,7 +78,7 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 		}
 	};
 	
-	AirFileSystem.prototype.openDialog = function(callback) {
+	AirFileSystem.openDialog = function(callback) {
 		var self = this;
 		log.trace("Air openDialog called");
 		var airfile = new air.File();

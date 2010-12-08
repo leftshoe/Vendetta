@@ -103,7 +103,7 @@ define([
 			if(self.openFile) {
 				self.openFile.set({'data': editor.getDocument().toString()});
 				FileSystem.save(self.openFile);
-				new Notification({msg: 'Saved'});
+				core.trigger('saved');
 			} else {
 				log.trace("No openFile");
 				core.trigger("saveas");
@@ -112,8 +112,12 @@ define([
 		core.bind("saveas", function() {
 			FileSystem.saveas(editor.getDocument().toString(), function(f) {
 				self.openFile = f;
+				core.trigger('saved');
 			});
 		});
+		core.bind("saved", function() {
+			new Notification({msg: 'Saved'});
+		})
 		core.bind("selectall", function() {
 			log.trace('selectall');
 			editor.getSelection().selectAll();
