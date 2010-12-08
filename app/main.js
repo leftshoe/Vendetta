@@ -46,6 +46,8 @@ require({ baseUrl: ""}, [
 			"app/FindAndReplace",
 			"app/randomise-gutter",
 			"app/Notification",
+			"app/FileBrowser/FileBrowser",
+			"app/File/Directory",
 			"app/window-util.js",
 			"lib/air/AIRIntrospector.js",
 			"lib/air/AIRSourceViewer.js",
@@ -53,7 +55,7 @@ require({ baseUrl: ""}, [
 			"lib/toolbox.expose.js"
 		],
 		function(Log, FileSystem, KeyBinding, Core, MetaMode, Editor, PromptToSave, FindAndReplace,
-				 randomiseGutter, Notification) {
+				 randomiseGutter, Notification, FileBrowser, Directory) {
 					
 			$(function(){
 				var log = new Log("main");
@@ -66,6 +68,9 @@ require({ baseUrl: ""}, [
 				var keybinding = new KeyBinding(element, core);
 				var findAndReplace = new FindAndReplace(core);
 				randomiseGutter();
+				
+				var fileBrowser = new FileBrowser(core);
+				metaMode.addWidget(fileBrowser);
 
 				//TODO: find a better spot for this
 				core.bind('newactivefile',function(f) {

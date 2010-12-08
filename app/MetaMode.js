@@ -14,12 +14,12 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 	};
 	
 	var MetaMode = function(core, editor) {
-		_.bindAll(this, 'toggleMetaMode');
+		_.bindAll(this, 'toggleMetaMode', 'addWidget');
 		var self = this;
 		
 		self.core = core;
 		self.editor = editor;
-		self.widgets = Backbone.Collection.extend({model: Widget});
+		self.widgets = new (Backbone.Collection.extend({model: Widget}));
 		
 		core.set({inMetaMode: false});
 		
@@ -38,6 +38,8 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 		if(!inMetaMode) {
 			log.trace('Entering metaMode');
 			
+			self.showWidgets();
+			
 			editor.addClass('fullscreen');
 			var offset = getOffset();
 			editor.css({
@@ -48,6 +50,8 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 			});
 		} else {
 			log.trace('Exiting metaMode');
+			
+			self.hideWidgets();
 			
 			editor.removeClass('fullscreen');
 			editor.css({
@@ -64,7 +68,9 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 	};
 	
 	var toolBoxFilter = function(toolbox) {
-		return function(m) { return m.get('toolbox') == toolbox};
+		return toolbox ? 
+			function(m) { return m.get('toolbox') == toolbox} : 
+			_.identity;
 	};
 	
 	MetaMode.prototype.hideWidgets = function() {
@@ -75,10 +81,14 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 	
 	MetaMode.prototype.showWidgets = function(toolbox) {
 		var filter = toolBoxFilter(toolbox);
-		this.widgets.select(filter).each(function(widget){
+		_.each(this.widgets.select(filter), function(widget){
 			widget.show();
 		});
 	};
+	
+	MetaMode.prototype.addWidget = function(widget) {
+		this.widgets.add(widget);
+	}
 	
 	return MetaMode;
 });

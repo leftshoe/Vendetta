@@ -1,0 +1,35 @@
+
+.file-browser {
+	display: none;
+	position: fixed;
+	left: 100px;
+	top: 100px;
+	color: rgb(159,159,159);
+	background-color: rgb(71,71,71);
+	padding: 8px;
+	-webkit-border-radius: 5px;
+	width: 250px;
+}
+
+.folder-open {
+	padding-left: 15px;
+	background-image: url('../icons/down-triangle.png');
+	background-position: 0px 3px;
+	background-repeat: no-repeat;
+}
+
+.folder-name {
+	padding-left: 15px;
+	border-bottom: 1px solid rgb(80,80,80);
+}
+
+.file {
+	border-bottom: 1px solid rgb(80,80,80);
+	margin-left: 10px;
+	padding-left: 15px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background-image: url('icons/file.png');
+	background-position: left center;
+	background-repeat: no-repeat;
+}

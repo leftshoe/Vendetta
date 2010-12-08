@@ -10,7 +10,8 @@ define(["app/Logging/Log"], function(Log) {
 		{fg: '#96567D', bg: '#9BB267'},
 		{fg: '#674E80', bg: '#BEB96D'},
 		{fg: '#4D607E', bg: '#BEA16D'},
-		{fg: '#404E58', bg: '#8A7862'}
+		{fg: '#404E58', bg: '#8A7862'},
+		{fg: '#5D5283', bg: '#BEB06D'}
 	];
 
 	var randomiseGutter = function() {

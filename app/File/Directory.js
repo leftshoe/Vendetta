@@ -6,19 +6,22 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 	var Directory = Backbone.Model.extend({
 		initialize: function() {
 			_.bindAll(this, 'getFiles', 'addFile', 'load');
-			this.loaded = false;
-			this.isDirectory = true;
-			this.files = new Backbone.Collection();
+			this.set({
+				files: new Backbone.Collection(),
+				isDirectory: true,
+				loaded: false,
+				open: false
+			});
 		},
 		getFiles: function() {
-			if(this.loaded == false) {
+			if(!this.get('loaded')) {
 				this.load();
 			}
 			
-			return files;
+			return this.get('files');
 		},
 		addFile: function(f) {
-			this.files.add(f);
+			this.get('files').add(f);
 		}
 	});
 	

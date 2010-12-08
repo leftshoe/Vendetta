@@ -1,0 +1,22 @@
+{namespace template}
+
+/**
+ * A standard file listing widget
+ *	@param file Top level directory
+ */
+{template .fileBrowser}
+	{if $file.isDirectory}
+		{if $file.open}
+			<div class="folder-open">
+				<div class="folder-name">{$file.fileName}</div>
+				{foreach $subfile in $file.files}
+					{call .FileBrowser}
+						{param file: $subfile /}
+					{/call}
+				{/foreach}
+			</div>
+		{/if}
+	{else}
+		<div class="file js">{$file.fileName}</div>
+	{/if}
+{/template}
