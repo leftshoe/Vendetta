@@ -39,5 +39,40 @@
           <extension>css</extension>
           <contentType>text/css</contentType>
       </fileType>
+      <fileType>
+          <name>Bash</name>
+          <extension>sh</extension>
+          <contentType>text/plain</contentType>
+      </fileType>
+      <fileType>
+          <name>Python</name>
+          <extension>py</extension>
+          <contentType>text/plain</contentType>
+      </fileType>
+      <fileType>
+          <name>Ruby</name>
+          <extension>rb</extension>
+          <contentType>text/plain</contentType>
+      </fileType>
+      <fileType>
+          <name>RubyTemplate</name>
+          <extension>erb</extension>
+          <contentType>text/plain</contentType>
+      </fileType>
+      <fileType>
+          <name>Haml</name>
+          <extension>haml</extension>
+          <contentType>text/plain</contentType>
+      </fileType>
+      <fileType>
+          <name>Tex</name>
+          <extension>tex</extension>
+          <contentType>text/plain</contentType>
+      </fileType>
+      <fileType>
+          <name>ClosureTemplate</name>
+          <extension>soy</extension>
+          <contentType>text/plain</contentType>
+      </fileType>
   </fileTypes>
 </application>
