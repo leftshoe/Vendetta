@@ -11,6 +11,8 @@ define(["app/Logging/Log"], function(Log) {
 		}
 	});
 	
+	File.separator = separator;
+	
 	File.prototype.update = function() {
 		this.set({
 			extension: this.extractExtension(),

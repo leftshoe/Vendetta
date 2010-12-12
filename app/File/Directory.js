@@ -19,10 +19,20 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 		},
 		update: function() {
 			var fullFileName = this.getFullFileName();
+			
+			// Remove trailing slash
+			if(fullFileName.match(File.separator + '$')) {
+				fullFileName = fullFileName.substr(0, fullFileName.length-1);
+				this.set({fullFileName: fullFileName});
+			}
+			
+			var parts = fullFileName.split(File.separator);
+			log.trace('fullFileName: ' + fullFileName);
+			log.trace('last: ' + _.last(parts));
 			this.set({
-				fileName: fullFileName,
+				fileName: _.last(parts),
 				directory: fullFileName
-			});
+			});	
 		},
 		getFiles: function() {
 			if(!this.get('loaded')) {
