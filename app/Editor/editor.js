@@ -20,10 +20,12 @@ define([
 	var log = new Log("AirFileSystem");
 					
 	var Editor = function(element, core) {
-		_.bindAll(this, 'editFile', 'isNothingInputed');	// Makes this pointer correct
+		var self = this;
+		_.bindAll(this, 'editFile', 'isNothingInputed', 'showFile');	// Makes this pointer correct
 		
-		var ace = this.ace = new AceEditor(new Renderer(element, theme));
-		this.el = element;
+		var ace = self.ace = new AceEditor(new Renderer(element, theme));
+		self.core = core;
+		self.el = element;
 		ace.focus();
 		ace.resize();
 		
@@ -31,19 +33,20 @@ define([
 			ace.resize();
 		}
 				
-		this.handleEditCommands(core);
-		core.bind('newactivefile', this.editFile);
+		self.handleEditCommands(core);
+		core.bind('newactivefile', self.editFile);
 		
 		// File object is passed in 
 		if(window.argFileName) {
 			log.trace("new window's editor, argFileName: " + window.argFileName);
 			FileSystem.open(window.argFileName, function(f) {
 				core.trigger("newactivefile", f);
+				self.showFile(f);
 			});
 		} else {
 			// Empty document
 			log.trace("Setting empty document");
-			this.setDocument('', JavascriptMode);
+			self.setDocument('', JavascriptMode);
 		}
 	};
 	
@@ -55,6 +58,13 @@ define([
 		'xml': XmlMode,
 		'js': JavascriptMode
 	};
+	
+	Editor.prototype.showFile = function(f) {
+		log.trace('showing: ' + f.getDirectory());
+		this.core.trigger("showfile", {
+			file: FileSystem.loadDirectory(f.getDirectory())
+		});
+	}
 	
 	Editor.prototype.isSaved = function() {
 		log.trace('isSaved called');
@@ -94,6 +104,7 @@ define([
 			FileSystem.openDialog(function(f) {
 				if(self.isNothingInputed()) {
 					core.trigger("newactivefile", f);
+					self.showFile(f);
 				} else {
 					openWindow(f.getFullFileName());
 				}

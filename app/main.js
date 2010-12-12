@@ -21,6 +21,12 @@ var getOS = function() {
 	}
 };
 
+var assert = function(b) {
+	if(!b) {
+		throw new Exception('assertion failed');
+	}
+};
+
 document.title = "untitled - Vendetta";
 
 require({ baseUrl: ""}, [

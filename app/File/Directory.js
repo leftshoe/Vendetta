@@ -5,12 +5,23 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 	/* Abstract, needs load method */
 	var Directory = Backbone.Model.extend({
 		initialize: function() {
-			_.bindAll(this, 'getFiles', 'addFile', 'load');
-			this.set({
+			var self = this;
+			_.bindAll(self, 'getFiles', 'addFile', 'load');
+			self.set({
 				files: new Backbone.Collection(),
 				isDirectory: true,
 				loaded: false,
-				open: false
+				open: false,
+			});
+			
+			self.update();
+			self.bind('change:fullFileName', self.update);
+		},
+		update: function() {
+			var fullFileName = this.getFullFileName();
+			this.set({
+				fileName: fullFileName,
+				directory: fullFileName
 			});
 		},
 		getFiles: function() {
@@ -22,6 +33,26 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 		},
 		addFile: function(f) {
 			this.get('files').add(f);
+		},
+		getDirectory: function() {
+			return this.get('directory');
+		},
+		getFullFileName: function() {
+			return this.get('fullFileName');
+		},
+		getExtension: function() {
+			return null;
+		},
+		getFileName: function() {
+			return this.get('fileName');
+		},
+		isDirectory: function() {
+			return true;
+		},
+		toJSON: function() {
+			var json = _.clone(this.attributes);
+			json.files = this.get('files').toJSON();
+			return json;
 		}
 	});
 	

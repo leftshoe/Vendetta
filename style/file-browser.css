@@ -2,13 +2,16 @@
 .file-browser {
 	display: none;
 	position: fixed;
-	left: 100px;
-	top: 100px;
+	left: 10px;
+	top: 10px;
 	color: rgb(159,159,159);
 	background-color: rgb(71,71,71);
 	padding: 8px;
 	-webkit-border-radius: 5px;
 	width: 250px;
+	height: 700px;
+	overflow-x: scroll;
+	font-size: 10px;
 }
 
 .folder-open {
@@ -16,6 +19,15 @@
 	background-image: url('../icons/down-triangle.png');
 	background-position: 0px 3px;
 	background-repeat: no-repeat;
+	text-overflow: ellipsis;
+}
+
+.folder-close {
+	padding-left: 15px;
+	background-image: url('../icons/down-triangle.png');
+	background-position: 0px 3px;
+	background-repeat: no-repeat;
+	text-overflow: ellipsis;
 }
 
 .folder-name {

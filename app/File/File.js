@@ -6,17 +6,16 @@ define(["app/Logging/Log"], function(Log) {
 
 	var File = Backbone.Model.extend({
 		initialize: function() {
-			log.trace('initialize called');
 			this.update();
 			this.bind('change:fullFileName', this.update);
 		}
 	});
 	
 	File.prototype.update = function() {
-		log.trace('changed fullFileName');
 		this.set({
 			extension: this.extractExtension(),
-			fileName: this.extractFileName()
+			fileName: this.extractFileName(),
+			directory: this.extractParentDir()
 		});
 	};
 	
@@ -40,6 +39,11 @@ define(["app/Logging/Log"], function(Log) {
 		return _.last(parts);
 	};
 	
+	File.prototype.extractParentDir = function() {
+		var dir = this.getFullFileName().match('.*' + separator);
+		return dir[0];
+	}
+	
 	File.prototype.getFullFileName = function() {
 		return this.get('fullFileName');
 	};
@@ -51,6 +55,14 @@ define(["app/Logging/Log"], function(Log) {
 	File.prototype.getExtension = function() {
 		return this.get('extension');
 	};	
+	
+	File.prototype.getDirectory = function() {
+		return this.get('directory');
+	};
+	
+	File.prototype.isDirectory = function() {
+		return false;
+	}
 
 	return File;
 });

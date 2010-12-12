@@ -8,12 +8,20 @@
 	{if $file.isDirectory}
 		{if $file.open}
 			<div class="folder-open">
-				<div class="folder-name">{$file.fileName}</div>
+				<div class="folder-name" data-fullFileName="{$file.fullFileName}">
+					{$file.fileName}
+				</div>
 				{foreach $subfile in $file.files}
-					{call .FileBrowser}
+					{call .fileBrowser}
 						{param file: $subfile /}
 					{/call}
 				{/foreach}
+			</div>
+		{else}
+			<div class="folder-close">
+				<div class="folder-name" data-fullFileName="{$file.fullFileName}">
+					{$file.fileName}
+				</div>
 			</div>
 		{/if}
 	{else}

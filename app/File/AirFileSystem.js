@@ -4,6 +4,7 @@ define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directo
 	
 	var AirDirectory = Directory.extend({
 		load: function() {
+			log.trace('load');
 			AirFileSystem.loadDirectory(this.get('fullFileName'), this);
 		}
 	});
@@ -47,6 +48,7 @@ define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directo
 			}));
 		});
 		
+		directory.set({loaded: true});
 		return directory;
 	};
 	
