@@ -6,8 +6,11 @@ define(["app/Logging/Log", "app/Widget", "templates/FileBrowser.js"],
 	
 	var FileBrowser = Widget.extend({
 		initialize: function(core) {
+			Widget.prototype.initialize.call(this);
 			var self = this;
 			self.view = new FileBrowserView({core: core});
+			
+			self.set({location: "left"});
 			
 			core.bind('showfile', function(e) {
 				e.file.set({open: true});
