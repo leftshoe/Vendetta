@@ -21,7 +21,8 @@ define([
 					
 	var Editor = function(element, core) {
 		var self = this;
-		_.bindAll(this, 'editFile', 'isNothingInputed', 'showFile');	// Makes this pointer correct
+		_.bindAll(this, 'editFile', 'isNothingInputed', 'showFile', 
+						'openFile');	// Makes 'this' pointer correct
 		
 		var ace = self.ace = new AceEditor(new Renderer(element, theme));
 		self.core = core;
@@ -66,21 +67,21 @@ define([
 	Editor.prototype.isSaved = function() {
 		log.trace('isSaved called');
 		var txt = this.ace.getDocument().toString();
-		return this.openFile ?  
-			(this.openFile.get('data') == txt)
+		return this.currentFile ?  
+			(this.currentFile.get('data') == txt)
 			: (txt == "");
 	};
 	
 	Editor.prototype.editFile = function(f) {
 		log.trace("Edit file called: " + f.getFullFileName());
-		this.openFile = f;
+		this.currentFile = f;
 		var mode = extensionModes[f.getExtension() || 'txt'];
 		mode = mode || JavascriptMode;
 		this.setDocument(f.get('data'), mode);
 	};
 	
 	Editor.prototype.isNothingInputed = function() {
-		return this.ace.getDocument().toString() === '' && !self.openFile;
+		return this.ace.getDocument().toString() === '' && !self.currentFile;
 	}
 	
 	Editor.prototype.setDocument = function(txt, mode) {
@@ -90,6 +91,16 @@ define([
 		this.ace.setDocument(doc);
 	};
 	
+	Editor.prototype.openFile = function(f) {
+		if(this.isNothingInputed()) {
+			this.core.trigger("newactivefile", f);
+			this.showFile(f);
+		} else {
+			openWindow(f.getFullFileName(), window.nativeWindow);
+			this.core.trigger('closemetamode');
+		}
+	}
+	
 	Editor.prototype.handleEditCommands = function(core) {
 		var self = this;
 		var editor = this.ace;
@@ -98,34 +109,24 @@ define([
 			$('.editor textarea').focus();	
 		});
 		core.bind("opendialog", function() {
-			FileSystem.openDialog(function(f) {
-				if(self.isNothingInputed()) {
-					core.trigger("newactivefile", f);
-					self.showFile(f);
-				} else {
-					openWindow(f.getFullFileName());
-				}
-			});
+			FileSystem.openDialog(self.openFile);
 		});
 		core.bind("open", function(e) {
-			FileSystem.open(e.fileName, function(f) {
-				core.trigger("newactivefile", f);
-				self.showFile(f);
-			});	
+			FileSystem.open(e.fileName, self.openFile);	
 		});
 		core.bind("save", function() {
-			if(self.openFile) {
-				self.openFile.set({'data': editor.getDocument().toString()});
-				FileSystem.save(self.openFile);
+			if(self.currentFile) {
+				self.currentFile.set({'data': editor.getDocument().toString()});
+				FileSystem.save(self.currentFile);
 				core.trigger('saved');
 			} else {
-				log.trace("No openFile");
+				log.trace("No currentFile");
 				core.trigger("saveas");
 			}
 		});
 		core.bind("saveas", function() {
 			FileSystem.saveas(editor.getDocument().toString(), function(f) {
-				self.openFile = f;
+				self.currentFile = f;
 				core.trigger('saved');
 			});
 		});

@@ -71,7 +71,7 @@ require({ baseUrl: ""}, [
 				var core = new Core();
 				var editor = new Editor(element, core);
 				var metaMode = new MetaMode(core, editor);
-				var keybinding = new KeyBinding(element, core);
+				var keybinding = new KeyBinding($('body')[0], core);
 				var findAndReplace = new FindAndReplace(core);
 				randomiseGutter();
 				

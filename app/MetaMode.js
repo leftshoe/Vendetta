@@ -14,7 +14,7 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 	};
 	
 	var MetaMode = function(core, editor) {
-		_.bindAll(this, 'toggleMetaMode', 'addWidget');
+		_.bindAll(this, 'toggleMetaMode', 'addWidget', 'closeMetaMode');
 		var self = this;
 		
 		self.core = core;
@@ -24,11 +24,18 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 		core.set({inMetaMode: false});
 		
 		core.bind('togglemetamode', this.toggleMetaMode);
+		core.bind('closemetamode', this.closeMetaMode);
 	};
 	
 	var getOffset = function() {
 		return OFFSETS[getOS()];
 	};
+	
+	MetaMode.prototype.closeMetaMode = function() {
+		if(this.core.get('inMetaMode')) {
+			this.toggleMetaMode();
+		}
+	}
 	
 	MetaMode.prototype.toggleMetaMode = function() {
 		var self = this;
@@ -57,6 +64,7 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 			editor.css({
 				left: 0, top: 0,
 				width: '100%', height: '100%'});
+			editor.focus();
 		}
 		
 		if(isAir()) {

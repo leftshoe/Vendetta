@@ -4,6 +4,7 @@ define(["app/Logging/Log"], function(Log) {
 	
 	var Widget = Backbone.Model.extend({
 		initialize: function() {
+			_.bindAll(this, 'show', 'hide', 'changePosition');
 			this.bind('change:position', changePosition);
 		},
 		show: function() {
