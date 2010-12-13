@@ -8,17 +8,16 @@ template.fileBrowser = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('\t');
   if (opt_data.file.isDirectory) {
+    output.append('<div class="folder-name ', (opt_data.file.open) ? ' folder-open ' : ' folder-close ', '" data-fullFileName="', soy.$$escapeHtml(opt_data.file.fullFileName), '">', soy.$$escapeHtml(opt_data.file.fileName), '</div>');
     if (opt_data.file.open) {
-      output.append('<div class="folder-open"><div class="folder-name" data-fullFileName="', soy.$$escapeHtml(opt_data.file.fullFileName), '">', soy.$$escapeHtml(opt_data.file.fileName), '</div>');
-      var subfileList13 = opt_data.file.files;
-      var subfileListLen13 = subfileList13.length;
-      for (var subfileIndex13 = 0; subfileIndex13 < subfileListLen13; subfileIndex13++) {
-        var subfileData13 = subfileList13[subfileIndex13];
-        template.fileBrowser({file: subfileData13}, output);
+      output.append('<div class="folder-contents">');
+      var subfileList20 = opt_data.file.files;
+      var subfileListLen20 = subfileList20.length;
+      for (var subfileIndex20 = 0; subfileIndex20 < subfileListLen20; subfileIndex20++) {
+        var subfileData20 = subfileList20[subfileIndex20];
+        template.fileBrowser({file: subfileData20}, output);
       }
       output.append('</div>');
-    } else {
-      output.append('<div class="folder-close"><div class="folder-name" data-fullFileName="', soy.$$escapeHtml(opt_data.file.fullFileName), '">', soy.$$escapeHtml(opt_data.file.fileName), '</div></div>');
     }
   } else {
     output.append('<div class="file js">', soy.$$escapeHtml(opt_data.file.fileName), '</div>');

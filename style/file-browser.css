@@ -12,27 +12,28 @@
 	height: 700px;
 	overflow-x: scroll;
 	font-size: 10px;
+	text-overflow: ellipsis;
 }
 
 .folder-open {
-	padding-left: 15px;
 	background-image: url('../icons/down-triangle.png');
 	background-position: 0px 3px;
 	background-repeat: no-repeat;
-	text-overflow: ellipsis;
 }
 
 .folder-close {
-	padding-left: 15px;
-	background-image: url('../icons/down-triangle.png');
+	background-image: url('../icons/right-triangle.png');
 	background-position: 0px 3px;
 	background-repeat: no-repeat;
-	text-overflow: ellipsis;
 }
 
 .folder-name {
 	padding-left: 15px;
 	border-bottom: 1px solid rgb(80,80,80);
+}
+
+.folder-contents {
+	padding-left: 15px;
 }
 
 .file {
