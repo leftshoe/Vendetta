@@ -7,7 +7,7 @@ define(["app/Logging/Log", "app/Widget", "templates/FileBrowser.js"],
 	var FileBrowser = Widget.extend({
 		initialize: function(core) {
 			var self = this;
-			self.view = new FileBrowserView();
+			self.view = new FileBrowserView({core: core});
 			
 			core.bind('showfile', function(e) {
 				e.file.set({open: true});
@@ -26,6 +26,7 @@ define(["app/Logging/Log", "app/Widget", "templates/FileBrowser.js"],
 		className: 'file-browser',
 		initialize: function(options) {
 			this.rendered = false;
+			this.core = options.core;
 			this.folders = {};
 			this.render();
 		},
@@ -51,6 +52,9 @@ define(["app/Logging/Log", "app/Widget", "templates/FileBrowser.js"],
 			var self = this;
 			self.$('.folder-name').click(function(){
 				self.toggleFolder($(this).data('fullFileName'));
+			});
+			self.$('.file').click(function() {
+				self.core.trigger('open', {fileName: $(this).data('fullFileName')});
 			});
 		},
 		toggleFolder: function(fullFileName) {

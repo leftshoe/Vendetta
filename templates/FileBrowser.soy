@@ -22,6 +22,8 @@
 			</div>
 		{/if}
 	{else}
-		<div class="file js">{$file.fileName}</div>
+		<div class="file $file.extension" data-fullFileName="{$file.fullFileName}">
+			{$file.fileName}
+		</div>
 	{/if}
 {/template}

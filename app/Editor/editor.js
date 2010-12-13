@@ -39,10 +39,7 @@ define([
 		// File object is passed in 
 		if(window.argFileName) {
 			log.trace("new window's editor, argFileName: " + window.argFileName);
-			FileSystem.open(window.argFileName, function(f) {
-				core.trigger("newactivefile", f);
-				self.showFile(f);
-			});
+			core.trigger('open', {fileName: window.argFileName});
 		} else {
 			// Empty document
 			log.trace("Setting empty document");
@@ -109,6 +106,12 @@ define([
 					openWindow(f.getFullFileName());
 				}
 			});
+		});
+		core.bind("open", function(e) {
+			FileSystem.open(e.fileName, function(f) {
+				core.trigger("newactivefile", f);
+				self.showFile(f);
+			});	
 		});
 		core.bind("save", function() {
 			if(self.openFile) {

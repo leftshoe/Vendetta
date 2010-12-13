@@ -20,7 +20,7 @@ template.fileBrowser = function(opt_data, opt_sb) {
       output.append('</div>');
     }
   } else {
-    output.append('<div class="file js">', soy.$$escapeHtml(opt_data.file.fileName), '</div>');
+    output.append('<div class="file $file.extension" data-fullFileName="', soy.$$escapeHtml(opt_data.file.fullFileName), '">', soy.$$escapeHtml(opt_data.file.fileName), '</div>');
   }
   if (!opt_sb) return output.toString();
 };
