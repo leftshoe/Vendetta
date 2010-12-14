@@ -5,6 +5,18 @@
  *	@param file Top level directory
  */
 {template .fileBrowser}
+	<div class="file-browser-inner">
+		{call .file}
+			{param file: $file /}
+		{/call}
+	</div>
+{/template}
+
+/**
+ *  File in file browser
+ *	@param file Top level directory
+ */
+{template .file}
 	{if $file.isDirectory}
 	
 		<div class="folder-name {if $file.open} folder-open {else} folder-close {/if}"
@@ -15,7 +27,7 @@
 		{if $file.open}
 			<div class="folder-contents">
 				{foreach $subfile in $file.files}
-					{call .fileBrowser}
+					{call .file}
 						{param file: $subfile /}
 					{/call}
 				{/foreach}

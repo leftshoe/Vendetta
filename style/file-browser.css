@@ -1,15 +1,20 @@
 
 .file-browser {
 	display: none;
-	position: fixed;
-	left: 10px;
-	top: 10px;
+	position: absolute;
+	padding: 10px;
+	-webkit-box-sizing: border-box;
+}
+
+.file-browser-inner {
 	color: rgb(159,159,159);
 	background-color: rgb(71,71,71);
 	padding: 8px;
+	
 	-webkit-border-radius: 5px;
-	width: 250px;
-	height: 700px;
+	width: 100%;
+	height: 100%;
+	
 	overflow-x: scroll;
 	font-size: 10px;
 	text-overflow: ellipsis;
