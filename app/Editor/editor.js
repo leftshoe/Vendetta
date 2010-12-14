@@ -17,11 +17,11 @@ define([
 	], function(event, AceEditor, Renderer, theme, Document, 
 				JavascriptMode, CssMode, HtmlMode, XmlMode, 
 				TextMode, UndoManager, FileSystem, Log, Notification) {
-	var log = new Log("AirFileSystem");
+	var log = new Log("Editor");
 					
 	var Editor = function(element, core) {
 		var self = this;
-		_.bindAll(this, 'editFile', 'isNothingInputed', 'showFile', 
+		_.bindAll(this, 'editFile', 'isNothingInputed', 'showFolderOf', 
 						'openFile');	// Makes 'this' pointer correct
 		
 		var ace = self.ace = new AceEditor(new Renderer(element, theme));
@@ -57,10 +57,10 @@ define([
 		'js': JavascriptMode
 	};
 	
-	Editor.prototype.showFile = function(f) {
+	Editor.prototype.showFolderOf = function(f) {
 		log.trace('showing: ' + f.getDirectory());
-		this.core.trigger("showfile", {
-			file: FileSystem.loadDirectory(f.getDirectory())
+		this.core.trigger("showfolder", {
+			folder: FileSystem.loadDirectory(f.getDirectory())
 		});
 	}
 	
@@ -94,7 +94,7 @@ define([
 	Editor.prototype.openFile = function(f) {
 		if(this.isNothingInputed()) {
 			this.core.trigger("newactivefile", f);
-			this.showFile(f);
+			this.showFolderOf(f);
 		} else {
 			openWindow(f.getFullFileName(), window.nativeWindow);
 			this.core.trigger('closemetamode');

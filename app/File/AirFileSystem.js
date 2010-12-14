@@ -35,6 +35,7 @@ define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directo
 	};
 	
 	AirFileSystem.loadDirectory = function(file_name, opt_directory) {
+		log.trace('loadDirectory: ' + file_name);
 		var directory = opt_directory || new AirDirectory({fullFileName: file_name});
 		
 		var airdir = new air.File(file_name);
@@ -50,6 +51,10 @@ define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directo
 		
 		directory.set({loaded: true});
 		return directory;
+	};
+	
+	AirFileSystem.loadDefaultDirectory = function() {
+		return AirFileSystem.loadDirectory(air.File.documentsDirectory.nativePath);
 	};
 	
 	AirFileSystem.save = function(file) {

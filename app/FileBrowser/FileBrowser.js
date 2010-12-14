@@ -1,23 +1,25 @@
 
-define(["app/Logging/Log", "app/Widget", "templates/FileBrowser.js"], 
-		function(Log, Widget) {
+define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileBrowser.js"], 
+		function(Log, Widget, FileSystem) {
 
 	var log = new Log('FileBrowser');
 	
 	var FileBrowser = Widget.extend({
 		initialize: function(core) {
+			//_.bindAll(this, 'showFolder');
 			Widget.prototype.initialize.call(this);
 			var self = this;
 			self.view = new FileBrowserView({core: core});
 			
 			self.set({location: "left"});
 			
-			core.bind('showfile', function(e) {
-				e.file.set({open: true});
-				self.showFile(e.file);
+			core.bind('showfolder', function(e) {
+				log.trace('e.folder: ' + e.folder); 
+				e.folder.set({open: true});
+				self.showFolder(e.folder);
 			});
 		},
-		showFile: function(file) {
+		showFolder: function(file) {
 			this.view.file = file;
 			this.view.updateLookup(file);
 			this.view.render();
@@ -31,6 +33,11 @@ define(["app/Logging/Log", "app/Widget", "templates/FileBrowser.js"],
 			this.rendered = false;
 			this.core = options.core;
 			this.folders = {};
+			
+			this.file = FileSystem.loadDefaultDirectory();
+			this.file.set({open: true});
+			this.updateLookup(this.file);
+			
 			this.render();
 		},
 		render: function() {
@@ -40,6 +47,7 @@ define(["app/Logging/Log", "app/Widget", "templates/FileBrowser.js"],
 			if(self.file) {
 				$(self.el).html(template.fileBrowser({file: self.file.toJSON()}));
 			} else {
+				log.trace('No file to render');
 				$(self.el).html('');
 			}
 			

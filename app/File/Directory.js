@@ -27,8 +27,8 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 			}
 			
 			var parts = fullFileName.split(File.separator);
-			log.trace('fullFileName: ' + fullFileName);
-			log.trace('last: ' + _.last(parts));
+			//log.trace('fullFileName: ' + fullFileName);
+			//log.trace('last: ' + _.last(parts));
 			this.set({
 				fileName: _.last(parts),
 				directory: fullFileName
