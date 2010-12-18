@@ -34,7 +34,8 @@
 			</div>
 		{/if}
 	{else}
-		<div class="file $file.extension" data-fullFileName="{$file.fullFileName}">
+		<div class="file" data-fullFileName="{$file.fullFileName}">
+			<span class="extension {$file.extension}">{$file.extension}</span>
 			{$file.fileName}
 		</div>
 	{/if}

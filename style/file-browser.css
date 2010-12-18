@@ -51,3 +51,35 @@
 	background-position: left center;
 	background-repeat: no-repeat;
 }
+
+.extension {
+	margin-right: 6px;
+	text-align: center;
+	background-color: #915C83;
+	color: #BBBBBB;
+}
+
+.extension.js {
+	background-color: #E32636;
+	color: #F0F8FF;
+}
+
+.extension.txt {
+	background-color: #000000;
+	color: #AAAAAA;
+}
+
+.extension.css {
+	background-color: #9F8170;
+	color: #E0FFFF;
+}
+
+.extension.htm, .extension.html {
+	background-color: #0077BE;
+	color: #BCD4EE;
+}
+
+.extension.xml {
+	background-color: #9678B6;
+	color: #FFFAFA;
+}
