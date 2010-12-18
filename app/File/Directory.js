@@ -31,7 +31,8 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 			//log.trace('last: ' + _.last(parts));
 			this.set({
 				fileName: _.last(parts),
-				directory: fullFileName
+				directory: fullFileName,
+				hidden: _.last(parts).substr(0,1) == '.'
 			});	
 		},
 		getFiles: function() {

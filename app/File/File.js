@@ -3,6 +3,7 @@ define(["app/Logging/Log"], function(Log) {
 	var log = new Log('File');
 	
 	var separator = isAir() ? air.File.separator : '/';
+	var separatorRegex = separator == '\\' ? '\\\\' : separator;
 
 	var File = Backbone.Model.extend({
 		initialize: function() {
@@ -19,6 +20,9 @@ define(["app/Logging/Log"], function(Log) {
 			fileName: this.extractFileName(),
 			directory: this.extractParentDir()
 		});
+		this.set({
+			hidden: this.extractHidden()
+		})
 	};
 	
 	// Just looks for the last bit after a dot that doesn't contain a path separator
@@ -37,14 +41,19 @@ define(["app/Logging/Log"], function(Log) {
 	};
 	
 	File.prototype.extractFileName = function() {
-		var parts = this.getFullFileName().split(separator);
+		var parts = this.getFullFileName().split(separatorRegex);
 		return _.last(parts);
 	};
 	
 	File.prototype.extractParentDir = function() {
-		var dir = this.getFullFileName().match('.*' + separator);
+		var dir = this.getFullFileName().match('.*' + separatorRegex);
 		return dir[0];
-	}
+	};
+	
+	File.prototype.extractHidden = function() {
+		// Unix only, Hidden files not really an issue on windows.
+		return this.getFileName().substr(0,1) == '.';
+	};
 	
 	File.prototype.getFullFileName = function() {
 		return this.get('fullFileName');
