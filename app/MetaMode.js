@@ -79,8 +79,8 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 			};
 		} else {
 			return {
-				height: window.height,
-				width: window.width
+				height: window.innerHeight,
+				width: window.innerWidth
 			};
 		}
 	};

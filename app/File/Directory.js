@@ -30,7 +30,7 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 			//log.trace('fullFileName: ' + fullFileName);
 			//log.trace('last: ' + _.last(parts));
 			this.set({
-				fileName: _.last(parts),
+				fileName: _.last(parts) || File.separator,
 				directory: fullFileName,
 				hidden: _.last(parts).substr(0,1) == '.'
 			});	
