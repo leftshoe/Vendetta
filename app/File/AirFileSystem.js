@@ -34,6 +34,7 @@ define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directo
 		return f.isDirectory;
 	};
 	
+	// This is just for use in testing really
 	AirFileSystem.loadDirectory = function(file_name, opt_directory) {
 		log.trace('loadDirectory: ' + file_name);
 		var directory = opt_directory || new AirDirectory({fullFileName: file_name});

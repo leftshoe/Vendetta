@@ -1,12 +1,22 @@
 
-define(["app/Logging/Log", "./File"], function(Log, File) {
+define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directory) {
 	var log = new Log("DBFileSystem");
 	var DB_SIZE = 2*1024*1024; //2MB
 	
+	var DBDirectory = Directory.extend({
+		load: function() {
+			log.trace('load');
+			DBFileSystem.loadDirectory(this.get('fullFileName'), this);
+		}
+	});
+	
 	DBFileSystem = function() {
+		var self = this;
+		_.bindAll(self, 'loadDirectory', 'loadDefaultDirectory');
+		
 		if(window.openDatabase) {
-			this.db = window.openDatabase("vendentta-file-db", "", "Vendetta File Database", DB_SIZE);
-			this.initialise();
+			self.db = window.openDatabase("vendentta-file-db", "", "Vendetta File Database", DB_SIZE);
+			self.initialise();
 		} else {
 			log.error("No window.openDatabase object");
 		}
@@ -20,6 +30,29 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 					'data VARCHAR' + 
 				')');
 		});
+	};
+	
+	DBFileSystem.prototype.loadDefaultDirectory = function() {
+		return this.loadDirectory('/');
+	};
+	
+	DBFileSystem.prototype.loadDirectory = function(file_name, opt_directory) {
+		log.trace('loadDirectory: ' + file_name);
+		var directory = opt_directory || new DBDirectory({fullFileName: file_name});
+				
+		this.db.transaction(function(t) {
+			t.executeSql('SELECT * FROM file WHERE full_file_name like ?', [file_name + '%'],
+				function(t, rs) {
+					for(var i = 1; i <= rs.rows.length; i++) {
+						directory.addFile(new File({
+							fullFileName: rs.rows.item(i).full_file_name
+						}));
+					}
+				});
+		});
+		
+		directory.set({loaded: true});
+		return directory;
 	};
 	
 	DBFileSystem.prototype.open = function(file_name, callback) {
@@ -45,13 +78,16 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 	};
 	
 	DBFileSystem.prototype.saveas = function(data, callback) {
-		log.trace("saveas not implemented yet");
+		var fileName = prompt("Save as");
 		callback(new File({
-			fullFileName: "temp",
+			fullFileName: fileName,
 			data: data
 		}));
 	}
 	
+	/*
+	 * Opens from file system, only supported on nightly webkit
+	 */ 
 	DBFileSystem.prototype.openDialog = function(callback) {
 		log.trace("Opening upload file dialog");
 		var inputNode = $('<input />');

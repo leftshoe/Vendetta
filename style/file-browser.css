@@ -17,7 +17,7 @@
 	
 	overflow-x: scroll;
 	font-size: 10px;
-	text-overflow: ellipsis;
+	/*text-overflow: ellipsis;*/
 }
 
 .folder-open {

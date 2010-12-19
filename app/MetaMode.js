@@ -2,18 +2,13 @@
 define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 	var log = new Log('MetaMode');
 	
-	var HORIZONTAL_SCALE = 0.6;
-	var VERTICAL_SCALE = 0.8;
-	
 	if(isAir()) {
 		var Display = runtime.flash.display.StageDisplayState;
 		var stage = window.nativeWindow.stage;
-		var screenHeight = stage.fullScreenHeight;
-		var screenWidth = stage.fullScreenWidth;
-	} else {
-		var screenHeight = window.height;
-		var screenWidth = window.width;
 	}
+	
+	var HORIZONTAL_SCALE = 0.6;
+	var VERTICAL_SCALE = 0.8;
 	
 	var OFFSETS = {
 		win: {x: 7, y: 29},
@@ -51,6 +46,11 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 		var editor = $(self.editor.el);
 		var inMetaMode = self.core.get('inMetaMode');
 		
+		if(isAir()) {
+			stage.displayState = inMetaMode ?
+				Display.NORMAL : Display.FULL_SCREEN_INTERACTIVE;
+		}
+		
 		if(!inMetaMode) {
 			log.trace('Entering metaMode');
 			
@@ -67,13 +67,22 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 			editor.removeClass('fullscreen');
 			editor.focus();
 		}
-		
-		if(isAir()) {
-			stage.displayState = inMetaMode ?
-				Display.NORMAL : Display.FULL_SCREEN_INTERACTIVE;
-		}
-		
+				
 		self.core.set({inMetaMode: !inMetaMode});
+	};
+	
+	MetaMode.prototype.getScreen = function() {
+		if(isAir()) {
+			return {
+				height: stage.fullScreenHeight,
+				width: stage.fullScreenWidth
+			};
+		} else {
+			return {
+				height: window.height,
+				width: window.width
+			};
+		}
 	};
 	
 	var toolBoxFilter = function(toolbox) {
@@ -117,7 +126,7 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 			widget.set({
 				top: 0, left: 0,
 				width: editorDimensions.left,
-				height: screenHeight
+				height: self.getScreen().height
 			});	
 		});
 		
@@ -127,7 +136,7 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 				top: 0,
 				left: editorDimensions.left + editorDimensions.height,
 				width: editorDimensions.left, //symmetrical
-				height: screenHeight
+				height: self.getScreen().height
 			});	
 		});
 	};
@@ -146,31 +155,39 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 	MetaMode.prototype.shrinkEditor = function() {
 		var self = this;
 		var editor = $(self.editor.el);
+		var screen = self.getScreen();
 		var editorWidth = editor.width();
 		var editorHeight = editor.height();
 		var scale = 1;
 		
-		var hoz_factor = editorWidth / screenWidth;
+		var hoz_factor = editorWidth / screen.width;
 		if(hoz_factor > HORIZONTAL_SCALE) {
 			scale = HORIZONTAL_SCALE / hoz_factor;
 		}
 		
-		var vert_factor = editorHeight / screenHeight;
+		var vert_factor = editorHeight / screen.height;
 		if(vert_factor > VERTICAL_SCALE) {
 			scale = Math.min(scale, VERTICAL_SCALE / vert_factor);
 		}
 		
-		var editorDimensions = {
-			left: (screenWidth - editorWidth) / 2,
-			top: (screenHeight - editorHeight) / 2,
+		// Scaling is w.r.t the center of the editor,
+		// and is applied post positioning and sizing.
+		editor.css({
+			left: (screen.width - editorWidth) / 2,
+			top: (screen.height - editorHeight) / 2,
 			width: editorWidth,
-			height: editorHeight
-		}
-		editor.css(_.extend(editorDimensions, {
+			height: editorHeight,
 			'-webkit-transform': 'scale(' + scale + ')'
-		}));
+		});
 		
-		return editorDimensions;
+		// Return dimensions as they appear on screen
+		return {
+			left: (screen.width - scale*editorWidth) / 2,
+			top: (screen.height - scale*editorHeight) / 2,
+			width: scale*editorWidth,
+			height: scale*editorHeight
+		};
+		
 	};
 	
 	return MetaMode;
