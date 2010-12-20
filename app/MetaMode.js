@@ -1,5 +1,5 @@
 
-define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
+define(["app/Logging/Log", "app/Widget", "app/Geometry/Rectangle"], function(Log, Widget, Rectangle) {
 	var log = new Log('MetaMode');
 	
 	if(isAir()) {
@@ -9,6 +9,7 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 	
 	var HORIZONTAL_SCALE = 0.6;
 	var VERTICAL_SCALE = 0.8;
+	var WIDGET_PADDING = 10; // in pixels
 	
 	var OFFSETS = {
 		win: {x: 7, y: 29},
@@ -118,26 +119,29 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 		var self = this;
 		var editor = $(self.editor.el);
 		
-		//TODO: position and size widgets
 		var editorDimensions = self.shrinkEditor();
+		log.trace('editor dimensions after shrink:' + JSON.stringify(editorDimensions));
 		
 		_.each(this.widgets.select(filterByLocation('left')), function(widget) {
 			log.trace('managing left widget: ' + JSON.stringify(widget));
-			widget.set({
+			var rect = new Rectangle({
 				top: 0, left: 0,
 				width: editorDimensions.left,
 				height: self.getScreen().height
-			});	
+			});
+			log.trace('new rect for widget: ' +  JSON.stringify(rect.shrink(WIDGET_PADDING)));
+			widget.setRect(rect.shrink(WIDGET_PADDING));	
 		});
 		
 		_.each(this.widgets.select(filterByLocation('right')), function(widget) {
 			log.trace('managing right widget ...');
-			widget.set({
+			var rect = new Rectangle({
 				top: 0,
 				left: editorDimensions.left + editorDimensions.height,
 				width: editorDimensions.left, //symmetrical
 				height: self.getScreen().height
-			});	
+			});
+			widget.setRect(rect.shrink(WIDGET_PADDING));
 		});
 	};
 	
@@ -170,23 +174,30 @@ define(["app/Logging/Log", "app/Widget"], function(Log, Widget) {
 			scale = Math.min(scale, VERTICAL_SCALE / vert_factor);
 		}
 		
-		// Scaling is w.r.t the center of the editor,
-		// and is applied post positioning and sizing.
-		editor.css({
+		var rect = new Rectangle({
 			left: (screen.width - editorWidth) / 2,
 			top: (screen.height - editorHeight) / 2,
 			width: editorWidth,
-			height: editorHeight,
+			height: editorHeight
+		});
+		
+		// Scaling is w.r.t the center of the editor,
+		// and is applied post positioning and sizing.
+		editor.css(rect);
+		editor.css({
 			'-webkit-transform': 'scale(' + scale + ')'
 		});
 		
+		log.trace('editor dimensions before shrink:' + JSON.stringify(rect));
+		
 		// Return dimensions as they appear on screen
-		return {
-			left: (screen.width - scale*editorWidth) / 2,
-			top: (screen.height - scale*editorHeight) / 2,
-			width: scale*editorWidth,
-			height: scale*editorHeight
-		};
+		return rect.scale(scale);
+		 // {
+		// 			left: (screen.width - scale*editorWidth) / 2,
+		// 			top: (screen.height - scale*editorHeight) / 2,
+		// 			width: scale*editorWidth,
+		// 			height: scale*editorHeight
+		// 		};
 		
 	};
 	
