@@ -55,6 +55,11 @@ define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directo
 		return directory;
 	};
 	
+	DBFileSystem.prototype.openDirectoryDialog = function() {
+		var fileName = prompt('Directory to open');
+		return new DBDirectory({fullFileName: fileName});
+	};
+	
 	DBFileSystem.prototype.open = function(file_name, callback) {
 		this.db.transaction(function(t) {
 			t.executeSql('SELECT * FROM file WHERE full_file_name = ?', [file_name],

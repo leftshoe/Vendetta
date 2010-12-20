@@ -5,6 +5,14 @@
  *	@param file Top level directory
  */
 {template .fileBrowser}
+	<div class="file-browser-menu">
+		<div class="file-browser-path">
+			{$file.fullFileName}
+		</div>
+		<div class="file-browser-change-button">
+			Change
+		</div>
+	</div>
 	<div class="file-browser-inner">
 		{call .file}
 			{param file: $file /}

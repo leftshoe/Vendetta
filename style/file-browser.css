@@ -11,6 +11,29 @@
 	overflow: auto;
 }
 
+.file-browser-menu {
+	font-size: 10px;
+	height: 20px;
+	padding: 5px 5px;
+}
+
+.file-browser-path {
+	height: 10px;
+	padding: 5px 0px;
+	float: left;
+}
+
+.file-browser-change-button {
+	float: right;
+	height: 20px;
+	
+	width: 65px;
+	font-size: 12px;
+	margin: 0px;
+	display: block;
+	text-align: center;
+}
+
 .file-browser-inner {
 	padding: 8px;
 	margin: 0px;

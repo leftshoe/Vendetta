@@ -55,6 +55,8 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 				$('body').append(self.el);
 			}
 			
+			self.$('.file-browser-change-button').button();
+			
 			self.updateHandlers();
 			
 			return this;
@@ -66,6 +68,9 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 			});
 			self.$('.file').click(function() {
 				self.core.trigger('open', {fileName: $(this).data('fullFileName')});
+			});
+			self.$('.file-browser-change-button').click(function() {
+				self.core.trigger('opendirectorydialog');
 			});
 		},
 		toggleFolder: function(fullFileName) {

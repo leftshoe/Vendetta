@@ -58,6 +58,19 @@ define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directo
 		return AirFileSystem.loadDirectory(air.File.documentsDirectory.nativePath);
 	};
 	
+	AirFileSystem.openDirectoryDialog = function(callback) {
+		var self = this;
+		log.trace("Air openDirectoryDialog called");
+		var airfile = new air.File();
+		airfile.addEventListener(air.Event.SELECT, function(e) {
+			log.trace("select event called");
+			var dir = self.loadDirectory(e.target.nativePath);
+			callback(dir);
+		});
+		
+		airfile.browseForDirectory("Open Directory");
+	};
+	
 	AirFileSystem.save = function(file) {
 		log.trace("Saving " + file.get('fullFileName'));
 		var airfile = new air.File(file.get('fullFileName'));

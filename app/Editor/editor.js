@@ -59,6 +59,7 @@ define([
 	
 	Editor.prototype.showFolderOf = function(f) {
 		log.trace('showing: ' + f.getDirectory());
+		this.hasShownDirectory = true;
 		this.core.trigger("showfolder", {
 			folder: FileSystem.loadDirectory(f.getDirectory())
 		});
@@ -94,7 +95,9 @@ define([
 	Editor.prototype.openFile = function(f) {
 		if(this.isNothingInputed()) {
 			this.core.trigger("newactivefile", f);
-			this.showFolderOf(f);
+			if(!this.hasShownDirectory) {
+				this.showFolderOf(f);
+			}
 		} else {
 			openWindow(f.getFullFileName(), window.nativeWindow);
 			this.core.trigger('closemetamode');
@@ -110,6 +113,9 @@ define([
 		});
 		core.bind("opendialog", function() {
 			FileSystem.openDialog(self.openFile);
+		});
+		core.bind("opendirectorydialog", function() {
+			FileSystem.openDirectoryDialog(self.showFolderOf);
 		});
 		core.bind("open", function(e) {
 			FileSystem.open(e.fileName, self.openFile);	
