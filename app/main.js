@@ -31,7 +31,6 @@ document.title = "untitled - Vendetta";
 
 require({ baseUrl: ""}, [
 	"lib/air/AIRAliases.js",
-	"lib/underscore.js",
 	"lib/backbone.js",
 	"lib/soyutils.js",
 	"lib/jquery-ui-1.8.6.js"
