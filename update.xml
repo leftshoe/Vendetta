@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<update xmlns="http://ns.adobe.com/air/framework/update/description/1.0">
-	<version>0.1.1</version>
-	<url>https://github.com/downloads/leftshoe/Vendetta/Vendetta.air</url>
+<update xmlns="http://ns.adobe.com/air/framework/update/description/2.5">
+	<versionNumber>0.1.1</versionNumber>
+	<url>https://github.com/downloads/leftshoe/Vendetta/Vendetta-v0-1-1.air</url>
 	
 	<!-- Shown in the auto-update dialog -->
 	<description>

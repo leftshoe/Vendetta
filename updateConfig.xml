@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<configuration xmlns="http://ns.adobe.com/air/framework/update/configuration/1.0"> 
+      <url>http://cloud.github.com/downloads/leftshoe/Vendetta/update.xml</url> 
+		
+	  <!-- days between checks -->
+      <delay>0</delay>
+</configuration>
