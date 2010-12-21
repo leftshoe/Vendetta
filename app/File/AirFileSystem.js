@@ -77,7 +77,7 @@ define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directo
 		var fileStream = new air.FileStream();
 		fileStream.openAsync(airfile, air.FileMode.WRITE);
 		
-		fileStream.writeMultiByte(file.get('data'), air.File.systemCharset);
+		fileStream.writeMultiByte(file.get('data') || '', air.File.systemCharset);
 		fileStream.close();
 	};
 	
