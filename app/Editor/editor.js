@@ -5,24 +5,15 @@ define([
     "ace/virtual_renderer",
     "ace/theme/textmate",
     "ace/document",
-    "ace/mode/javascript",
-    "ace/mode/css",
-    "ace/mode/html",
-    "ace/mode/xml",
-    "ace/mode/text",
-    "ace/undomanager",
 	"app/File/FileSystem",
 	"app/Logging/Log",
 	"app/Notification"
-	], function(event, AceEditor, Renderer, theme, Document, 
-				JavascriptMode, CssMode, HtmlMode, XmlMode, 
-				TextMode, UndoManager, FileSystem, Log, Notification) {
+	], function(event, AceEditor, Renderer, theme, Document, FileSystem, Log, Notification) {
 	var log = new Log("Editor");
 					
 	var Editor = function(element, core) {
 		var self = this;
-		_.bindAll(this, 'editFile', 'isNothingInputed', 'showFolderOf', 
-						'openFile');	// Makes 'this' pointer correct
+		_.bindAll(this, 'setDocument');	// Makes 'this' pointer correct
 		
 		var ace = self.ace = new AceEditor(new Renderer(element, theme));
 		self.core = core;
@@ -35,75 +26,12 @@ define([
 		}
 				
 		self.handleEditCommands(core);
-		core.bind('newactivefile', self.editFile);
-		
-		// File object is passed in 
-		if(window.argFileName) {
-			log.trace("new window's editor, argFileName: " + window.argFileName);
-			core.trigger('open', {fileName: window.argFileName});
-		} else {
-			// Empty document
-			log.trace("Setting empty document");
-			self.setDocument('', JavascriptMode);
-		}
 	};
 	
-	var extensionModes = {
-		'txt': TextMode,
-		'css': CssMode,
-		'htm': HtmlMode,
-		'html': HtmlMode,
-		'xml': XmlMode,
-		'js': JavascriptMode
-	};
-	
-	Editor.prototype.showFolderOf = function(f) {
-		log.trace('showing: ' + f.getDirectory());
-		this.hasShownDirectory = true;
-		this.core.trigger("showfolder", {
-			folder: FileSystem.loadDirectory(f.getDirectory())
-		});
-	}
-	
-	Editor.prototype.isSaved = function() {
-		log.trace('isSaved called');
-		var txt = this.ace.getDocument().toString();
-		return this.currentFile ?  
-			(this.currentFile.get('data') == txt)
-			: (txt == "");
-	};
-	
-	Editor.prototype.editFile = function(f) {
-		log.trace("Edit file called: " + f.getFullFileName());
-		this.currentFile = f;
-		var mode = extensionModes[f.getExtension() || 'txt'];
-		mode = mode || JavascriptMode;
-		this.setDocument(f.get('data'), mode);
-	};
-	
-	Editor.prototype.isNothingInputed = function() {
-		return this.ace.getDocument().toString() === '' && !self.currentFile;
-	}
-	
-	Editor.prototype.setDocument = function(txt, mode) {
-		var doc = new Document(txt);
-		doc.setMode(new mode());
-		doc.setUndoManager(new UndoManager());
+	Editor.prototype.setDocument = function(doc) {
 		this.ace.setDocument(doc);
-	};
-	
-	Editor.prototype.openFile = function(f) {
-		if(this.isNothingInputed()) {
-			this.core.trigger("newactivefile", f);
-			if(!this.hasShownDirectory) {
-				this.showFolderOf(f);
-			}
-		} else {
-			openWindow(f.getFullFileName(), window.nativeWindow);
-			this.core.trigger('closemetamode');
-		}
 	}
-	
+		
 	Editor.prototype.handleEditCommands = function(core) {
 		var self = this;
 		var editor = this.ace;
@@ -111,34 +39,6 @@ define([
 		core.bind("focus", function() {
 			$('.editor textarea').focus();	
 		});
-		core.bind("opendialog", function() {
-			FileSystem.openDialog(self.openFile);
-		});
-		core.bind("opendirectorydialog", function() {
-			FileSystem.openDirectoryDialog(self.showFolderOf);
-		});
-		core.bind("open", function(e) {
-			FileSystem.open(e.fileName, self.openFile);	
-		});
-		core.bind("save", function() {
-			if(self.currentFile) {
-				self.currentFile.set({'data': editor.getDocument().toString()});
-				FileSystem.save(self.currentFile);
-				core.trigger('saved');
-			} else {
-				log.trace("No currentFile");
-				core.trigger("saveas");
-			}
-		});
-		core.bind("saveas", function() {
-			FileSystem.saveas(editor.getDocument().toString(), function(f) {
-				self.currentFile = f;
-				core.trigger('saved');
-			});
-		});
-		core.bind("saved", function() {
-			new Notification({msg: 'Saved'});
-		})
 		core.bind("selectall", function() {
 			log.trace('selectall');
 			editor.getSelection().selectAll();

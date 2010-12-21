@@ -5,9 +5,9 @@ define(["app/Logging/Log", "templates/PromptToSave.js"], function(Log) {
 	// need to force quit in that case.
 	var MAX_QUITS = 100; 
 	
-	var PromptToSave = function(core, editor) {
+	var PromptToSave = function(core, documentManager) {
 		this.quitAttempts = 0;
-		this.editor = editor;
+		this.documentManager = documentManager;
 		this.model = new Backbone.Model();
 		this.view = new PromptToSaveView({
 			model: this.model,
@@ -20,7 +20,7 @@ define(["app/Logging/Log", "templates/PromptToSave.js"], function(Log) {
 	
 	PromptToSave.prototype.closing = function(e) {
 		if(!this.model.get('forceQuit') 
-		&& !this.editor.isSaved()
+		&& !this.documentManager.isSaved()
 		&& this.quitAttempts <= MAX_QUITS) {
 			this.view.render();
 			$(this.view.el).overlay(overlay_settings);

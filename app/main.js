@@ -45,6 +45,7 @@ require({ baseUrl: ""}, [
 			"app/File/FileSystem",
 			"app/Keyboard/keybinding",
 			"app/Core",
+			"app/Editor/DocumentManager",
 			"app/MetaMode",
 			"app/Editor/editor",
 			"app/PromptToSave",
@@ -59,7 +60,7 @@ require({ baseUrl: ""}, [
 			"lib/overlay.js",
 			"lib/toolbox.expose.js"
 		],
-		function(Log, FileSystem, KeyBinding, Core, MetaMode, Editor, PromptToSave, FindAndReplace,
+		function(Log, FileSystem, KeyBinding, Core, DocumentManager, MetaMode, Editor, PromptToSave, FindAndReplace,
 				 randomiseGutter, Notification, FileBrowser, Directory) {
 					
 			$(function(){
@@ -69,6 +70,7 @@ require({ baseUrl: ""}, [
 				var element = $('.editor')[0];
 				var core = new Core();
 				var editor = new Editor(element, core);
+				var documentManager = new DocumentManager(core, editor);
 				var metaMode = new MetaMode(core, editor);
 				var keybinding = new KeyBinding($('body')[0], core);
 				var findAndReplace = new FindAndReplace(core);
@@ -78,17 +80,25 @@ require({ baseUrl: ""}, [
 				metaMode.addWidget(fileBrowser);
 
 				//TODO: find a better spot for this
-				core.bind('newactivefile',function(f) {
-					document.title = f.getFileName() + " - Vendetta";
+				core.bind('activedocumentchanged',function(doc) {
+					document.title = doc.file.getFileName() + " - Vendetta";
 				});
 				core.bind('newwindow', function() {
 					openWindow(null, window.nativeWindow);
 				});
+				
+				// File object is passed in 
+				if(window.argFileName) {
+					log.trace("new window's editor, argFileName: " + window.argFileName);
+					core.trigger('open', {fileName: window.argFileName});
+				} else {
+					log.trace("Setting empty document");
+				}
 
 				if(isAir()) {
 					// window starts hidden to avoid graphical gliches
 					window.nativeWindow.visible = true;
-					var promptToSave = new PromptToSave(core, editor);
+					var promptToSave = new PromptToSave(core, documentManager);
 					
 					if(isMac()) {
 						// "select all" (Cmd-A) is not passed to html event system for some reason.
