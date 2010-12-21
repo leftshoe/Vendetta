@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5">
-	<versionNumber>0.1.1</versionNumber>
+	<versionNumber>0.1.2</versionNumber>
 	<url>https://github.com/downloads/leftshoe/Vendetta/Vendetta-v0-1-1.air</url>
 	
 	<!-- Shown in the auto-update dialog -->
 	<description>
-		v0.1.1
-		Introduced file browser.
+		v0.1.2
+		Enabled auto-update functionality.
 	</description>
 </update>
