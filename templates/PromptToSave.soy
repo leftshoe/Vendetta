@@ -1,11 +1,21 @@
 {namespace template}
 
 /**
- * Dialog that asks use if they want to save before quiting
+ * Dialog that asks the user if they want to save the open document
  */
 {template .promptToSave}
 	<p>You have unsaved changes</p>
 	<button class="save close">save</button>
+	<button class="close-anyway close">close anyway</button>
+	<button class="cancel close">cancel</button>
+{/template}
+
+/**
+ * Dialog that asks the user if they want to save before quiting
+ */
+{template .promptToSaveAll}
+	<p>You have unsaved documents open</p>
+	<button class="save close">save all</button>
 	<button class="close-anyway close">close anyway</button>
 	<button class="cancel close">cancel</button>
 {/template}

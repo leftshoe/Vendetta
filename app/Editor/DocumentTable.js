@@ -64,7 +64,7 @@ define(["app/Logging/Log", "app/Widget", "templates/DocumentTable.js"], function
 			
 			self.$('.document-close').click(function(e) {
 				log.trace('document close clicked');
-				self.core.trigger('closedocument', {id: $(this).data('id')});
+				self.core.trigger('promptclosedocument', {id: $(this).data('id')});
 				return false;
 			});
 			

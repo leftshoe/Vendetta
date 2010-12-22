@@ -3,6 +3,7 @@ define(["app/Logging/Log",
 		"ace/document", 
 		"app/Notification",
 		"app/File/FileSystem",
+		"app/PromptToSave",
 		"./DocumentCollection",
 		"ace/mode/javascript",
 	    "ace/mode/css",
@@ -10,14 +11,14 @@ define(["app/Logging/Log",
 	    "ace/mode/xml",
 	    "ace/mode/text",
 	    "ace/undomanager"],
-	function(Log, Document, Notification, FileSystem, DocumentCollection,
+	function(Log, Document, Notification, FileSystem, PromptToSave, DocumentCollection,
 			 JavascriptMode, CssMode, HtmlMode, XmlMode, TextMode, UndoManager) {
 				
 	var log = new Log("DocumentManager");
 
 	var DocumentManager = function(core, editor) {
 		_.bindAll(this, 'editFile', 'isNothingInputed', 'showFolderOf', 
-						'openFile', 'newDocument', 'activate');
+						'openFile', 'newDocument', 'activate', 'save');
 						
 		var self = this;
 		self.core = core;
@@ -43,18 +44,20 @@ define(["app/Logging/Log",
 			FileSystem.open(e.fileName, self.openFile);	
 		});
 		core.bind("save", function() {
-			if(self.active.file) {
-				self.active.file.set({'data': self.active.toString()});
-				FileSystem.save(self.active.file);
-				core.trigger('saved');
-			} else {
-				log.trace("No currentFile");
-				core.trigger("saveas");
-			}
+			self.save(self.active);
 		});
-		core.bind("saveas", function() {
-			FileSystem.saveas(self.active.toString(), function(f) {
-				self.active.file = f;
+		core.bind("saveall", function() {
+			self.documents._().each(self.save);
+			core.trigger('saved');
+		});
+		core.bind("savedocument", function(e) {
+			var doc = self.documents.getById(e.id);
+			self.save(doc);
+		});
+		core.bind("saveas", function(opt_doc) {
+			var doc = opt_doc || self.active; 
+			FileSystem.saveas(doc.toString(), function(f) {
+				doc.file = f;
 				core.trigger('saved');
 			});
 		});
@@ -89,6 +92,15 @@ define(["app/Logging/Log",
 			
 			self.core.trigger('docschanged', self.documents);
 		});
+		core.bind("promptclosedocument", function(e) {
+			var doc = self.documents.getById(e.id);
+			if(self.isSaved(doc)) {
+				core.trigger('closedocument', e);
+			} else {
+				var saveDialog = new PromptToSave(core, e.id);
+				saveDialog.show();
+			}
+		});
 		core.bind("closedocument", function(e) {
 			var doc = self.documents.getById(e.id);
 			//TODO: check and prompt for save
@@ -121,12 +133,24 @@ define(["app/Logging/Log",
 		'xml': XmlMode,
 		'js': JavascriptMode
 	};
+	
+	DocumentManager.prototype.save = function(doc) {
+		if(doc.file) {
+			doc.file.set({'data': doc.toString()});
+			FileSystem.save(doc.file);
+			this.core.trigger('saved');
+		} else {
+			log.trace("No currentFile");
+			this.core.trigger("saveas", doc);
+		}
+	};
 		
-	DocumentManager.prototype.isSaved = function() {
+	DocumentManager.prototype.isSaved = function(opt_doc) {
+		var doc = opt_doc || this.active;
 		log.trace('isSaved called');
-		var txt = this.active.toString();
-		return this.active.file ?  
-			(this.active.file.get('data') == txt)
+		var txt = doc.toString();
+		return doc.file ?  
+			(doc.file.get('data') == txt)
 			: (txt == "");
 	};
 	

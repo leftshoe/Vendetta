@@ -1,33 +1,19 @@
 
 define(["app/Logging/Log", "templates/PromptToSave.js"], function(Log) {
 	var log = new Log('PromptToSave');
-	// Control-C on command line just calls closing repeatedly, so we
-	// need to force quit in that case.
-	var MAX_QUITS = 100; 
 	
-	var PromptToSave = function(core, documentManager) {
+	var PromptToSave = function(core, docId) {
 		this.quitAttempts = 0;
-		this.documentManager = documentManager;
-		this.model = new Backbone.Model();
 		this.view = new PromptToSaveView({
-			model: this.model,
+			docId: docId,
 			core: core
 		});
-		
-		window.nativeWindow.addEventListener(air.Event.CLOSING,
-			_.bind(this.closing, this));
 	};
 	
-	PromptToSave.prototype.closing = function(e) {
-		if(!this.model.get('forceQuit') 
-		&& !this.documentManager.isSaved()
-		&& this.quitAttempts <= MAX_QUITS) {
-			this.view.render();
-			$(this.view.el).overlay(overlay_settings);
-			$(this.view.el).data("overlay").load();
-			this.quitAttempts += 1;
-			e.preventDefault();
-		}
+	PromptToSave.prototype.show = function() {
+		this.view.render();
+		$(this.view.el).overlay(overlay_settings);
+		//$(this.view.el).data("overlay").load();
 	};
 	
 	var overlay_settings = {
@@ -52,6 +38,7 @@ define(["app/Logging/Log", "templates/PromptToSave.js"], function(Log) {
 		},
 		initialize: function(options) {
 			this.core = options.core;
+			this.docId = options.docId;
 		},
 		render: function() {
 			log.trace('Rendering');
@@ -60,12 +47,12 @@ define(["app/Logging/Log", "templates/PromptToSave.js"], function(Log) {
 			return this;
 		},
 		save: function() {
-			this.core.trigger('save');
-			window.close();
+			this.core.trigger('savedocument', {id: this.docId});
+			this.close();
 		},
 		close: function() {
-			this.model.set({forceQuit: true});
-			window.close();
+			this.core.trigger("closedocument", {id: this.docId});
+			$(this.el).data("overlay").close();
 		},
 		cancel: function() {
 			$(this.el).data("overlay").close();

@@ -48,7 +48,7 @@ require({ baseUrl: ""}, [
 			"app/Editor/DocumentManager",
 			"app/MetaMode",
 			"app/Editor/editor",
-			"app/PromptToSave",
+			"app/PromptToSaveAll",
 			"app/FindAndReplace",
 			"app/randomise-gutter",
 			"app/Notification",
@@ -61,7 +61,7 @@ require({ baseUrl: ""}, [
 			"lib/overlay.js",
 			"lib/toolbox.expose.js"
 		],
-		function(Log, FileSystem, KeyBinding, Core, DocumentManager, MetaMode, Editor, PromptToSave, FindAndReplace,
+		function(Log, FileSystem, KeyBinding, Core, DocumentManager, MetaMode, Editor, PromptToSaveAll, FindAndReplace,
 				 randomiseGutter, Notification, FileBrowser, DocumentTable, Directory) {
 					
 			$(function(){
@@ -104,7 +104,7 @@ require({ baseUrl: ""}, [
 				if(isAir()) {
 					// window starts hidden to avoid graphical gliches
 					window.nativeWindow.visible = true;
-					var promptToSave = new PromptToSave(core, documentManager);
+					var promptToSave = new PromptToSaveAll(core, documentManager);
 					
 					if(isMac()) {
 						// "select all" (Cmd-A) is not passed to html event system for some reason.

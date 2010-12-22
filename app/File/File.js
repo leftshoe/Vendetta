@@ -47,7 +47,7 @@ define(["app/Logging/Log"], function(Log) {
 	
 	File.prototype.extractParentDir = function() {
 		var dir = this.getFullFileName().match('.*' + separatorRegex);
-		return dir[0];
+		return dir ? dir[0] : separator;
 	};
 	
 	File.prototype.extractHidden = function() {
