@@ -53,6 +53,7 @@ require({ baseUrl: ""}, [
 			"app/randomise-gutter",
 			"app/Notification",
 			"app/FileBrowser/FileBrowser",
+			"app/Editor/DocumentTable",
 			"app/File/Directory",
 			"app/window-util.js",
 			"lib/air/AIRIntrospector.js",
@@ -61,7 +62,7 @@ require({ baseUrl: ""}, [
 			"lib/toolbox.expose.js"
 		],
 		function(Log, FileSystem, KeyBinding, Core, DocumentManager, MetaMode, Editor, PromptToSave, FindAndReplace,
-				 randomiseGutter, Notification, FileBrowser, Directory) {
+				 randomiseGutter, Notification, FileBrowser, DocumentTable, Directory) {
 					
 			$(function(){
 				var log = new Log("main");
@@ -70,7 +71,6 @@ require({ baseUrl: ""}, [
 				var element = $('.editor')[0];
 				var core = new Core();
 				var editor = new Editor(element, core);
-				var documentManager = new DocumentManager(core, editor);
 				var metaMode = new MetaMode(core, editor);
 				var keybinding = new KeyBinding($('body')[0], core);
 				var findAndReplace = new FindAndReplace(core);
@@ -78,6 +78,11 @@ require({ baseUrl: ""}, [
 				
 				var fileBrowser = new FileBrowser(core);
 				metaMode.addWidget(fileBrowser);
+				
+				var documentTable = new DocumentTable(core);
+				metaMode.addWidget(documentTable);
+				
+				var documentManager = new DocumentManager(core, editor);
 
 				//TODO: find a better spot for this
 				core.bind('activedocumentchanged',function(doc) {

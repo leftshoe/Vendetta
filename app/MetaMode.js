@@ -134,11 +134,11 @@ define(["app/Logging/Log", "app/Widget", "app/Geometry/Rectangle"], function(Log
 		});
 		
 		_.each(this.widgets.select(filterByLocation('right')), function(widget) {
-			log.trace('managing right widget ...');
+			log.trace('managing right widget ...' + JSON.stringify(widget));
 			var rect = new Rectangle({
 				top: 0,
-				left: editorDimensions.left + editorDimensions.height,
-				width: editorDimensions.left, //symmetrical
+				left: editorDimensions.left + editorDimensions.width,
+				width: editorDimensions.left, //symmetrical against left widget
 				height: self.getScreen().height
 			});
 			widget.setRect(rect.shrink(WIDGET_PADDING));

@@ -70,6 +70,25 @@ define(["app/Logging/Log",
 			var currentIdx = self.documents.indexOf(self.active);
 			self.activate(self.documents.get((currentIdx-1) % self.documents.length));
 		});
+		core.bind("activatedocument", function(e) {
+			var doc = self.documents.getById(e.id);
+			if(doc) {
+				self.activate(doc);	
+			} else {
+				log.trace('no document with id: ' + e.id);
+			}
+		});
+		core.bind("movedocument", function(e) {
+			log.trace('moving id: ' + e.id + ' newPosition: ' + e.newPosition);
+			var doc = self.documents.getById(e.id);
+			var oldPosition = self.documents.indexOf(doc);
+			self.documents.move({
+				from: oldPosition, 
+				to: e.newPosition
+			});
+			
+			self.core.trigger('docschanged', self.documents);
+		});
 	};
 
 	var extensionModes = {
@@ -113,6 +132,7 @@ define(["app/Logging/Log",
 		this.determineDocMode(doc);
 		this.documents.add(doc);
 		
+		this.core.trigger('docschanged', this.documents);
 		return doc;
 	};
 	
@@ -132,7 +152,13 @@ define(["app/Logging/Log",
 	
 	DocumentManager.prototype.activate = function(doc) {
 		log.trace('Activating doc:' + doc.id);
+		
 		this.active = doc;
+		this.documents._().each(function(x) {
+			x.active = false;
+		});
+		doc.active = true;
+		
 		this.editor.setDocument(doc);
 		this.core.trigger('activedocumentchanged', doc);
 	};

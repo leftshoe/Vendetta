@@ -1,0 +1,38 @@
+.document-table {
+	display: none;
+	position: absolute;
+	margin: 0px;
+	padding: 5px;
+	
+	color: rgb(159,159,159);
+	background-color: rgb(71,71,71);
+	
+	-webkit-border-radius: 5px;
+	overflow: auto;
+}
+
+.document-table-list {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.document-table-list li {
+	background-color: rgb(90,90,90);
+	border-bottom: 1px solid rgb(230,230,230);
+	padding: 5px 5px;
+}
+
+li .file-name {
+	font-size: 16px;
+}
+
+li .directory {
+	padding-left: 10px;
+	font-size: 10px;
+}
+
+li.active {
+	background-color: rgb(102,159,172);
+	color: rgb(188,222,229);
+}

@@ -3,18 +3,13 @@ define(["app/Logging/Log"], function(Log) {
 	var log = new Log('DocumentCollection');
 	
 	var DocumentCollection = function() {
-		this.lastId = 0;
 		this.documents = [];
 		this.length = 0;
 	};
 	
 	DocumentCollection.prototype.add = function(doc) {
-		if(!doc.id) {
-			doc.id = ++this.lastId;
-		} {
-			log.trace('Has id: ' + doc.id);
-		}
-		
+		doc.id = _.uniqueId();
+		log.trace('document id: ' + doc.id);	
 		this.documents.push(doc);
 		this.length = this.documents.length;
 	};
@@ -24,14 +19,6 @@ define(["app/Logging/Log"], function(Log) {
 			return doc.id == odoc.id;
 		});
 		this.length = this.documents.length;
-	};
-	
-	DocumentCollection.prototype.first = function() {
-		return _.first(this.documents);
-	};
-	
-	DocumentCollection.prototype.last = function () {
-		return _.last(this.documents);
 	};
 	
 	DocumentCollection.prototype.get = function(idx) {
@@ -53,6 +40,21 @@ define(["app/Logging/Log"], function(Log) {
 		});
 		
 		return index != -1 ? index : null;
+	};
+	
+	DocumentCollection.prototype.move = function(params) {
+		var doc = this.get(params.from);
+		log.trace('from: ' + params.from + ' to: ' + params.to + ' id: ' + 
+				  doc.id + ' length: ' + this.length);
+		this.documents.splice(params.from, 1);	//Remove 1 element
+		this.documents.splice(params.to, 0, doc); //Insert at new position
+	};
+	
+	/*
+	 * For accessing the standard functional underscore library methods
+	 */
+	DocumentCollection.prototype._ = function() {
+		return _(this.documents);
 	};
 	
 	DocumentCollection.prototype.logStatus = function() {
