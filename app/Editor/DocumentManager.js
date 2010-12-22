@@ -89,6 +89,28 @@ define(["app/Logging/Log",
 			
 			self.core.trigger('docschanged', self.documents);
 		});
+		core.bind("closedocument", function(e) {
+			var doc = self.documents.getById(e.id);
+			//TODO: check and prompt for save
+			
+			if(self.documents.length > 1) {
+				if(doc.id == self.active.id) {
+					// Activate the doc after the deleted one,
+					// if possible, otherwise the one before.
+					var idx = self.documents.indexOf(doc);
+					if(idx == self.documents.length-1) {
+						self.activate(self.documents.get(idx-1));
+					} else {
+						self.activate(self.documents.get(idx+1));
+					}
+				}
+			} else {
+				self.activate(self.newDocument());
+			}
+			
+			self.documents.remove(doc);
+			self.core.trigger('docschanged', self.documents);
+		});
 	};
 
 	var extensionModes = {

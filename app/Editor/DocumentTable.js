@@ -62,6 +62,12 @@ define(["app/Logging/Log", "app/Widget", "templates/DocumentTable.js"], function
 				self.core.trigger('activatedocument', {id: $(this).data('id')});
 			});
 			
+			self.$('.document-close').click(function(e) {
+				log.trace('document close clicked');
+				self.core.trigger('closedocument', {id: $(this).data('id')});
+				return false;
+			});
+			
 			self.$('.document-table-list').bind('sortupdate', function(event, ui) {
 				var id = $(ui.item).data('id');
 				var idx = self.$('li').index(ui.item);

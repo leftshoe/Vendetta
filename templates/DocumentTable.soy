@@ -22,7 +22,10 @@
  */
 {template .documentTableRow}
 	<li class="document-row {if $doc.active}active{/if}" data-id="{$doc.id}">
-		<div class="file-name">{$doc.fileName}</div>
-		<div class="directory">{$doc.directory}</div>
+		<div class="document-info">
+			<div class="file-name">{$doc.fileName}</div>
+			<div class="directory">{$doc.directory}</div>
+		</div>
+		<div class="document-close" data-id="{$doc.id}"></div>
 	</li>
 {/template}
