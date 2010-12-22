@@ -61,6 +61,15 @@ define(["app/Logging/Log",
 		core.bind("saved", function() {
 			new Notification({msg: 'Saved'});
 		});
+		
+		core.bind("nexttab", function() {
+			var currentIdx = self.documents.indexOf(self.active);
+			self.activate(self.documents.get((currentIdx+1) % self.documents.length));
+		});
+		core.bind("previoustab", function() {
+			var currentIdx = self.documents.indexOf(self.active);
+			self.activate(self.documents.get((currentIdx-1) % self.documents.length));
+		});
 	};
 
 	var extensionModes = {

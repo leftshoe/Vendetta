@@ -38,6 +38,8 @@
 define(function() {
 
 return {
+	"previoustab": "Command-Shift-{",
+	"nexttab": "Command-Shift-}",
 	"togglemetamode": "Esc",
 	"newwindow": "Command-N",
 	"save": "Command-S",

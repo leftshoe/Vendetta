@@ -81,7 +81,8 @@ require({ baseUrl: ""}, [
 
 				//TODO: find a better spot for this
 				core.bind('activedocumentchanged',function(doc) {
-					document.title = doc.file.getFileName() + " - Vendetta";
+					var fileName = doc.file ? doc.file.getFileName() : 'untitled';
+					document.title = fileName + " - Vendetta";
 				});
 				core.bind('newwindow', function() {
 					openWindow(null, window.nativeWindow);

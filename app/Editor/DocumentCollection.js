@@ -5,6 +5,7 @@ define(["app/Logging/Log"], function(Log) {
 	var DocumentCollection = function() {
 		this.lastId = 0;
 		this.documents = [];
+		this.length = 0;
 	};
 	
 	DocumentCollection.prototype.add = function(doc) {
@@ -15,12 +16,14 @@ define(["app/Logging/Log"], function(Log) {
 		}
 		
 		this.documents.push(doc);
+		this.length = this.documents.length;
 	};
 	
 	DocumentCollection.prototype.remove = function(doc) {
 		this.documents = _.reject(this.documents, function(odoc) {
 			return doc.id == odoc.id;
-		})
+		});
+		this.length = this.documents.length;
 	};
 	
 	DocumentCollection.prototype.first = function() {
@@ -29,6 +32,27 @@ define(["app/Logging/Log"], function(Log) {
 	
 	DocumentCollection.prototype.last = function () {
 		return _.last(this.documents);
+	};
+	
+	DocumentCollection.prototype.get = function(idx) {
+		return this.documents[idx];
+	};
+	
+	DocumentCollection.prototype.getById = function(id) {
+		return _.detect(this.documents, function(odoc) {
+			return odoc.id == id;
+		});
+	};
+	
+	DocumentCollection.prototype.indexOf = function(doc) {
+		var index = -1;
+		_.each(this.documents, function(odoc, i) {
+			if(doc.id == odoc.id) {
+				index = i;
+			}
+		});
+		
+		return index != -1 ? index : null;
 	};
 	
 	DocumentCollection.prototype.logStatus = function() {
