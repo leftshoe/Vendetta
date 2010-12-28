@@ -71,6 +71,9 @@
 	background-image: url('icons/file.png');
 	background-position: left center;
 	background-repeat: no-repeat;
+	
+	word-wrap: break-word;
+	min-width: 140px;
 }
 
 .extension {
