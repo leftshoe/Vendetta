@@ -36,6 +36,7 @@ define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directo
 		return this.loadDirectory('/');
 	};
 	
+	// This is just for use in testing really
 	DBFileSystem.prototype.loadDirectory = function(file_name, opt_directory) {
 		log.trace('loadDirectory: ' + file_name);
 		var directory = opt_directory || new DBDirectory({fullFileName: file_name});

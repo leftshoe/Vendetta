@@ -21,7 +21,7 @@ define(["app/Logging/Log", "./File"], function(Log, File) {
 			var fullFileName = this.getFullFileName();
 			
 			// Remove trailing slash
-			if(fullFileName.match(File.separator + '$')) {
+			if(fullFileName.match('.' + File.separator + '$')) {
 				fullFileName = fullFileName.substr(0, fullFileName.length-1);
 				this.set({fullFileName: fullFileName});
 			}
