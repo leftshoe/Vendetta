@@ -74,18 +74,24 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 			});
 		},
 		toggleFolder: function(fullFileName) {
+			var self = this;
 			log.trace('showing folder: ' + fullFileName);
 
-			var dir = this.folders[fullFileName];
+			var dir = self.folders[fullFileName];
 			
 			if(dir.get('open')) {
 				dir.set({open: false});
 			} else {
 				dir.set({open: true});
-				this.updateLookup(dir);
+				self.updateLookup(dir);
 			}
 			
-			this.render();
+			var scrollVert = $(self.el).scrollTop();
+			var scrollHorz = $(self.el).scrollLeft();
+			self.render();
+			$(self.el).scrollTop(scrollVert);
+			$(self.el).scrollLeft(scrollHorz);
+			
 		},
 		updateLookup: function(dir) {
 			var self = this;
