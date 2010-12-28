@@ -161,6 +161,7 @@ define(["app/Logging/Log",
 			//TODO: optimize?
 			folder: FileSystem.loadDirectory(f.getDirectory())
 		});
+		this.core.trigger('togglemetamode');
 	};
 	
 	DocumentManager.prototype.isNothingInputed = function() {

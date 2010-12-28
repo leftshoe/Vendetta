@@ -34,6 +34,7 @@ define(["app/Logging/Log", "app/Widget", "app/Geometry/Rectangle"], function(Log
 		
 		if(isAir()) {
 			window.nativeWindow.addEventListener(air.Event.DEACTIVATE, function() {
+				log.trace('deactivating');
 				core.trigger('closemetamode');
 			});
 		}
