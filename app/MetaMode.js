@@ -5,6 +5,8 @@ define(["app/Logging/Log", "app/Widget", "app/Geometry/Rectangle"], function(Log
 	if(isAir()) {
 		var Display = runtime.flash.display.StageDisplayState;
 		var stage = window.nativeWindow.stage;
+		
+		log.trace("Screen height: " + stage.fullScreenHeight + " width: " + stage.fullScreenWidth);
 	}
 	
 	var HORIZONTAL_SCALE = 0.6;
@@ -135,8 +137,8 @@ define(["app/Logging/Log", "app/Widget", "app/Geometry/Rectangle"], function(Log
 				width: editorDimensions.left,
 				height: self.getScreen().height
 			});
-			log.trace('new rect for widget: ' +  JSON.stringify(rect.shrink(WIDGET_PADDING)));
 			widget.setRect(rect.shrink(WIDGET_PADDING));	
+			log.trace('left widget: ' +  JSON.stringify(widget.get('rect')));
 		});
 		
 		_.each(this.widgets.select(filterByLocation('right')), function(widget) {
@@ -148,6 +150,7 @@ define(["app/Logging/Log", "app/Widget", "app/Geometry/Rectangle"], function(Log
 				height: self.getScreen().height
 			});
 			widget.setRect(rect.shrink(WIDGET_PADDING));
+			log.trace('right widget: ' +  JSON.stringify(widget.get('rect')));
 		});
 	};
 	

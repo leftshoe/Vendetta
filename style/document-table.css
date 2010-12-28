@@ -2,7 +2,6 @@
 	display: none;
 	position: absolute;
 	margin: 0px;
-	padding: 5px;
 	
 	color: rgb(159,159,159);
 	background-color: rgb(71,71,71);
@@ -14,7 +13,7 @@
 .document-table-list {
 	list-style-type: none;
 	margin: 0px;
-	padding: 0px;
+	padding: 5px;
 }
 
 .document-info {

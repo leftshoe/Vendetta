@@ -3,13 +3,14 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 		function(Log, Widget, FileSystem) {
 
 	var log = new Log('FileBrowser');
+	var HEADER_HEIGHT = 30;
 	
 	var FileBrowser = Widget.extend({
 		initialize: function(core) {
 			//_.bindAll(this, 'showFolder');
 			Widget.prototype.initialize.call(this);
 			var self = this;
-			self.view = new FileBrowserView({core: core});
+			self.view = new FileBrowserView({core: core, widget: self});
 			
 			self.set({location: "left"});
 			
@@ -32,6 +33,7 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 		initialize: function(options) {
 			this.rendered = false;
 			this.core = options.core;
+			this.widget = options.widget;
 			this.folders = {};
 			
 			this.file = FileSystem.loadDefaultDirectory();
@@ -56,6 +58,7 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 			}
 			
 			self.$('.file-browser-change-button').button();
+			self.$('.file-browser-scroller').height(self.widget.get('rect').height - HEADER_HEIGHT);
 			
 			self.updateHandlers();
 			
@@ -86,11 +89,16 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 				self.updateLookup(dir);
 			}
 			
-			var scrollVert = $(self.el).scrollTop();
-			var scrollHorz = $(self.el).scrollLeft();
+			// Re-rendering resets the scroller position, which we don't want
+			var scroller = self.$('.file-browser-scroller');
+			var scrollVert = scroller.scrollTop();
+			var scrollHorz = scroller.scrollLeft();
+			
 			self.render();
-			$(self.el).scrollTop(scrollVert);
-			$(self.el).scrollLeft(scrollHorz);
+			
+			scroller = self.$('.file-browser-scroller');
+			scroller.scrollTop(scrollVert);
+			scroller.scrollLeft(scrollHorz);
 			
 		},
 		updateLookup: function(dir) {

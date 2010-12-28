@@ -6,9 +6,9 @@ if (typeof template == 'undefined') { var template = {}; }
 
 template.fileBrowser = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('\t<div class="file-browser-menu"><div class="file-browser-path">', soy.$$escapeHtml(opt_data.file.fullFileName), '</div><div class="file-browser-change-button">Change</div></div><div class="file-browser-inner">');
+  output.append('\t<div class="file-browser-menu"><div class="file-browser-path">', soy.$$escapeHtml(opt_data.file.fullFileName), '</div><div class="file-browser-change-button">Change</div></div><div class="file-browser-scroller"><div class="file-browser-inner">');
   template.file({file: opt_data.file}, output);
-  output.append('</div>');
+  output.append('</div></div>');
   if (!opt_sb) return output.toString();
 };
 

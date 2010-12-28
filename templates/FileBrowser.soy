@@ -13,10 +13,12 @@
 			Change
 		</div>
 	</div>
-	<div class="file-browser-inner">
-		{call .file}
-			{param file: $file /}
-		{/call}
+	<div class="file-browser-scroller">
+		<div class="file-browser-inner">
+			{call .file}
+				{param file: $file /}
+			{/call}
+		</div>
 	</div>
 {/template}
 
