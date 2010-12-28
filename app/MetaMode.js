@@ -29,6 +29,12 @@ define(["app/Logging/Log", "app/Widget", "app/Geometry/Rectangle"], function(Log
 		
 		core.bind('togglemetamode', this.toggleMetaMode);
 		core.bind('closemetamode', this.closeMetaMode);
+		
+		if(isAir()) {
+			window.nativeWindow.addEventListener(air.Event.DEACTIVATE, function() {
+				core.trigger('closemetamode');
+			});
+		}
 	};
 	
 	var getOffset = function() {
