@@ -50,7 +50,12 @@ define(["app/Logging/Log", "app/Widget", "templates/DocumentTable.js"], function
 			}
 			
 			self.$('.button').button();
-			self.$('.document-table-list').sortable({helper: 'clone'});
+			self.$('.document-table-list').sortable({
+				helper: 'clone',
+				axis: 'y',
+				containment: self.el, // prevents dragging outside of widget
+				tolerance: 'pointer' // default value doesn't work well with containment
+			});
 			self.updateHandlers();
 			return this;
 		},
