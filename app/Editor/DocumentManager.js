@@ -172,7 +172,7 @@ define(["app/Logging/Log",
 		log.trace('newDocument');
 		
 		var data = f ? f.get('data') : '';
-		var doc = new Document(data);
+		var doc = new Document(data || '');
 		doc.setUndoManager(new UndoManager());
 		
 		doc.file = f;
