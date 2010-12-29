@@ -4,4 +4,12 @@
 		
 	  <!-- days between checks -->
       <delay>3</delay>
+
+		<!-- 
+			This makes checking for updates happen in the background 
+			the user is only prompted if an update is available.
+		-->
+		<defaultUI> 
+			<dialog name="checkForUpdate" visible="false" /> 
+	    </defaultUI>
 </configuration>
