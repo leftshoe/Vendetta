@@ -1,5 +1,9 @@
 
-define(["app/Logging/Log", "templates/PromptToSave.js"], function(Log) {
+define(["app/Logging/Log", 
+		"app/OverlaySettings",
+		"templates/PromptToSave.js"], 
+		function(Log, OverlaySettings) {
+
 	var log = new Log('PromptToSave');
 	
 	var PromptToSave = function(core, docId) {
@@ -12,18 +16,7 @@ define(["app/Logging/Log", "templates/PromptToSave.js"], function(Log) {
 	
 	PromptToSave.prototype.show = function() {
 		this.view.render();
-		$(this.view.el).overlay(overlay_settings);
-		//$(this.view.el).data("overlay").load();
-	};
-	
-	var overlay_settings = {
-		closeOnClick: false,
-		load: true,
-		mask: {
-			color: '#ebecff',
-			loadSpeed: 200,
-			opacity: 0.8
-		}
+		$(this.view.el).overlay(OverlaySettings);
 	};
 	
 	var PromptToSaveView = Backbone.View.extend({

@@ -1,5 +1,7 @@
 
-define(["app/Logging/Log", "templates/PromptToSave.js"], function(Log) {
+define(["app/Logging/Log",
+		"app/OverlaySettings",
+		"templates/PromptToSave.js"], function(Log, OverlaySettings) {
 	var log = new Log('PromptToSaveAll');
 	// Control-C on command line just calls closing repeatedly, so we
 	// need to force quit in that case.
@@ -23,20 +25,10 @@ define(["app/Logging/Log", "templates/PromptToSave.js"], function(Log) {
 		&& !this.documentManager.isSaved()
 		&& this.quitAttempts <= MAX_QUITS) {
 			this.view.render();
-			$(this.view.el).overlay(overlay_settings);
+			$(this.view.el).overlay(OverlaySettings);
 			$(this.view.el).data("overlay").load();
 			this.quitAttempts += 1;
 			e.preventDefault();
-		}
-	};
-	
-	var overlay_settings = {
-		closeOnClick: false,
-		load: true,
-		mask: {
-			color: '#ebecff',
-			loadSpeed: 200,
-			opacity: 0.8
 		}
 	};
 	
