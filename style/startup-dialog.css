@@ -1,0 +1,36 @@
+
+.startup-dialog {
+	position: absolute;
+	width: 500px;
+	height: 300px;
+	top: 50px;
+	left: 100px;
+	
+	background-image: url('../images/MetaModeDiagram.png');
+	background-repeat: no-repeat;
+	background-position: 5px 0px;
+	
+	background-color: rgb(220,220,220);
+	color: rgb(70,70,70);
+	display: none;	
+	padding: 0px 5px;
+	
+	border: 2px solid #333;
+	-webkit-border-radius: 6px;
+	-webkit-box-shadow: 0 0 50px #ccc;
+}
+
+.startup-info, .startup-mode-name {
+	width: 500px;
+	text-align: center;
+	font-size: 20px;
+	position: absolute;
+}
+
+.startup-info {
+	top: 20px;
+}
+
+.startup-mode-name {
+	top: 250px;
+}

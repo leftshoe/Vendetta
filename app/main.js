@@ -55,14 +55,16 @@ require({ baseUrl: ""}, [
 			"app/FileBrowser/FileBrowser",
 			"app/Editor/DocumentTable",
 			"app/File/Directory",
+			"app/StartupDialog",
 			"app/window-util.js",
 			"lib/air/AIRIntrospector.js",
 			"lib/air/AIRSourceViewer.js",
 			"lib/overlay.js",
 			"lib/toolbox.expose.js"
 		],
-		function(Log, FileSystem, KeyBinding, Core, DocumentManager, MetaMode, Editor, PromptToSaveAll, FindAndReplace,
-				 randomiseGutter, Notification, FileBrowser, DocumentTable, Directory) {
+		function(Log, FileSystem, KeyBinding, Core, DocumentManager, MetaMode, Editor, 
+				 PromptToSaveAll, FindAndReplace, randomiseGutter, Notification, 
+				FileBrowser, DocumentTable, Directory, StartupDialog) {
 					
 			$(function(){
 				var log = new Log("main");
@@ -71,6 +73,9 @@ require({ baseUrl: ""}, [
 				var element = $('.editor')[0];
 				var core = new Core();
 				var editor = new Editor(element, core);
+				
+				var startupDialog = new StartupDialog(core);
+				
 				var metaMode = new MetaMode(core, editor);
 				var keybinding = new KeyBinding($('body')[0], core);
 				var findAndReplace = new FindAndReplace(core);
@@ -83,6 +88,7 @@ require({ baseUrl: ""}, [
 				metaMode.addWidget(documentTable);
 				
 				var documentManager = new DocumentManager(core, editor);
+				
 
 				//TODO: find a better spot for this
 				core.bind('activedocumentchanged',function(doc) {
