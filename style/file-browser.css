@@ -20,6 +20,10 @@
 	height: 10px;
 	padding: 5px 0px;
 	float: left;
+	
+	text-overflow: ellipsis;
+	overflow: hidden;
+	width: 100%;
 }
 
 .file-browser-change-button {

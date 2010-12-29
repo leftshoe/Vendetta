@@ -50,6 +50,7 @@ li .file-name {
 li .directory {
 	padding-left: 10px;
 	font-size: 10px;
+	word-wrap: break-word;
 }
 
 li.active {
