@@ -99,10 +99,12 @@ require({ baseUrl: ""}, [
 					openWindow(null, window.nativeWindow);
 				});
 				
-				// File object is passed in 
-				if(window.argFileName) {
-					log.trace("new window's editor, argFileName: " + window.argFileName);
-					core.trigger('open', {fileName: window.argFileName});
+				// Open any passed in files
+				if(window.argFileNames) {
+					_.each(window.argFileNames, function(fileName) {
+						core.trigger('open', {fileName: fileName});	
+					});
+					
 				} else {
 					log.trace("Setting empty document");
 				}

@@ -5,7 +5,7 @@ var DEFAULT_POSITION_X = 200;
 var DEFAULT_POSITION_Y = 200; 
 var WOFFSET = 40; 
 
-function openWindow(file_path, existing_window) {
+function openWindow(file_paths, existing_window) {
 	var options = new air.NativeWindowInitOptions();
 	options.resizable = true;
 	options.maximizable = true;
@@ -26,6 +26,6 @@ function openWindow(file_path, existing_window) {
 	var loader = air.HTMLLoader.createRootWindow(false, options, false, windowBounds);
 	loader.load(new air.URLRequest('vendetta.html'));
 	
-	loader.window.argFileName = file_path;
+	loader.window.argFileNames = file_paths;
 	loader.window.focus();
 };

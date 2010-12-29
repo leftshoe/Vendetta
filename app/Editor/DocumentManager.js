@@ -41,7 +41,12 @@ define(["app/Logging/Log",
 			FileSystem.openDirectoryDialog(self.showFolderOf);
 		});
 		core.bind("open", function(e) {
-			FileSystem.open(e.fileName, self.openFile);	
+			if(FileSystem.isDirectory(e.fileName)) {
+				var dir = FileSystem.loadDirectory(e.fileName);
+				self.showFolderOf(dir);
+			} else {
+				FileSystem.open(e.fileName, self.openFile);	
+			}
 		});
 		core.bind("save", function() {
 			self.save(self.active);
