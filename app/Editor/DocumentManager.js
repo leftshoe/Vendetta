@@ -226,9 +226,10 @@ define(["app/Logging/Log",
 			}
 			
 			this.documents.remove(this.active);
-		} else {
-			this.core.trigger('closemetamode');
 		}
+		
+		this.core.trigger('closemetamode');
+		
 		
 		this.activate(this.newDocument(f));
 		this.documents.logStatus();
