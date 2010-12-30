@@ -44,7 +44,11 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 		},
 		render: function() {
 			var self = this;
-			log.trace('render');
+			
+			// Re-rendering resets the scroller position, which we don't want
+			var scroller = self.$('.file-browser-scroller');
+			var scrollVert = scroller.scrollTop();
+			var scrollHorz = scroller.scrollLeft();
 			
 			if(self.file) {
 				$(self.el).html(template.fileBrowser({file: self.file.toJSON()}));
@@ -61,6 +65,10 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 			self.$('.file-browser-scroller').height(self.widget.get('rect').height - HEADER_HEIGHT);
 			
 			self.updateHandlers();
+			
+			scroller = self.$('.file-browser-scroller');
+			scroller.scrollTop(scrollVert);
+			scroller.scrollLeft(scrollHorz);
 			
 			return this;
 		},
@@ -89,17 +97,7 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 				self.updateLookup(dir);
 			}
 			
-			// Re-rendering resets the scroller position, which we don't want
-			var scroller = self.$('.file-browser-scroller');
-			var scrollVert = scroller.scrollTop();
-			var scrollHorz = scroller.scrollLeft();
-			
-			self.render();
-			
-			scroller = self.$('.file-browser-scroller');
-			scroller.scrollTop(scrollVert);
-			scroller.scrollLeft(scrollHorz);
-			
+			self.render();			
 		},
 		updateLookup: function(dir) {
 			var self = this;

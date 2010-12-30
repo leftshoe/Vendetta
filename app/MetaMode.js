@@ -67,6 +67,7 @@ define(["app/Logging/Log", "app/Widget", "app/Geometry/Rectangle"], function(Log
 			self.manageWidgets();
 			self.showWidgets();
 			
+			self.core.trigger('enteredmetamode');
 			editor.addClass('fullscreen');
 		} else {
 			log.trace('Exiting metaMode');
