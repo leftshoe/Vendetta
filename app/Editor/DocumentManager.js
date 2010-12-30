@@ -38,7 +38,11 @@ define(["app/Logging/Log",
 			FileSystem.openDialog(self.openFile);
 		});
 		core.bind("opendirectorydialog", function() {
-			FileSystem.openDirectoryDialog(self.showFolderOf);
+			// This is only triggered in metamode, and we want it to go back into metamode
+			FileSystem.openDirectoryDialog(function(f) {
+				self.showFolderOf(f);
+				core.trigger('togglemetamode');
+			});
 		});
 		core.bind("open", function(e) {
 			if(FileSystem.isDirectory(e.fileName)) {
@@ -155,7 +159,7 @@ define(["app/Logging/Log",
 		log.trace('isSaved called');
 		var txt = doc.toString();
 		return doc.file ?  
-			(doc.file.get('data') == txt)
+			(doc.file.getData() == txt)
 			: (txt == "");
 	};
 	
@@ -166,7 +170,6 @@ define(["app/Logging/Log",
 			//TODO: optimize?
 			folder: FileSystem.loadDirectory(f.getDirectory())
 		});
-		this.core.trigger('togglemetamode');
 	};
 	
 	DocumentManager.prototype.isNothingInputed = function() {
@@ -176,8 +179,8 @@ define(["app/Logging/Log",
 	DocumentManager.prototype.newDocument = function(f) {
 		log.trace('newDocument');
 		
-		var data = f ? f.get('data') : '';
-		var doc = new Document(data || '');
+		var data = f ? f.getData() : '';
+		var doc = new Document(data);
 		doc.setUndoManager(new UndoManager());
 		
 		doc.file = f;

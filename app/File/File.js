@@ -74,6 +74,10 @@ define(["app/Logging/Log"], function(Log) {
 	File.prototype.isDirectory = function() {
 		return false;
 	}
+	
+	File.prototype.getData = function() {
+		return (this.get('data') || '');
+	}
 
 	return File;
 });
