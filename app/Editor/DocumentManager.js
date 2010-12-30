@@ -221,6 +221,7 @@ define(["app/Logging/Log",
 	DocumentManager.prototype.openFile = function(f) {		
 		// New document should 'overwrite' a single empty unsaved document
 		if(this.isNothingInputed()) {
+			// Active folder in file browser is changed to the directory of the first opened file
 			if(!this.hasShownDirectory) {
 				this.showFolderOf(f);
 			}
@@ -230,8 +231,14 @@ define(["app/Logging/Log",
 		
 		this.core.trigger('closemetamode');
 		
-		
-		this.activate(this.newDocument(f));
+		// Is file already open ?
+		var existing = this.documents.getByFullFileName(f.getFullFileName());
+		if(existing) {
+			log.trace('File already open');
+			this.activate(existing);
+		} else {
+			this.activate(this.newDocument(f));	
+		}
 		this.documents.logStatus();
 	};
 	

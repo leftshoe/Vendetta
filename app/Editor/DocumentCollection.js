@@ -31,6 +31,12 @@ define(["app/Logging/Log"], function(Log) {
 		});
 	};
 	
+	DocumentCollection.prototype.getByFullFileName = function(fileName) {
+		return _.detect(this.documents, function(odoc) {
+			return odoc.file && odoc.file.getFullFileName() == fileName;
+		});
+	};
+	
 	DocumentCollection.prototype.indexOf = function(doc) {
 		var index = -1;
 		_.each(this.documents, function(odoc, i) {
