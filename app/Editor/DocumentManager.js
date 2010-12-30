@@ -4,6 +4,7 @@ define(["app/Logging/Log",
 		"app/Notification",
 		"app/File/FileSystem",
 		"app/PromptToSave",
+		"app/File/FileChanged",
 		"./DocumentCollection",
 		"ace/mode/javascript",
 	    "ace/mode/css",
@@ -11,7 +12,7 @@ define(["app/Logging/Log",
 	    "ace/mode/xml",
 	    "ace/mode/text",
 	    "ace/undomanager"],
-	function(Log, Document, Notification, FileSystem, PromptToSave, DocumentCollection,
+	function(Log, Document, Notification, FileSystem, PromptToSave, FileChanged, DocumentCollection,
 			 JavascriptMode, CssMode, HtmlMode, XmlMode, TextMode, UndoManager) {
 				
 	var log = new Log("DocumentManager");
@@ -68,6 +69,16 @@ define(["app/Logging/Log",
 			FileSystem.saveas(doc.toString(), function(f) {
 				doc.file = f;
 				core.trigger('saved');
+			});
+		});
+		core.bind("revertdocument", function(e) {
+			var doc = self.documents.getById(e.id);
+			FileSystem.open(doc.file.getFullFileName(), function(f) {
+				doc.setValue(f.getData());
+				doc.file.set({
+					data: f.getData(),
+					modificationDate: f.get('modificationDate')
+				});
 			});
 		});
 		core.bind("saved", function() {
@@ -218,28 +229,39 @@ define(["app/Logging/Log",
 		this.core.trigger('activedocumentchanged', doc);
 	};
 	
-	DocumentManager.prototype.openFile = function(f) {		
+	DocumentManager.prototype.openFile = function(f) {
+		var self = this;
+		
 		// New document should 'overwrite' a single empty unsaved document
-		if(this.isNothingInputed()) {
+		if(self.isNothingInputed()) {
 			// Active folder in file browser is changed to the directory of the first opened file
-			if(!this.hasShownDirectory) {
-				this.showFolderOf(f);
+			if(!self.hasShownDirectory) {
+				self.showFolderOf(f);
 			}
 			
-			this.documents.remove(this.active);
+			self.documents.remove(self.active);
 		}
 		
-		this.core.trigger('closemetamode');
+		self.core.trigger('closemetamode');
 		
 		// Is file already open ?
-		var existing = this.documents.getByFullFileName(f.getFullFileName());
+		var existing = self.documents.getByFullFileName(f.getFullFileName());
 		if(existing) {
 			log.trace('File already open');
-			this.activate(existing);
+			self.activate(existing);
 		} else {
-			this.activate(this.newDocument(f));	
+			var doc = self.newDocument(f);
+			
+			// Handle changes from outside this application
+			doc.file.bind('changedOnFilesystem', function() {
+				var changedDialog = new FileChanged(self.core, doc);
+				changedDialog.show();
+			});
+			
+			self.activate(doc);	
 		}
-		this.documents.logStatus();
+		
+		self.documents.logStatus();
 	};
 	
 	return DocumentManager;

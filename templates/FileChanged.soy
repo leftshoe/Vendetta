@@ -1,0 +1,11 @@
+{namespace template}
+
+/**
+ * Shown when a file changes on the filesystem outside of this application
+ * @param fileName The,
+ */
+{template .fileChanged}
+	<p>The file {$fileName} has changed outside of Vendetta.</p>
+	<button class="keep-changes close">Stick with my changes</button>
+	<button class="revert close">revert to the outside changes</button>
+{/template}

@@ -1,11 +1,29 @@
 
 define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directory) {
 	var log = new Log("AirFileSystem");
+	var POLLING_INTERVAL = 8000;
 	
 	var AirDirectory = Directory.extend({
 		load: function() {
 			log.trace('load');
 			AirFileSystem.loadDirectory(this.get('fullFileName'), this);
+		}
+	});
+	
+	var AirFile = File.extend({
+		initialize: function() {
+			_.bindAll(this, 'pollForChanges');
+			File.prototype.initialize.call(this);
+		},
+		pollForChanges: function() {
+			var airfile = new air.File(this.getFullFileName());
+			
+			if(this.get('modificationDate').toString() != airfile.modificationDate.toString()) {
+				this.trigger('changedOnFilesystem');
+				this.set({modificationDate : airfile.modificationDate});
+			}
+			
+			setTimeout(this.pollForChanges, POLLING_INTERVAL);
 		}
 	});
 	
@@ -19,10 +37,14 @@ define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directo
 		fileStream.addEventListener(air.Event.COMPLETE, function() {
 			var str = fileStream.readMultiByte(fileStream.bytesAvailable, air.File.systemCharset);
 			fileStream.close();
-			callback(new File({
+			var file = new AirFile({
 				fullFileName: file_name,
+				modificationDate: airfile.modificationDate,
 				data: str
-			}));
+			});
+			
+			file.pollForChanges(); // start polling
+			callback(file);
 		});
 		
 		// Triggers COMPLETE event when open
@@ -78,6 +100,8 @@ define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directo
 		
 		fileStream.writeMultiByte(file.get('data') || '', air.File.systemCharset);
 		fileStream.close();
+		
+		file.set({modificationDate: airfile.modificationDate}); 
 	};
 	
 	AirFileSystem.saveas = function(data, callback) {
