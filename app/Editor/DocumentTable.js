@@ -37,6 +37,7 @@ define(["app/Logging/Log", "app/Widget", "templates/DocumentTable.js"], function
 			var view_docs = self.docs._().map(function(doc) {
 				return {
 					id: doc.id,
+					changed: doc.changed,
 					fileName: doc.file ? doc.file.getFileName() : 'untitled',
 					directory: doc.file ? doc.file.getDirectory() : '',
 					active: !!doc.active

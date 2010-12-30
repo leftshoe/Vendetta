@@ -53,6 +53,11 @@ li .directory {
 	word-wrap: break-word;
 }
 
+li .changed {
+	font-size: 8px;
+	color: green;
+}
+
 li.active {
 	background-color: rgb(102,159,172);
 	color: rgb(188,222,229);

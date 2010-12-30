@@ -20,6 +20,6 @@ template.documentTable = function(opt_data, opt_sb) {
 
 template.documentTableRow = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('\t<li class="document-row ', (opt_data.doc.active) ? 'active' : '', '" data-id="', soy.$$escapeHtml(opt_data.doc.id), '"><div class="document-info"><div class="file-name">', soy.$$escapeHtml(opt_data.doc.fileName), '</div><div class="directory">', soy.$$escapeHtml(opt_data.doc.directory), '</div></div><div class="document-close" data-id="', soy.$$escapeHtml(opt_data.doc.id), '"></div></li>');
+  output.append('\t<li class="document-row ', (opt_data.doc.active) ? 'active' : '', '" data-id="', soy.$$escapeHtml(opt_data.doc.id), '"><div class="document-info"><div class="file-name">', soy.$$escapeHtml(opt_data.doc.fileName), '</div><div class="directory">', soy.$$escapeHtml(opt_data.doc.directory), '</div>', (opt_data.doc.changed) ? '<div class="changed">changed</div>' : '', '</div><div class="document-close" data-id="', soy.$$escapeHtml(opt_data.doc.id), '"></div></li>');
   if (!opt_sb) return output.toString();
 };

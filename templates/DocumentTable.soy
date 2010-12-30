@@ -25,6 +25,7 @@
 		<div class="document-info">
 			<div class="file-name">{$doc.fileName}</div>
 			<div class="directory">{$doc.directory}</div>
+			{if $doc.changed}<div class="changed">changed</div>{/if}
 		</div>
 		<div class="document-close" data-id="{$doc.id}"></div>
 	</li>

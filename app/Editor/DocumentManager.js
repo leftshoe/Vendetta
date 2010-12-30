@@ -160,7 +160,10 @@ define(["app/Logging/Log",
 		if(doc.file) {
 			doc.file.set({'data': doc.toString()});
 			FileSystem.save(doc.file);
+			doc.changed = false;
+			
 			this.core.trigger('saved');
+			this.core.trigger('docschanged', this.documents);
 		} else {
 			log.trace("No currentFile");
 			this.core.trigger("saveas", doc);
@@ -190,6 +193,7 @@ define(["app/Logging/Log",
 	};
 	
 	DocumentManager.prototype.newDocument = function(f) {
+		var self = this;
 		log.trace('newDocument');
 		
 		var data = f ? f.getData() : '';
@@ -197,10 +201,16 @@ define(["app/Logging/Log",
 		doc.setUndoManager(new UndoManager());
 		
 		doc.file = f;
-		this.determineDocMode(doc);
-		this.documents.add(doc);
+		self.determineDocMode(doc);
+		self.documents.add(doc);
 		
-		this.core.trigger('docschanged', this.documents);
+		doc.addEventListener('change', function() {
+				log.trace('change event invoked on document');
+				doc.changed = true;
+				self.core.trigger('docschanged', self.documents);
+		});
+		
+		self.core.trigger('docschanged', self.documents);
 		return doc;
 	};
 	

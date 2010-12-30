@@ -23,6 +23,7 @@
 }
 
 .notification {
+	z-index: 1000;
 	background-color: rgb(70,70,70);
 	color: rgb(220,220,220);
 	padding: 15px;

@@ -98,10 +98,14 @@ define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directo
 		var fileStream = new air.FileStream();
 		fileStream.openAsync(airfile, air.FileMode.WRITE);
 		
-		fileStream.writeMultiByte(file.get('data') || '', air.File.systemCharset);
-		fileStream.close();
+		fileStream.addEventListener(air.Event.CLOSE, function(e) {
+			log.trace("Close");
+			file.set({modificationDate: airfile.modificationDate});
+		});
 		
-		file.set({modificationDate: airfile.modificationDate}); 
+		fileStream.writeMultiByte(file.getData(), air.File.systemCharset);		
+		fileStream.close();
+		 
 	};
 	
 	AirFileSystem.saveas = function(data, callback) {
