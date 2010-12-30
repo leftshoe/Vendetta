@@ -123,7 +123,6 @@ define(["app/Logging/Log",
 		});
 		core.bind("closedocument", function(e) {
 			var doc = self.documents.getById(e.id);
-			//TODO: check and prompt for save
 			
 			if(self.documents.length > 1) {
 				if(doc.id == self.active.id) {
@@ -139,6 +138,9 @@ define(["app/Logging/Log",
 			} else {
 				self.activate(self.newDocument());
 			}
+			
+			// Remove file system monitoring handler
+			doc.file.unbind('changedOnFilesystem');
 			
 			self.documents.remove(doc);
 			self.core.trigger('docschanged', self.documents);
