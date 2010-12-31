@@ -3,28 +3,26 @@ define(["app/Logging/Log", "app/Geometry/Rectangle"], function(Log, Rectangle) {
 	var log = new Log('Widget');
 	
 	/**
-	 * Widgets are the controls displayed on in metamode
+	 * Widgets are the controls displayed in metamode
 	 * They have the following attributes:
 	 *   rect: In screen coordinates.
+	 *   element: Root dom element for the widget.
 	 *   location: Read Only. Location for widget. One of: left,right,top,bottom
+	 *
+	 *  Widgets are assumed to have a backbone style view as property 'view'.
 	 */
 	var Widget = Backbone.Model.extend({
 		initialize: function() {
-			_.bindAll(this, 'show', 'hide', 'changeRect', 'setRect', 'dock');
+			_.bindAll(this, 'getElement', 'changeRect', 'setRect', 'getLocation', 'dock');
 			log.trace('initializing widget ...');
+			
 			this.set({rect: new Rectangle()});
 			this.bind('change:rect', this.changeRect);
 		},
-		show: function() {
-			log.trace('Showing widget');
-			$(this.view.el).show();
-		},
-		hide: function() {
-			log.trace('Hiding widget');
-			$(this.view.el).hide();
+		getElement: function() {
+			return this.view.el;
 		},
 		changeRect: function() {
-			//log.trace('change rect: ' + JSON.stringify(this));
 			$(this.view.el).css(this.get('rect'));
 		},
 		setRect: function(rectangle) {

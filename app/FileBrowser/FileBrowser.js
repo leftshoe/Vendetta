@@ -31,7 +31,6 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 		tagName: 'div',
 		className: 'file-browser',
 		initialize: function(options) {
-			this.rendered = false;
 			this.core = options.core;
 			this.widget = options.widget;
 			this.folders = {};
@@ -55,10 +54,6 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 			} else {
 				log.trace('No file to render');
 				$(self.el).html('');
-			}
-			
-			if(!self.rendered) {
-				$('body').append(self.el);
 			}
 			
 			self.$('.file-browser-change-button').button();

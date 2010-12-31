@@ -19,7 +19,6 @@ define(["app/Logging/Log", "app/Widget", "templates/DocumentTable.js"], function
 		className: 'document-table',
 		initialize: function(options) {
 			var self = this;
-			self.rendered = false;
 			self.core = options.core;		
 			
 			self.core.bind('docschanged', function(docs) {
@@ -46,13 +45,9 @@ define(["app/Logging/Log", "app/Widget", "templates/DocumentTable.js"], function
 			
 			$(self.el).html(template.documentTable({documents: view_docs}));
 			
-			if(!self.rendered) {
-				$('body').append(self.el);
-			}
-			
 			self.$('.button').button();
 			self.$('.document-table-list').sortable({
-				helper: 'clone',
+				helper: 'clone',  // prevents click event from triggering during drag
 				axis: 'y',
 				containment: self.el, // prevents dragging outside of widget
 				tolerance: 'pointer' // default value doesn't work well with containment
