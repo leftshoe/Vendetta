@@ -89,10 +89,10 @@ define(["app/Logging/Log", "app/Widget", "app/Geometry/Rectangle"], function(Log
 				log.trace('Exiting metaMode');
 				self.resetEditor();
 				editor.removeClass('fullscreen');
-				editor.focus();
 			}
 		});
-						
+		
+		self.editor.ace.focus();
 		self.core.set({inMetaMode: !inMetaMode});
 	};
 	
