@@ -26,6 +26,18 @@ function openWindow(file_paths, existing_window) {
 	var loader = air.HTMLLoader.createRootWindow(false, options, false, windowBounds);
 	loader.load(new air.URLRequest('vendetta.html'));
 	
+	// Ensure that on non-macs closing the last window closes the app
+	if(!isMac()) {
+		loader.window.nativeWindow.addEventListener(air.Event.CLOSE, function() {
+
+			if(!_.any(air.NativeApplication.nativeApplication.openedWindows, function(win) {
+				return win.visible;
+			})) {
+				air.NativeApplication.nativeApplication.exit();
+			}
+		});
+	}
+	
 	loader.window.argFileNames = file_paths;
 	loader.window.focus();
 };
