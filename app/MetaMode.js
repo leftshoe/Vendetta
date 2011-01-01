@@ -90,9 +90,13 @@ define(["app/Logging/Log", "app/Widget", "app/Geometry/Rectangle"], function(Log
 				self.resetEditor();
 				editor.removeClass('fullscreen');
 			}
+			
+			// Doesn't work without the defer
+			_.defer(function() {
+				self.editor.ace.focus();
+			});
 		});
 		
-		self.editor.ace.focus();
 		self.core.set({inMetaMode: !inMetaMode});
 	};
 	

@@ -41,7 +41,7 @@ define(["app/Logging/Log"], function(Log) {
 	};
 	
 	File.prototype.extractFileName = function() {
-		var parts = this.getFullFileName().split(separatorRegex);
+		var parts = this.getFullFileName().split(separator); // not regex
 		return _.last(parts);
 	};
 	
