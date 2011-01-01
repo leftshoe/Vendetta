@@ -29,6 +29,9 @@ define(["app/Logging/Log", "app/Geometry/Rectangle"], function(Log, Rectangle) {
 			this.set({rect: rectangle});
 			return this;
 		},
+		getRect: function() {
+			return this.get('rect');
+		},
 		getLocation: function() {
 			return this.get('location');
 		}

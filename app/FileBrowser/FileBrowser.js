@@ -3,14 +3,18 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 		function(Log, Widget, FileSystem) {
 
 	var log = new Log('FileBrowser');
-	var HEADER_HEIGHT = 30;
+	var HEADER_HEIGHT = 50;
 	
 	var FileBrowser = Widget.extend({
 		initialize: function(core) {
 			//_.bindAll(this, 'showFolder');
 			Widget.prototype.initialize.call(this);
 			var self = this;
-			self.view = new FileBrowserView({core: core, widget: self});
+			
+			self.view = new FileBrowserView({
+				core: core, 
+				widget: self
+			});
 			
 			self.set({location: "left"});
 			
@@ -18,6 +22,11 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 				log.trace('e.folder: ' + e.folder); 
 				e.folder.set({open: true});
 				self.showFolder(e.folder);
+			});
+			
+			self.bind('change:rect', function() {
+				log.trace('change:rect');
+				self.view.render();
 			});
 		},
 		showFolder: function(file) {
@@ -57,7 +66,9 @@ define(["app/Logging/Log", "app/Widget", "app/File/FileSystem", "templates/FileB
 			}
 			
 			self.$('.file-browser-change-button').button();
-			self.$('.file-browser-scroller').height(self.widget.get('rect').height - HEADER_HEIGHT);
+			var widgetHeight = self.widget.getRect().height;
+			log.trace('widget Height: ' + widgetHeight);
+			self.$('.file-browser-scroller').height(widgetHeight - HEADER_HEIGHT);
 			
 			self.updateHandlers();
 			
