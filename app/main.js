@@ -63,10 +63,14 @@ require({ baseUrl: ""}, [
 				
 
 				//TODO: find a better spot for this
-				core.bind('activedocumentchanged',function(doc) {
+				var updateTitle = function(doc) {
+					log.trace('active document changed');
 					var fileName = doc.file ? doc.file.getFileName() : 'untitled';
 					document.title = fileName + " - Vendetta";
-				});
+				};
+				
+				core.bind('activedocumentchanged', updateTitle);
+				core.bind('saved', updateTitle);
 				core.bind('newwindow', function() {
 					openWindow(null, window.nativeWindow);
 				});

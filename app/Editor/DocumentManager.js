@@ -68,7 +68,7 @@ define(["app/Logging/Log",
 			var doc = opt_doc || self.active; 
 			FileSystem.saveas(doc.toString(), function(f) {
 				doc.file = f;
-				core.trigger('saved');
+				core.trigger('saved', doc);
 			});
 		});
 		core.bind("revertdocument", function(e) {
