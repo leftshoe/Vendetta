@@ -58,7 +58,6 @@ define(["app/Logging/Log",
 		});
 		core.bind("saveall", function() {
 			self.documents._().each(self.save);
-			core.trigger('saved');
 		});
 		core.bind("savedocument", function(e) {
 			var doc = self.documents.getById(e.id);
@@ -162,7 +161,7 @@ define(["app/Logging/Log",
 			FileSystem.save(doc.file);
 			doc.changed = false;
 			
-			this.core.trigger('saved');
+			this.core.trigger('saved', doc);
 			this.core.trigger('docschanged', this.documents);
 		} else {
 			log.trace("No currentFile");
