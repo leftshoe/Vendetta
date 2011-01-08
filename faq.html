@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="page-style.css" />
+	<title>Vendetta Editor</title>
+
+	<script type="text/javascript" src="jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="links.js"></script>
+	
+	<script type="text/javascript">
+		$(function() {
+			$('#bar').height(Math.max($('#main').height(), window.innerHeight));
+		});
+	</script>
+</head>
+<body>	
+	<div id="content">
+	
+		<div id="bar">
+			<div id="navigation">
+					<div class="link" id="download">
+						Download
+						<a id="download-req" href="http://get.adobe.com/air/">Adobe Air required</a>
+					</div>
+					<div class="link" id="faq">FAQ</div>
+					<div class="link" id="development">Development</div>
+					<div class="link" id="info">Info</div>
+			</div>
+		</div>
+	
+		<img id="logo" src="logo-small.png">
+	
+		<div id="main">
+			<h1>FAQ</h1>
+		
+			<h2>What platforms are supported?</h2>
+			<p>Windows, Mac and Linux. Generally any platform that Adobe Air runs on.</p>
+		
+			<h2>What makes Vendetta unique?</h2>
+			<p>
+				Vendetta is a modern text editor; Its inspired by the simplicity and power of
+				of command line editors such as Vim and GNU Emacs, but without the historical baggage.   
+			</p>
+			<p>
+				However, Vendetta is not a me-too editor, its a test-bed for some radical changes to
+				the traditional editor user interface.  
+			</p>
+		
+			<h2>What technologies are behind Vendetta?</h2>
+			<p>
+				Vendetta is part of the vanguard of a new wave desktop software, developed using web 
+				technologies. Vendetta is written in Javascript, CSS and HTML, making it easy to 
+				modify and extend. The Adobe Air hosts the application, and provides an abstraction
+				layer, hiding operating system specifics.  
+			</p>
+			<p>
+				Vendetta uses a number of Javascript libraries, including jQuery, Backbone.js and 
+				Require.js. The central editor component is the excellent ACE library by Ajax.org. 
+			</p>
+		
+			<h2>How is Vendetta licenced</h2>
+			<p>
+				Vendetta is free &amp; open source. It is distributed under the GNU GPL licence. 
+			</p>
+		</div>
+	
+	</div>
+</body>
+</html>

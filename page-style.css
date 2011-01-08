@@ -1,0 +1,103 @@
+html {
+	height: 100%;
+}
+
+body {
+	background-color: rgb(231, 234, 236);
+	font-family: Helvetica, Verdana;
+		
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+#content {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#logo {
+    cursor: pointer;
+	position: absolute;
+	top: 10px;
+	left: 5px;
+	height: 256px;
+}
+
+#bar {
+	position: absolute;
+	left: 58px;
+	width: 150px;
+	height: 800px;
+
+	background-color: rgb(125,125,125);
+	-webkit-box-shadow: 0 0px 4px rgba(0,0,0,0.4);
+	-moz-box-shadow: 0 0px 4px rgba(0,0,0,0.4);
+}
+
+#navigation {
+	padding-top: 270px;
+}
+
+.link {
+	display: block;
+	height: 60px;
+
+	margin: 0px;
+	padding: 0px;
+	
+	color: rgb(230,230,230);
+	text-shadow: 0px -1px 0px rgb(0,0,0);
+		
+	font-size: 20px;
+	line-height: 60px;
+	width: 150px;
+	text-align: center;
+}
+
+.link:hover {
+	cursor: pointer;
+	background-color: rgb(102,159,172);
+	color: rgb(188,222,229);
+}
+
+#download-req {
+	display: block;
+	width: 100%;
+	text-align: center;
+	margin-top: -40px;
+	font-size: 12px;
+	text-shadow: none;
+	
+	color: yellow;
+}
+
+#main {
+	padding-left: 280px;
+	max-width: 700px;
+}
+
+h1 {
+	margin: 0px;
+	padding-top: 50px;
+	padding-bottom: 25px;
+	padding-left: 50px;
+	color: rgb(105, 131, 176);
+	/*text-shadow: 0px 0px 1px rgb(0,0,0); */
+	font-size: 70px;
+	letter-spacing: 10px;
+	font-weight: bold;
+}
+
+h2 {
+	margin: 0px;
+	padding: 8px 0px;
+	font-size: 30px;
+}
+
+p {
+	padding-left: 10px;
+	font-size: 20px;
+}
