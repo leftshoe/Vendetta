@@ -10,7 +10,7 @@ body {
 }
 
 #content {
-	position: relative;
+	position: absolute;
 	height: 660px;
 	width: 100%;
 	overflow: hidden;
