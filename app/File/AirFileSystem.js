@@ -18,7 +18,8 @@ define(["app/Logging/Log", "./File", "./Directory"], function(Log, File, Directo
 		pollForChanges: function() {
 			var airfile = new air.File(this.getFullFileName());
 			
-			if(this.get('modificationDate').toString() != airfile.modificationDate.toString()) {
+			if(airfile.exists && 
+			   this.get('modificationDate').toString() != airfile.modificationDate.toString()) {
 				this.trigger('changedOnFilesystem');
 				this.set({modificationDate : airfile.modificationDate});
 			}
