@@ -8,6 +8,7 @@
 	opacity: 0.9;
 	height: 36px;
 	clip: rect(-10, 358, 44, -10);
+	z-index: 20;
 }
 
 #up-down {

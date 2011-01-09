@@ -1,6 +1,8 @@
 
 define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 	var log = new Log('FindAndReplace');
+	var ESC_KEY = 27;
+	var ENTER_KEY = 13;
 	
 	var FindAndReplace = function(core) {
 		_.bindAll(this, 'find', 'replace', 'replaceAll');
@@ -17,10 +19,15 @@ define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 		$('body').append(self.view.el);
 		
 		core.bind('openfind', function() {
+		    core.trigger('closemetamode');
 			$(self.view.el).show();
 			self.view.focus();
 		});
+		core.bind('enteredmetamode', function() {
+		    self.view.close(); 
+		});
 		
+		self.model.bind('find', this.find);
 		self.model.bind('change:find', this.find);
 		self.model.bind('change:case', this.find);
 		self.model.bind('change:regex', this.find);
@@ -58,6 +65,8 @@ define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 			"click #check-regex": "toggleRegex",
 			"click #check-wrap": "toggleWrap",
 			"click #check-case": "toggleCase",
+			"keydown #find-input": "keydown",
+			"keydown #replace-input": "keydown",
 			"change #find-input": "findChange",
 			"change #replace-input": "replaceChange",
 			"click #up": "findPrevious",
@@ -71,10 +80,8 @@ define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 			this.core = options.core;
 		},
 		render: function() {
-			log.trace('Rendering find-and-replace');
 			$(this.el).html(template.find());
 			this.$('.button').button();
-			this.$('#find-input').keydown(this.findKeydown);
 			$('body').append(this.el);
 			return this;
 		},
@@ -97,7 +104,7 @@ define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 		toggleCase: function() {
 			this.toggle('case');
 		},
-		findChange: function(e) {
+        findChange: function(e) {
 			log.trace('findChange: ' + e);
 			this.model.set({find: e.target.value});
 		},
@@ -123,10 +130,16 @@ define(["app/Logging/Log", "templates/Find.js"], function(Log) {
 		focus: function() {
 			$('#find-input').focus();
 		},
-		findKeydown: function(e) {
-			log.trace('keydown: ' + e.keyCode);
-			if(e.keyCode == 27) {
+		keydown: function(e) {
+			if(e.keyCode == ESC_KEY) {
 				this.close();
+			}
+			if(e.keyCode == ENTER_KEY) {
+			     this.model.trigger('find');   
+			}
+			if(!e.ctrlKey && !e.metaKey) {
+			    // Otherwise special keys bubble to the editor.
+			    e.stopPropagation();
 			}
 		}
 	});
