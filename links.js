@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
     $('#logo').click(function() {
 	   window.location = 'index.html';
     });
