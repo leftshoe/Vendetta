@@ -1,0 +1,32 @@
+{namespace template}
+
+/**
+ * A vertical open document (tabs) display
+ * @param documents Open documents
+ */
+{template .documentTable}
+	<div class="document-table-menu">
+	</div>
+	<ul class="document-table-list">
+		{foreach $doc in $documents}
+			{call .documentTableRow}
+				{param doc: $doc /}
+			{/call}
+		{/foreach}
+	</ul>
+{/template}
+
+/**
+ *  Row in above
+ *	@param doc Document
+ */
+{template .documentTableRow}
+	<li class="document-row {if $doc.active}active{/if}" data-id="{$doc.id}">
+		<div class="document-info">
+			<div class="file-name">{$doc.fileName}</div>
+			<div class="directory">{$doc.directory}</div>
+			{if $doc.changed}<div class="changed">changed</div>{/if}
+		</div>
+		<div class="document-close" data-id="{$doc.id}"></div>
+	</li>
+{/template}

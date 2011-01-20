@@ -1,0 +1,120 @@
+#find-dialog {
+	width: 350px;
+	font-size: 11px;
+	overflow: auto;
+	position: absolute;
+	bottom: 15px;
+	right: 15px;
+	opacity: 0.9;
+	height: 36px;
+	clip: rect(-10, 358, 44, -10);
+	z-index: 20;
+}
+
+#up-down {
+	float: left;
+	width: 30px;
+}
+
+#up {
+	background-image: url('../icons/up-arrow.png');
+}
+
+#down {
+	background-image: url('../icons/down-arrow.png');
+}
+
+#up:hover, #down:hover {
+	background-color: rgb(100,100,100);
+}
+
+#up, #down {
+	font-size: 9px;
+	display: block;
+	text-align: center;
+	height: 17px;
+	width: 25px;
+	line-height: 17px;
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+}
+
+#find-replace {
+	float: left;
+	overflow: hidden;
+	width: 180px;
+}
+
+#find-replace .label {
+	float: left;
+	width: 55px;
+	height: 17px;
+	line-height: 17px;
+}
+
+#find-input, #replace-input {
+	padding: 0px 3px;
+	margin: 0px;
+	float: left;
+	width: 120px;
+}
+
+#find-options  {
+	float: left;
+	width: 50px;
+}
+
+.find-check {
+	-webkit-border-radius: 2px;
+	float: left;
+	display: block;
+	width: 10px;
+	height: 10px;
+	padding: 0px;
+	margin: 0px;
+	background-color: white;
+}
+
+.find-check.checked {
+	background-color: rgb(108,206,245);
+}
+
+#find-options .label {
+	font-size: 9px;
+	display: block;
+	float: left;
+	width: 35px;
+	height: 12px;
+	line-height: 12px;
+	padding-left: 5px;
+}
+
+#find-buttons {
+	float: left;
+	width: 65px;
+}
+
+#find-buttons .button {
+	width: 65px;
+	font-size: 9px;
+	height: 15px;
+	margin: 0px;
+	display: block;
+	text-align: center;
+}
+
+#find-dialog-buttons {
+	float: left;
+	width: 15px;
+}
+
+#find-close {
+	width: 10px;
+	height: 10px;
+	-webkit-border-radius: 2px;
+	background-color: rgb(200, 0, 0);
+}
+
+#find-close:hover {
+	background-color: rgb(255, 0, 0);
+}

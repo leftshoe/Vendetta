@@ -1,0 +1,54 @@
+{namespace template}
+
+/**
+ * A standard file listing widget
+ *	@param file Top level directory
+ */
+{template .fileBrowser}
+	<div class="file-browser-menu">
+		<div class="file-browser-path">
+			{$file.fullFileName}
+		</div>
+		<div class="file-browser-change-button">
+			Change
+		</div>
+	</div>
+	<div class="file-browser-scroller">
+		<div class="file-browser-inner">
+			{call .file}
+				{param file: $file /}
+			{/call}
+		</div>
+	</div>
+{/template}
+
+/**
+ *  File in file browser
+ *	@param file Top level directory
+ */
+{template .file}
+	{if not $file.hidden}
+		{if $file.isDirectory}
+	
+			<div class="folder-name {if $file.open} folder-open {else} folder-close {/if}"
+				 data-fullFileName="{$file.fullFileName}">
+				{$file.fileName}
+			</div>
+		
+			{if $file.open}
+				<div class="folder-contents">
+					{foreach $subfile in $file.files}
+						{call .file}
+							{param file: $subfile /}
+						{/call}
+					{/foreach}
+				</div>
+			{/if}
+		{else}
+			<div class="file" data-fullFileName="{$file.fullFileName}">
+				<span class="extension {$file.extension}">{$file.extension}</span>
+				{$file.fileName}
+			</div>
+		{/if}
+	{/if}
+{/template}

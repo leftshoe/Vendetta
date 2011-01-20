@@ -1,0 +1,119 @@
+
+.file-browser {
+	position: absolute;
+	margin: 0px;
+	
+	color: rgb(159,159,159);
+	background-color: rgb(71,71,71);
+	
+	-webkit-border-radius: 5px;
+}
+
+.file-browser-menu {
+	font-size: 10px;
+	height: 40px;
+	padding: 5px 5px;
+}
+
+.file-browser-path {
+	height: 10px;
+	padding: 5px 0px;
+	float: left;
+	
+	text-overflow: ellipsis;
+	overflow: hidden;
+	width: 100%;
+}
+
+.file-browser-change-button {
+	float: right;
+	height: 20px;
+	
+	width: 65px;
+	font-size: 12px;
+	margin: 0px;
+	display: block;
+	text-align: center;
+}
+
+.file-browser-inner {
+	padding: 8px;
+}
+
+.file-browser-scroller {
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+	overflow: auto;
+}
+
+.folder-open {
+	background-image: url('../icons/down-triangle.png');
+	background-position: 0px 3px;
+	background-repeat: no-repeat;
+}
+
+.folder-close {
+	background-image: url('../icons/right-triangle.png');
+	background-position: 0px 3px;
+	background-repeat: no-repeat;
+}
+
+.folder-name {
+	font-size: 10px;
+	padding-left: 15px;
+	border-bottom: 1px solid rgb(80,80,80);
+	cursor: pointer;
+}
+
+.folder-contents {
+	padding-left: 15px;
+}
+
+.file {
+	font-size: 10px;
+	border-bottom: 1px solid rgb(80,80,80);
+	margin-left: 10px;
+	padding-left: 15px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background-image: url('icons/file.png');
+	background-position: left center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	
+	word-wrap: break-word;
+	min-width: 140px;
+}
+
+.extension {
+	margin-right: 6px;
+	text-align: center;
+	background-color: #915C83;
+	color: #BBBBBB;
+}
+
+.extension.js {
+	background-color: #E32636;
+	color: #F0F8FF;
+}
+
+.extension.txt {
+	background-color: #000000;
+	color: #AAAAAA;
+}
+
+.extension.css {
+	background-color: #9F8170;
+	color: #E0FFFF;
+}
+
+.extension.htm, .extension.html {
+	background-color: #0077BE;
+	color: #BCD4EE;
+}
+
+.extension.xml {
+	background-color: #9678B6;
+	color: #FFFAFA;
+}
