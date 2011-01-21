@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <application xmlns="http://ns.adobe.com/air/application/2.5"> 
     <id>defazio.vendetta</id>
-    <versionNumber>0.2.2</versionNumber> 
+    <versionNumber>0.2.3</versionNumber> 
     <filename>Vendetta</filename> 
     <initialWindow> 
         <content>vendetta-window-manager.html</content> 
