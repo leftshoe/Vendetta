@@ -10,7 +10,8 @@ function openWindow(file_paths, existing_window) {
 	options.resizable = true;
 	options.maximizable = true;
 
-
+	// Stagger windows so they don't all appear in the same spot on the screen
+	
 	var x = existing_window ? existing_window.x + WOFFSET : DEFAULT_POSITION_X;
 	if( x + DEFAULT_WINDOW_WIDTH > air.Capabilities.screenResolutionX) {
 		x = WOFFSET;

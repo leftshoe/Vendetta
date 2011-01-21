@@ -7,7 +7,6 @@ app.addEventListener("invoke", function(e) {
 	var file_paths = e.arguments;
 	air.trace("invoke. dir: " + dir.nativePath + " file_paths: " + file_paths);
 
-	// TODO: pass all into one window when tabs are supported
 	if(file_paths && file_paths.length > 0) {
 		
 		// Resolve paths w.r.t the current directory
@@ -23,6 +22,8 @@ app.addEventListener("invoke", function(e) {
 		// The current invisible window counts as open as well
 		if(app.openedWindows.length == 1) {
 			openWindow();
+		} else {
+			air.trace('open window count: ' + app.openedWindows.length);
 		}
 	}
 });

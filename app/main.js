@@ -16,7 +16,7 @@ require({ baseUrl: ""}, [
 			"app/Logging/Log",
 			"app/File/FileSystem",
 			"app/Keyboard/keybinding",
-			"app/Core",
+			"app/core",
 			"app/Editor/DocumentManager",
 			"app/MetaMode",
 			"app/Editor/editor",
