@@ -3,7 +3,7 @@ $(function() {
 	   window.location = 'index.html';
     });
 	$('#download').click(function() {
-		window.location = 'https://github.com/downloads/leftshoe/Vendetta/Vendetta-v0-2-2.air';
+		window.location = 'https://github.com/downloads/leftshoe/Vendetta/Vendetta-v0-2-3.air';
 	});
 	$('#faq').click(function() {
 		window.location = 'faq.html';
